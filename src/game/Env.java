@@ -1,0 +1,130 @@
+package game;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+import java.util.concurrent.TimeUnit;
+
+import game_cat.GameObject;
+import game_objects.SquareInstance;
+import sub.ID;
+import sub.Point3D;
+import sub.Vector3D;
+
+public class Env extends Canvas implements Runnable {
+	private static final long serialVersionUID = 534748158841784372L;
+	static Window window;
+	static Thread thread;
+	static Handler handler;
+	static boolean running = false;
+	public static final int CAMERAWIDTH = 800;
+	public static final int CAMERAHEIGHT = 450;
+	public static final int RESWIDTH = 1600;
+	public static final int RESHEIGHT = 900;
+	public static final int WORLDLENGTH = 750;
+	public static final int WORLDWIDTH = 1000;
+	public static final int WORLDHEIGHT = 500;
+	public static final int maxDistance = (int)Math.sqrt(Math.pow(WORLDWIDTH, 2) + Math.pow(WORLDHEIGHT, 2));
+	public static int fps = 60;
+	public static long lastRenderTime = 0;
+	public static long desiredRenderInterval = 1000000000 / fps;
+	
+	public Env() {
+		handler = new Handler();
+		handler.setCamera(new Point3D(WORLDLENGTH/2, 0, WORLDHEIGHT/2), new Vector3D(0, 1, 0));
+		handler.addObject(new SquareInstance(ID.Object, new Point3D(WORLDLENGTH*(3/4), WORLDWIDTH*(1/2), WORLDHEIGHT*(1/4)), new Vector3D(.6,.2,.2), 15));
+		this.addKeyListener(new KeyInput(handler));
+		window = new Window(RESWIDTH, RESHEIGHT, "3D", this);
+	}
+	
+	public Env(Point3D camLoc, GameObject[] gameObjects) {
+		handler = new Handler();
+		handler.setCamera(new Point3D(240, 0, 240), new Vector3D(0, 0, 0));
+		this.addKeyListener(new KeyInput(handler));
+		for(int i=0; i<gameObjects.length; i++){
+			handler.addObject(gameObjects[i]);
+		}
+		window = new Window(RESWIDTH, RESHEIGHT, "3D", this);
+	}
+	
+	public synchronized void start(){
+		thread = new Thread(this);
+		thread.start();
+		running = true;
+	}
+	
+	public synchronized void stop(){
+		try {
+			thread.join();
+			running = false;
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void run(){
+		long timer = System.currentTimeMillis();
+		int frames = 0;
+		
+		while(running) {
+			tick();
+			render();
+			lastRenderTime = System.nanoTime();
+			sleepNanos((long)desiredRenderInterval);
+			frames++;
+
+			if(System.currentTimeMillis() - timer > (1000)) {
+				System.out.println("FPS: " + frames);
+				frames = 0;
+				timer = System.currentTimeMillis();
+			}
+		}
+		stop();
+	}
+	
+	public static void sleepNanos (long nanoDuration) {
+		try {
+			long SLEEP_PRECISION = TimeUnit.MILLISECONDS.toNanos(2);
+			long SPIN_YIELD_PRECISION = TimeUnit.MILLISECONDS.toNanos(2);
+			final long end = System.nanoTime() + nanoDuration;
+			long timeLeft = nanoDuration;
+			do {
+				if (timeLeft > SLEEP_PRECISION)
+					Thread.sleep (1);
+				else
+					if (timeLeft > SPIN_YIELD_PRECISION)
+						Thread.yield();
+
+				timeLeft = end - System.nanoTime();
+			} while (timeLeft > 0);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void tick() {
+		handler.tick();
+	}
+	
+	private void render() {
+		BufferStrategy bs = this.getBufferStrategy();
+		if(bs == null) {
+			this.createBufferStrategy(3);
+			return;
+		}
+
+		Graphics g = bs.getDrawGraphics();
+
+		g.setColor(Color.black);
+		g.fillRect(0, 0, RESWIDTH, RESHEIGHT);
+
+		handler.render(g);
+
+		g.dispose();
+		bs.show();
+	}
+	
+	public static void main(String[] args){
+		new Env();
+	}
+}
