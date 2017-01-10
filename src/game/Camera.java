@@ -13,7 +13,7 @@ public class Camera {
 	boolean left = false;
 	boolean right = false;
 	boolean test;
-	int speed = 10;
+	int speed = 1;
 
 	public Camera(Point3D loc, Vector3D orient){
 		this.camLoc = loc;
@@ -22,21 +22,29 @@ public class Camera {
 	
 	public void tick(){
 		if(forward){
-			camLoc.x += speed * camOrient.dx;
-			camLoc.y += speed * camOrient.dy;
-			camLoc.z += speed * camOrient.dz;
-		}else if(backward){
-			camLoc.x += speed * camOrient.dx;
-			camLoc.y += speed * camOrient.dy;
-			camLoc.z += speed * camOrient.dz;
-		}else if(up){
-			
-		}else if(down){
-			
-		}else if(left){
-			
-		}else if(right){
-			
+			//System.out.println("Forward");
+			camLoc.y += speed;
+			//camLoc.x += speed * camOrient.dx;
+			//camLoc.y += speed * camOrient.dy;
+			//camLoc.z += speed * camOrient.dz;
+		}if(backward){
+			//System.out.println("Backward");
+			camLoc.y -= speed;
+			//camLoc.x += speed * camOrient.dx;
+			//camLoc.y += speed * camOrient.dy;
+			//camLoc.z += speed * camOrient.dz;
+		}if(up){
+			//System.out.println("Upward");
+			camLoc.z += speed;
+		}if(down){
+			//System.out.println("Downward");
+			camLoc.z -= speed;
+		}if(left){
+			//System.out.println("Leftward");
+			camLoc.x -= speed;
+		}if(right){
+			//System.out.println("Rightward");
+			camLoc.x += speed;
 		}
 	}
 

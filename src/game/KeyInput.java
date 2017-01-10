@@ -14,6 +14,7 @@ public class KeyInput extends KeyAdapter {
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 		
+		//System.out.println("Here\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHere");
 		if(key == KeyEvent.VK_W) handler.camera.setForward(true);
 		if(key == KeyEvent.VK_S) handler.camera.setBackward(true);
 		if(key == KeyEvent.VK_D) handler.camera.setRight(true);
@@ -25,6 +26,7 @@ public class KeyInput extends KeyAdapter {
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 
+		//System.out.println("Gone\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGone");
 		if(key == KeyEvent.VK_W) handler.camera.setForward(false);
 		if(key == KeyEvent.VK_S) handler.camera.setBackward(false);
 		if(key == KeyEvent.VK_D) handler.camera.setRight(false);

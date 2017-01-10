@@ -10,8 +10,8 @@ import sub.Vector3D;
 public class SquareInstance extends GameObject {
 	Square square;
 	
-	public SquareInstance(ID id, Point3D loc, Vector3D orient, int length) {
-		super(id, loc, orient);
+	public SquareInstance(Point3D loc, Vector3D orient, int length) {
+		super(loc, orient);
 		square = new Square(loc, orient, length);
 	}
 

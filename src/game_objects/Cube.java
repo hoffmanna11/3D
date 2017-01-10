@@ -12,8 +12,8 @@ public class Cube extends GameObject {
 	int length;
 	Square[] polygons;
 
-	public Cube(ID id, Point3D loc, Vector3D orient, int length) {
-		super(id, loc, orient);
+	public Cube(Point3D loc, Vector3D orient, int length) {
+		super(loc, orient);
 		this.loc = loc;
 		this.orient = orient;
 		this.length = length;

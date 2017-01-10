@@ -27,6 +27,10 @@ public class Point3D {
 		
 		return projection;
 	}
+	
+	public int distanceBetween(Point3D point){
+		return (int)Math.sqrt(Math.pow((point.x - x), 2) + Math.pow((point.y - y), 2) + Math.pow((point.z - z), 2));
+	}
 
 	public int getX() {
 		return x;
