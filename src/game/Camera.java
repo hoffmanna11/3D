@@ -1,6 +1,5 @@
 package game;
 
-import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,10 +18,55 @@ public class Camera {
 	boolean up = false;
 	boolean down = false;
 	int speed = 1;
+	static Vector3D XY = new Vector3D(1,0,0);
+	static Vector3D XZ = new Vector3D(0,0,1);
+	static Vector3D YZ = new Vector3D(0,1,0);
 
 	public Camera(Point3D loc, Vector3D orient){
 		this.camLoc = loc;
 		this.camOrient = orient;
+	}
+	
+	public static void main(String args[]){
+		Camera cam = new Camera(null, null);
+		System.out.println("Testing XY rotation. Initial vectors:");
+		XY.print();
+		XZ.print();
+		YZ.print();
+		System.out.println("After XY rotation:");
+		cam.rotate("XY", 10);
+		XY.print();
+		XZ.print();
+		YZ.print();
+		
+	}
+	
+	public void rotate(String plane, double theta){
+		switch(plane){
+		case "XY":
+			System.out.println("In XY rotate 1, XY: ");
+			XY.print();
+			XY.rotateXY(theta);
+			System.out.println("In XY rotate 2, XY: ");
+			XY.print();
+			System.out.println("In XY rotate 1, YZ: ");
+			YZ.print();
+			YZ.rotateXY(theta);
+			System.out.println("In XY rotate 2, YZ: ");
+			YZ.print();
+			break;
+		case "XZ":
+			XZ.rotateXZ(theta);
+			XY.rotateXZ(theta);
+			break;
+		case "YZ":
+			YZ.rotateYZ(theta);
+			XZ.rotateYZ(theta);
+			break;
+		default:
+			System.out.println("Error, Camera.rotate, exiting");
+			System.exit(-1);
+		}
 	}
 
 	public void tick(){
@@ -44,6 +88,7 @@ public class Camera {
 				if(backward){
 					// Do nothing
 				}else{
+					
 					// Shift + forward
 					// = Pitch down
 					// = Rotate on YZ CW : Negative
@@ -109,10 +154,8 @@ public class Camera {
 				// = Rotate on YZ CW : Negative
 			}
 		}
-
-		if(shift){
-			System.out.println("Shift!!\n\n\n\n\nShift!!");
-		}
+		
+		/*
 		if(forward){
 			//System.out.println("Forward");
 			camLoc.y += speed;
@@ -138,6 +181,7 @@ public class Camera {
 			//System.out.println("Rightward");
 			camLoc.x += speed;
 		}
+		*/
 	}
 
 	/** @category getter */
