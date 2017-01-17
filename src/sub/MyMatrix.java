@@ -2,10 +2,12 @@ package sub;
 
 import java.util.Arrays;
 
-public class Matrix {
+import testing.MatrixMult;
+
+public class MyMatrix {
 	double[][] values;
 
-	public Matrix(double[][] values){
+	public MyMatrix(double[][] values){
 		this.values = values;
 	}
 
@@ -17,7 +19,7 @@ public class Matrix {
 		System.out.println("-------------------");
 	}
 
-	public Matrix multiply(Matrix m){
+	public MyMatrix multiply(MyMatrix m){
 		if(this.invalid()){
 			System.out.println("Error in matrix mult\n"
 					+ "Left matrix is invalid\n"
@@ -42,7 +44,7 @@ public class Matrix {
 				result[i][k] = colSum;
 			}
 		}
-		return new Matrix(result);
+		return new MyMatrix(result);
 	}
 
 	public boolean invalid(){
@@ -52,7 +54,7 @@ public class Matrix {
 		return false;
 	}
 
-	public boolean canMultiplyWith(Matrix m){
+	public boolean canMultiplyWith(MyMatrix m){
 		if( this.columns() == m.rows() ){
 			return true;
 		}
@@ -67,11 +69,54 @@ public class Matrix {
 		return this.values[0].length;
 	}
 
-	public boolean invalidMatch(Matrix other){
+	public boolean invalidMatch(MyMatrix other){
 		return false;
 	}
+	
+	public static double[][] rref(double[][] mat)
+	{
+	    double[][] rref = new double[mat.length][mat[0].length];
 
-	public static void main1(String args[]){
+	    /* Copy matrix */
+	    for (int r = 0; r < rref.length; ++r)
+	    {
+	        for (int c = 0; c < rref[r].length; ++c)
+	        {
+	            rref[r][c] = mat[r][c];
+	        }
+	    }
+
+	    for (int p = 0; p < rref.length; ++p)
+	    {
+	        /* Make this pivot 1 */
+	        double pv = rref[p][p];
+	        if (pv != 0)
+	        {
+	            double pvInv = 1.0 / pv;
+	            for (int i = 0; i < rref[p].length; ++i)
+	            {
+	                rref[p][i] *= pvInv;
+	            }
+	        }
+
+	        /* Make other rows zero */
+	        for (int r = 0; r < rref.length; ++r)
+	        {
+	            if (r != p)
+	            {
+	                double f = rref[r][p];
+	                for (int i = 0; i < rref[r].length; ++i)
+	                {
+	                    rref[r][i] -= f * rref[p][i];
+	                }
+	            }
+	        }
+	    }
+
+	    return rref;
+	}
+
+	public static void main(String args[]){
 		/*
 		double[][] m1 = {
 				{1,6,5},
@@ -92,14 +137,30 @@ public class Matrix {
 				{Math.sin(theta), 0, Math.cos(theta)}
 		};
 		double[][] m2 = {{1},{1},{0}};
-		Matrix M1 = new Matrix(m1);
+		
+		double[][] matrix = {
+				{3,4,5},
+				{5,2,2},
+				{5,2,2}
+		};
+		
+		System.out.println("Before:");
+		MatrixMult.print(matrix);
+		double[][] rref = rref(matrix);
+		System.out.println("Check original hasn't changed:");
+		MatrixMult.print(matrix);
+		System.out.println("RREF: ");
+		MatrixMult.print(rref);
+		/*
+		MyMatrix M1 = new MyMatrix(m1);
 		M1.print();
-		Matrix M2 = new Matrix(m2);
+		MyMatrix M2 = new MyMatrix(m2);
 		M2.print();
-		Matrix MResult = M1.multiply(M2);
+		MyMatrix MResult = M1.multiply(M2);
 		MResult.print();
 		if(null == MResult){
 			System.out.println("Null result!");
 		}
+		*/
 	}
 }

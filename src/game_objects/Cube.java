@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import game.Env;
 import game_cat.GameObject;
 import polygons.Square;
-import sub.ID;
+//import sub.ID;
 import sub.Point3D;
 import sub.Vector3D;
 
