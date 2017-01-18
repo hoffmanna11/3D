@@ -1,6 +1,6 @@
 package sub;
 
-public class Vector3D extends MyMatrix {
+public class Vector3D extends Matrix {
 	public double dx, dy, dz;
 
 	public Vector3D(double dx, double dy, double dz) {
@@ -26,10 +26,10 @@ public class Vector3D extends MyMatrix {
 				{Math.sin(theta), Math.cos(theta), 0},
 				{0,0,0}
 		};
-		MyMatrix XYRotationMatrix = new MyMatrix(rotationXYValues);
+		Matrix XYRotationMatrix = new Matrix(rotationXYValues);
 		//XZRotationMatrix.print();
 		//Vector3D result = (Vector3D)XYRotationMatrix.multiply(this);
-		MyMatrix result = XYRotationMatrix.multiply(this);
+		Matrix result = XYRotationMatrix.multiply(this);
 		//result.print();
 		return new Vector3D(result.values[0][0], result.values[1][0], result.values[2][0]);
 	}
@@ -40,10 +40,10 @@ public class Vector3D extends MyMatrix {
 				{0,0,0},
 				{Math.sin(theta), 0, Math.cos(theta)}
 		};
-		MyMatrix XZRotationMatrix = new MyMatrix(rotationXZValues);
+		Matrix XZRotationMatrix = new Matrix(rotationXZValues);
 		//XZRotationMatrix.print();
 		//Vector3D result = (Vector3D)XYRotationMatrix.multiply(this);
-		MyMatrix result = XZRotationMatrix.multiply(this);
+		Matrix result = XZRotationMatrix.multiply(this);
 		//result.print();
 		return new Vector3D(result.values[0][0], result.values[1][0], result.values[2][0]);
 	}
@@ -54,10 +54,10 @@ public class Vector3D extends MyMatrix {
 				{0, Math.cos(theta), -Math.sin(theta)},
 				{0, Math.sin(theta), Math.cos(theta)}
 		};
-		MyMatrix YZRotationMatrix = new MyMatrix(rotationYZValues);
+		Matrix YZRotationMatrix = new Matrix(rotationYZValues);
 		//XZRotationMatrix.print();
 		//Vector3D result = (Vector3D)XYRotationMatrix.multiply(this);
-		MyMatrix result = YZRotationMatrix.multiply(this);
+		Matrix result = YZRotationMatrix.multiply(this);
 		//result.print();
 		return new Vector3D(result.values[0][0], result.values[1][0], result.values[2][0]);
 	}
