@@ -1,6 +1,7 @@
 package game_cat;
 import java.awt.Graphics;
 
+import game.Camera;
 import sub.Point3D;
 import sub.Vector3D;
 
@@ -14,6 +15,6 @@ public abstract class Polygon extends GameObject {
 	
 	public abstract void initPoints();
 	public abstract boolean orientationChanged();
-	public abstract void render(Graphics g, Point3D viewerLoc, Vector3D viewerOrient);
+	public abstract void render(Graphics g, Camera camera);
 	public abstract int[][] getPoints();
 }

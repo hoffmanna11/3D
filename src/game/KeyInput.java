@@ -14,32 +14,11 @@ public class KeyInput extends KeyAdapter {
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 
-		switch(key){
-		case KeyEvent.VK_W:
-			// If also shift, then roll forward = true
-			break;
-		case KeyEvent.VK_A:
-			break;
-		case KeyEvent.VK_S:
-			break;
-		case KeyEvent.VK_D:
-			break;
-		case KeyEvent.VK_CONTROL:
-			break;
-		case KeyEvent.VK_SPACE:
-			break;
-		case KeyEvent.VK_SHIFT:
-			break;
-		default:
-			break;
-		}
-
-		/*
 		if(key == KeyEvent.VK_W){
 			handler.camera.setForward(true);
 		}
-		if(key == KeyEvent.VK_S){ handler.camera.setBackward(true);
-
+		if(key == KeyEvent.VK_S){
+			handler.camera.setBackward(true);
 		}
 		if(key == KeyEvent.VK_D){
 			handler.camera.setRight(true);
@@ -56,13 +35,11 @@ public class KeyInput extends KeyAdapter {
 		if(key == KeyEvent.VK_SHIFT){
 			handler.camera.setShift(true);
 		}
-		*/
 	}
 
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 
-		//System.out.println("Gone\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGone");
 		if(key == KeyEvent.VK_W) handler.camera.setForward(false);
 		if(key == KeyEvent.VK_S) handler.camera.setBackward(false);
 		if(key == KeyEvent.VK_D) handler.camera.setRight(false);

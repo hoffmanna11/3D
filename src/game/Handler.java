@@ -26,10 +26,15 @@ public class Handler {
 	}
 
 	public void render(Graphics g) {
+		//setBackground();
+		for(int i = 0; i < background.length; i++){
+			//background[i].render(g, camera);
+		}
+		
 		for(int i = 0; i < object.size(); i++) {
 			GameObject tempObject = object.get(i);
 
-			tempObject.render(g, camera.camLoc, camera.camOrient);
+			tempObject.render(g, camera);
 		}
 	}
 
@@ -41,8 +46,8 @@ public class Handler {
 		this.object.remove(object);
 	}
 
-	public void setCamera(Point3D loc, Vector3D orient){
-		this.camera = new Camera(loc, orient);
+	public void setCamera(Point3D loc){
+		this.camera = new Camera(loc);
 	}
 
 	public void setBackground(){

@@ -15,21 +15,29 @@ public class Point3D {
 		this.z = 0;
 	}
 	
-	public Point3D projectOntoPlane(Point3D planePoint, Vector3D planeNormal){
-		Point3D projection;
+	public Vector3D toVector3D(){
+		return new Vector3D(x, y, z);
+	}
+	
+	public void print(){
+		System.out.println("(" + x + "," + y + "," + z + ")");
+	}
+	
+	public Vector3D projectOntoPlane(Point3D planePoint, Vector3D planeNormal){
+		Vector3D projection;
 		//double t = (a*d - a*x + b*e - b*y + c*f - c*z) / 
 		//		( Math.pow(a, 2) + Math.pow(b, 2) + Math.pow(c, 2) );
 		
 		double t = (planeNormal.dx*planePoint.x - planeNormal.dx*x + planeNormal.dy*planePoint.y - planeNormal.dy*y + planeNormal.dz*planePoint.z - planeNormal.dz*z) / 
 						( Math.pow(planeNormal.dx, 2) + Math.pow(planeNormal.dy, 2) + Math.pow(planeNormal.dz, 2) );
 		
-		projection = new Point3D((int)(x + t*planeNormal.dx), (int)(y + t*planeNormal.dy), (int)(z + t*planeNormal.dz));
+		projection = new Vector3D((x + t*planeNormal.dx), (y + t*planeNormal.dy), (z + t*planeNormal.dz));
 		
 		return projection;
 	}
 	
-	public int distanceBetween(Point3D point){
-		return (int)Math.sqrt(Math.pow((point.x - x), 2) + Math.pow((point.y - y), 2) + Math.pow((point.z - z), 2));
+	public double distanceBetween(Point3D point){
+		return Math.sqrt(Math.pow((point.x - x), 2) + Math.pow((point.y - y), 2) + Math.pow((point.z - z), 2));
 	}
 
 	public int getX() {

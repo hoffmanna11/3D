@@ -1,11 +1,7 @@
 package sub;
 
-import java.util.Arrays;
-
-import testing.MatrixMult;
-
 public class Matrix {
-	double[][] values;
+	public double[][] values;
 
 	public Matrix(double[][] values){
 		this.values = values;
@@ -24,6 +20,9 @@ public class Matrix {
 				newValues[i][j] = values[i][j] + matrix.values[i][j];
 			}
 		}
+		if(this.getClass().equals(Vector3D.class)){
+			return new Vector3D(newValues);
+		}
 		return new Matrix(newValues);
 	}
 	
@@ -33,6 +32,10 @@ public class Matrix {
 			for(int j=0; j<values[0].length; j++){
 				newValues[i][j] = values[i][j] * d;
 			}
+		}
+		
+		if(this.getClass().equals(Vector3D.class)){
+			return new Vector3D(newValues);
 		}
 		return new Matrix(newValues);
 	}
@@ -61,6 +64,11 @@ public class Matrix {
 				}
 				result[i][k] = colSum;
 			}
+		}
+		if(result[0].length == 1 && result.length == 3 && 
+				((this.getClass() == Vector3D.class) || (m.getClass() == Vector3D.class))
+				){
+			return new Vector3D(result);
 		}
 		return new Matrix(result);
 	}
@@ -135,8 +143,8 @@ public class Matrix {
 	}
 	
 	public void rref(){
-		System.out.println("Converting values to RREF:");
-		print();
+		//System.out.println("Converting values to RREF:");
+		//print();
 		int pivotRow = 0;
 		int rows = values.length;
 		int cols = values[0].length;
@@ -147,7 +155,7 @@ public class Matrix {
 			colsToIterate = rows;
 		}
 		
-		System.out.println("cols: " + cols + ", rows: " + rows);
+		//System.out.println("cols: " + cols + ", rows: " + rows);
 		
 		for(int col=0; col<colsToIterate; col++){
 			double pivot = values[pivotRow][col];
@@ -187,15 +195,15 @@ public class Matrix {
 		}
 		
 		// Now to zero out the upper half
-		System.out.println("Zero upper half:");
+		//System.out.println("Zero upper half:");
 		pivotRow = rows-1;
 		
-		System.out.println("colsToIterate: " + colsToIterate + ", pivotRow: " + pivotRow + ", rows: " + rows);
+		//System.out.println("colsToIterate: " + colsToIterate + ", pivotRow: " + pivotRow + ", rows: " + rows);
 		
 		for(int col = colsToIterate-1; col >= 1; col--){
 			double pivot = values[pivotRow][col];
 			if(pivot == 0){
-				System.out.println("Pivot is zero: @ (" + pivotRow + ", " + col + ")");
+				//System.out.println("Pivot is zero: @ (" + pivotRow + ", " + col + ")");
 				pivotRow--;
 				col++;
 				continue;
@@ -213,8 +221,8 @@ public class Matrix {
 			values[r1][i] = values[r2][i];
 			values[r2][i] = temp;
 		}
-		System.out.println("c" + r1 + " <-> c" + r2);
-		print();
+		//System.out.println("c" + r1 + " <-> c" + r2);
+		//print();
 	}
 	
 	public void rowAdd(int c_adder, int c_addedTo, double mult){
@@ -227,16 +235,16 @@ public class Matrix {
 		}else{
 			sign = "-";
 		}
-		System.out.println("c" + c_addedTo + " " + sign + " " + Math.abs(mult) + "c" + c_adder);
-		print();
+		//System.out.println("c" + c_addedTo + " " + sign + " " + Math.abs(mult) + "c" + c_adder);
+		//print();
 	}
 	
 	public void rowMult(int row, double mult){
 		for(int col=0; col<values[0].length; col++){
 			values[row][col] *= mult;
 		}
-		System.out.println("c" + row + " * " + mult);
-		print();
+		//System.out.println("c" + row + " * " + mult);
+		//print();
 	}
 	
 	public void print(){
@@ -263,13 +271,13 @@ public class Matrix {
 				if(values[i][j] >= 0){
 					// Sometimes a negative 0 happens, so this is to avoid that
 					values[i][j] = abs;
-					str += String.format(" %.0f", values[i][j]);
+					str += String.format(" %.7f", values[i][j]);
 					for(int k=0; k<addSpaces; k++){
 						str += " ";
 					}
 					//str += "+";
 				}else{
-					str += String.format("%.0f", values[i][j]);
+					str += String.format("%.7f", values[i][j]);
 					for(int k=0; k<addSpaces; k++){
 						str += " ";
 					}
@@ -293,7 +301,7 @@ public class Matrix {
 		return (int)Math.log10(max);
 	}
 	
-	public boolean closeToZero(double val){
+	public static boolean closeToZero(double val){
 		if(Math.abs(val) < .00001){
 			return true;
 		}
