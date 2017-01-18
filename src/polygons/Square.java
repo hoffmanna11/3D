@@ -111,9 +111,7 @@ public class Square extends Polygon {
 			getPoints();
 		}
 		// Get distance between points
-		//int distance = this.loc.distanceBetween(camLoc);
-		// Get yz difference
-		int distance = (int)Math.sqrt(Math.pow(loc.y-camLoc.y,2) + Math.pow(loc.z-camLoc.z, 2));
+		int distance = (int)Math.sqrt(Math.pow(loc.x-camLoc.x,2) + Math.pow(loc.y-camLoc.y,2) + Math.pow(loc.z-camLoc.z, 2));
 		// Get scaling factor
 		double scaling = (500 / (double)distance);
 		

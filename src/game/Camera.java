@@ -28,6 +28,13 @@ public class Camera {
 	}
 	
 	public static void main(String args[]){
+		Camera.rotate("", 45);
+		
+		//double theta = 45;
+		//double radians = Math.toRadians(theta);
+		//System.out.println(Math.toDegrees(Math.atan(1)));
+		
+		/*
 		Camera cam = new Camera(null, null);
 		System.out.println("Testing XY rotation. Initial vectors:");
 		XY.print();
@@ -38,30 +45,38 @@ public class Camera {
 		XY.print();
 		XZ.print();
 		YZ.print();
-		
+		*/
 	}
 	
-	public void rotate(String plane, double theta){
+	public static void rotate(String plane, double theta){
+		double radians = Math.toRadians(theta);
+		double s1 = 1/Math.sqrt(1 + Math.pow(Math.tan(radians), 2));
+		double s2 = s1 * Math.tan(radians);
+		System.out.println("s1: " + s1 + ", s2: " + s2);
 		switch(plane){
 		case "XY":
-			System.out.println("In XY rotate 1, XY: ");
-			XY.print();
-			XY.rotateXY(theta);
-			System.out.println("In XY rotate 2, XY: ");
-			XY.print();
-			System.out.println("In XY rotate 1, YZ: ");
-			YZ.print();
-			YZ.rotateXY(theta);
-			System.out.println("In XY rotate 2, YZ: ");
-			YZ.print();
+			Vector3D newXY = (Vector3D)XY.multiply(s1).add(YZ.multiply(s2));
+			Vector3D newYZ = (Vector3D)YZ.multiply(s1).add(new Vector3D(-XY.dx, XY.dy, XY.dz).multiply(s2));
+			XY = newXY;
+			YZ = newYZ;
 			break;
 		case "XZ":
-			XZ.rotateXZ(theta);
-			XY.rotateXZ(theta);
+			Vector3D newXZ_ = (Vector3D)XZ.multiply(s1).add(new Vector3D(-XY.dx, XY.dy, XY.dz).multiply(s2));
+			Vector3D newXY_ = (Vector3D)XY.multiply(s1).add(XZ.multiply(s2));
+			XZ = newXZ_;
+			XY = newXY_;
+			
+			//XZ.rotateXZ(theta);
+			//XY.rotateXZ(theta);
 			break;
 		case "YZ":
-			YZ.rotateYZ(theta);
-			XZ.rotateYZ(theta);
+			Vector3D _newYZ = (Vector3D)YZ.multiply(s1).add(XZ.multiply(s2));
+			Vector3D _newXZ = (Vector3D)YZ.multiply(s1).add(new Vector3D(-XY.dx, XY.dy, XY.dz).multiply(s2));
+			YZ = _newYZ;
+			XZ = _newXZ;
+			
+			//YZ.rotateYZ(theta);
+			//XZ.rotateYZ(theta);
 			break;
 		default:
 			System.out.println("Error, Camera.rotate, exiting");
@@ -88,7 +103,6 @@ public class Camera {
 				if(backward){
 					// Do nothing
 				}else{
-					
 					// Shift + forward
 					// = Pitch down
 					// = Rotate on YZ CW : Negative

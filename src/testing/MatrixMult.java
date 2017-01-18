@@ -1,7 +1,7 @@
 package testing;
 
 public class MatrixMult {
-	public static void main(String args[]){
+	public static void main1(String args[]){
 		double[][] m1 = {
 				{1,2,3},
 				{2,0,1},

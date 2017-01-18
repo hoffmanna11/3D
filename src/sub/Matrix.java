@@ -10,6 +10,32 @@ public class Matrix {
 	public Matrix(double[][] values){
 		this.values = values;
 	}
+	
+	public Matrix add(Matrix matrix){
+		if(
+				(values.length != matrix.values.length) ||
+				(values[0].length != matrix.values[0].length)
+				){
+			return null;
+		}
+		double[][] newValues = new double[values.length][values[0].length];
+		for(int i=0; i<values.length; i++){
+			for(int j=0; j<values[0].length; j++){
+				newValues[i][j] = values[i][j] + matrix.values[i][j];
+			}
+		}
+		return new Matrix(newValues);
+	}
+	
+	public Matrix multiply(double d){
+		double[][] newValues = new double[values.length][values[0].length];
+		for(int i=0; i<values.length; i++){
+			for(int j=0; j<values[0].length; j++){
+				newValues[i][j] = values[i][j] * d;
+			}
+		}
+		return new Matrix(newValues);
+	}
 
 	public Matrix multiply(Matrix m){
 		if(this.invalid()){
