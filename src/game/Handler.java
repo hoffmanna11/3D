@@ -8,13 +8,13 @@ import game_cat.GameObject;
 import game_cat.Polygon;
 import polygons.Square;
 import sub.Point3D;
-import sub.Vector3D;
 
 public class Handler {
 	LinkedList<GameObject> object = new LinkedList<GameObject>();
 	List<Polygon> polygons = new ArrayList<Polygon>();
 	Camera camera;
 	Square[] background = new Square[6];
+	ArrayList<HUD> huds = new ArrayList<HUD>();
 
 	public void tick(){
 		for(int i = 0; i < object.size(); i++) {
@@ -26,15 +26,22 @@ public class Handler {
 	}
 
 	public void render(Graphics g) {
-		//setBackground();
+		camera.render(g);
+		
 		for(int i = 0; i < background.length; i++){
-			//background[i].render(g, camera);
+			// background[i].render(g, camera);
 		}
 		
 		for(int i = 0; i < object.size(); i++) {
 			GameObject tempObject = object.get(i);
 
 			tempObject.render(g, camera);
+		}
+		
+		for(int i=0; i<huds.size(); i++){
+			HUD tempHUD = huds.get(i);
+			
+			tempHUD.render(g);
 		}
 	}
 
@@ -45,10 +52,20 @@ public class Handler {
 	public void removeObject(GameObject object) {
 		this.object.remove(object);
 	}
+	
+	public void addHUD(HUD hud) {
+		this.huds.add(hud);
+	}
+
+	public void removeHUD(HUD hud) {
+		this.huds.remove(hud);
+	}
 
 	public void setCamera(Point3D loc){
 		this.camera = new Camera(loc);
 	}
+	
+	
 
 	public void setBackground(){
 		// Background squares

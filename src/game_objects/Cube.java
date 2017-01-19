@@ -1,7 +1,6 @@
 package game_objects;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.Random;
 
 import game.Camera;
 import game.Env;
@@ -9,7 +8,6 @@ import game_cat.GameObject;
 import polygons.Square;
 //import sub.ID;
 import sub.Point3D;
-import sub.Vector3D;
 
 public class Cube extends GameObject {
 	int length;
@@ -52,6 +50,10 @@ public class Cube extends GameObject {
 		for(int i=5; i>=0; i--){
 			squares[i].render(g, camera);
 		}
+		
+		// Print location
+		g.setColor(Color.green);
+		g.drawString("Cube: " + "(" + loc.x + "," + loc.y + "," + loc.z + ")", 10, 20);
 	}
 
 	public void setPolygons(){

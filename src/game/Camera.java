@@ -1,5 +1,8 @@
 package game;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,6 +31,56 @@ public class Camera {
 		rotate("XY", 10);
 		//this.camOrient = orient;
 	}
+	
+	public void render(Graphics g){
+		g.setColor(Color.green);
+		g.drawString("Camerad: " + "(" + camLoc.x + "," + camLoc.y + "," + camLoc.z + ")", 10, 40);
+		g.drawString("XY: " + "(" + XY.dx + "," + XY.dy + "," + XY.dz + ")", 10, 60);
+		g.drawString("YZ: " + "(" + YZ.dx + "," + YZ.dy + "," + YZ.dz + ")", 10, 80);
+		g.drawString("XZ: " + "(" + XZ.dx + "," + XZ.dy + "," + XZ.dz + ")", 10, 100);
+		g.drawString("Dot product: " + (XY.dot(YZ)), 10, 120);
+		
+		Vector3D base_XY = new Vector3D(50,0,0).projectOntoPlane(new Point3D(0,0,0), new Vector3D(-20,50,-20));
+		Vector3D base_YZ = new Vector3D(0,50,0).projectOntoPlane(new Point3D(0,0,0), new Vector3D(-20,50,-20));
+		Vector3D base_XZ = new Vector3D(0,0,50).projectOntoPlane(new Point3D(0,0,0), new Vector3D(-20,50,-20));
+		
+		Vector3D XYMult = new Vector3D(XY.dx * 50, XY.dy * 50, XY.dz * 50);
+		Vector3D YZMult = new Vector3D(YZ.dx * 50, YZ.dy * 50, YZ.dz * 50);
+		Vector3D XZMult = new Vector3D(XZ.dx * 50, XZ.dy * 50, XZ.dz * 50);
+		
+		Vector3D proj_XY = XYMult.projectOntoPlane(new Point3D(0,0,0), new Vector3D(-20,50,-20));
+		Vector3D proj_YZ = YZMult.projectOntoPlane(new Point3D(0,0,0), new Vector3D(-20,50,-20));
+		Vector3D proj_XZ = XZMult.projectOntoPlane(new Point3D(0,0,0), new Vector3D(-20,50,-20));
+		
+		int[] baseXY = base_XY.getBaseCoords(base_XY);
+		int[] baseYZ = base_YZ.getBaseCoords(base_YZ);
+		int[] baseXZ = base_XZ.getBaseCoords(base_XZ);
+		
+		int[] projXY = proj_XY.getBaseCoords(proj_XY);
+		int[] projYZ = proj_YZ.getBaseCoords(proj_YZ);
+		int[] projXZ = proj_XZ.getBaseCoords(proj_XZ);
+		
+		//XY.print();
+		//YZ.print();
+		//XZ.print();
+		
+		//System.out.println(Arrays.toString(projXY));
+		//System.out.println(Arrays.toString(projYZ));
+		//System.out.println(Arrays.toString(projXZ) + "\n");
+		
+		drawVector(g, projXY, Color.MAGENTA);
+		drawVector(g, projYZ, Color.YELLOW);
+		drawVector(g, projXZ, Color.MAGENTA);
+		
+		drawVector(g, baseXY, Color.RED);
+		drawVector(g, baseYZ, Color.BLUE);
+		drawVector(g, baseXZ, Color.GREEN);
+	}
+	
+	public void drawVector(Graphics g, int[] coords, Color c){
+		g.setColor(c);
+		g.drawLine(200, 200, 200 + coords[0], 200 - coords[1]);
+	}
 
 	// Check DIRECTION and opposite axial DIRECTION
 	//   If both, do nothing
@@ -50,7 +103,7 @@ public class Camera {
 					// Shift + forward
 					// = Pitch down
 					// = Rotate on YZ CW : Negative
-					System.out.println("Pitch down");
+					//System.out.println("Pitch down");
 					rotate("YZ", false);
 				}
 			}else if(backward){
@@ -58,7 +111,7 @@ public class Camera {
 				// = Pitch up
 				// = Rotate on YZ CCW : Positive
 				rotate("YZ", true);
-				System.out.println("Pitch up");
+				//System.out.println("Pitch up");
 			}
 			if(left){
 				if(right){
@@ -67,14 +120,14 @@ public class Camera {
 					// Shift + left
 					// = Roll left
 					// = Rotate on XZ CCW : Positive
-					System.out.println("Roll left");
+					//System.out.println("Roll left");
 					rotate("XZ", true);
 				}
 			}else if(right){
 				// Shift + right
 				// = Roll right
 				// = Rotate on XZ CW : Negative
-				System.out.println("Roll right");
+				//System.out.println("Roll right");
 				rotate("XZ", false);
 			}
 		}else{
@@ -86,12 +139,12 @@ public class Camera {
 					// Forward
 					// = Move forward
 					// Add to x, y, z speed * (normalized)[x, y, z]
-					System.out.println("Move forward");
+					//System.out.println("Move forward");
 					camLoc.x += (int)(YZ.dx * speed);
 					camLoc.y += (int)(YZ.dy * speed);
 					camLoc.z += (int)(YZ.dz * speed);
 					// WORLDLENGTH/2, 200, WORLDHEIGHT/2
-					System.out.println("(" + (camLoc.x - Env.WORLDLENGTH/2) + "," + (camLoc.y - 200) + "," + (camLoc.z - Env.WORLDHEIGHT/2) + ")");
+					//System.out.println("(" + (camLoc.x - Env.WORLDLENGTH/2) + "," + (camLoc.y - 200) + "," + (camLoc.z - Env.WORLDHEIGHT/2) + ")");
 					//camLoc.print();
 					//YZ.print();
 				}
@@ -99,11 +152,11 @@ public class Camera {
 				// Backward
 				// = Move backward
 				// Add to x, y, z -1 * speed * (normalized)[x, y, z]
-				System.out.println("Move backward");
+				//System.out.println("Move backward");
 				camLoc.x = camLoc.x - (int)(YZ.dx * speed);
 				camLoc.y = camLoc.y - (int)(YZ.dy * speed);
 				camLoc.z = camLoc.z - (int)(YZ.dz * speed);
-				System.out.println("(" + (camLoc.x - Env.WORLDLENGTH/2) + "," + (camLoc.y - 200) + "," + (camLoc.z - Env.WORLDHEIGHT/2) + ")");
+				//System.out.println("(" + (camLoc.x - Env.WORLDLENGTH/2) + "," + (camLoc.y - 200) + "," + (camLoc.z - Env.WORLDHEIGHT/2) + ")");
 				//camLoc.print();
 				//YZ.print();
 			}
@@ -115,14 +168,14 @@ public class Camera {
 					// Left
 					// = Left
 					// = Rotate on XY CCW : Positive
-					System.out.println("Rotate left (yaw)");
+					//System.out.println("Rotate left (yaw)");
 					rotate("XY", true);
 				}
 			}else if(right){
 				// Right
 				// = Right
 				// = Rotate on XY CW : Negative
-				System.out.println("Rotate right (yaw)");
+				//System.out.println("Rotate right (yaw)");
 				rotate("XY", false);
 			}
 			if(up){
@@ -132,53 +185,25 @@ public class Camera {
 					// Up
 					// = Up
 					// = Move upward
-					System.out.println("Move upward");
+					//System.out.println("Move upward");
 					camLoc.x += XZ.dx * speed;
 					camLoc.y += XZ.dy * speed;
 					camLoc.z += XZ.dz * speed;
-					System.out.println("(" + (camLoc.x - Env.WORLDLENGTH/2) + "," + (camLoc.y - 200) + "," + (camLoc.z - Env.WORLDHEIGHT/2) + ")");
+					//System.out.println("(" + (camLoc.x - Env.WORLDLENGTH/2) + "," + (camLoc.y - 200) + "," + (camLoc.z - Env.WORLDHEIGHT/2) + ")");
 					//camLoc.print();
 				}
 			}else if(down){
 				// Down
 				// = Down
 				// = Move downward
-				System.out.println("Move downward");
+				//System.out.println("Move downward");
 				camLoc.x -= XZ.dx * speed;
 				camLoc.y -= XZ.dy * speed;
 				camLoc.z -= XZ.dz * speed;
-				System.out.println("(" + (camLoc.x - Env.WORLDLENGTH/2) + "," + (camLoc.y - 200) + "," + (camLoc.z - Env.WORLDHEIGHT/2) + ")");
+				//System.out.println("(" + (camLoc.x - Env.WORLDLENGTH/2) + "," + (camLoc.y - 200) + "," + (camLoc.z - Env.WORLDHEIGHT/2) + ")");
 				//camLoc.print();
 			}
 		}
-
-		/*
-		if(forward){
-			//System.out.println("Forward");
-			camLoc.y += speed;
-			//camLoc.x += speed * camOrient.dx;
-			//camLoc.y += speed * camOrient.dy;
-			//camLoc.z += speed * camOrient.dz;
-		}if(backward){
-			//System.out.println("Backward");
-			camLoc.y -= speed;
-			//camLoc.x += speed * camOrient.dx;
-			//camLoc.y += speed * camOrient.dy;
-			//camLoc.z += speed * camOrient.dz;
-		}if(up){
-			//System.out.println("Upward");
-			camLoc.z += speed;
-		}if(down){
-			//System.out.println("Downward");
-			camLoc.z -= speed;
-		}if(left){
-			//System.out.println("Leftward");
-			camLoc.x -= speed;
-		}if(right){
-			//System.out.println("Rightward");
-			camLoc.x += speed;
-		}
-		 */
 	}
 
 	public void rotate(String plane, double theta){
@@ -191,6 +216,7 @@ public class Camera {
 			Vector3D newYZ_1 = (Vector3D)(YZ.multiply(s1).add(new Vector3D(-XY.dx, XY.dy, XY.dz).multiply(s2)));
 			XY = newXY_1.normalize();
 			YZ = newYZ_1.normalize();
+			System.out.println("s1: " + s1 + ", s2: " + s2);
 			break;
 		case "XZ":
 			Vector3D newXZ_2 = (Vector3D)XZ.multiply(s1).add(new Vector3D(-XY.dx, XY.dy, XY.dz).multiply(s2));

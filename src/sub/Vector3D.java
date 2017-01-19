@@ -71,10 +71,68 @@ public class Vector3D extends Matrix {
 		return new Matrix(values);
 	}
 	
+	public int[] getBaseCoords(Vector3D pt){
+		// Combine all vectors into a matrix
+		
+		// First, make the point relative to the camera loc
+		//pt.values[0][0] -= camLoc.x;
+		//pt.values[1][0] -= camLoc.y;
+		//pt.values[2][0] -= camLoc.z;
+		
+		//pt.dx += 100;
+		//pt.dy += 100;
+		//pt.dz += 100;
+		
+		Vector3D XY = new Vector3D(1,0,0);
+		Vector3D YZ = new Vector3D(0,1,0);
+		Vector3D XZ = new Vector3D(0,0,1);
+		
+		//System.out.println("Printing point:");
+		//pt.print();
+		//System.out.println("Printing camloc:");
+		//System.out.println(camLoc.x + ", " + camLoc.y + ", " + camLoc.z);
+		
+		// Now combine all vectors into a matrix
+		// Create vector array
+		Vector3D[] vectors = new Vector3D[3];
+		vectors[0] = YZ;
+		vectors[1] = XZ;
+		vectors[2] = pt;
+		Matrix system = XY.combineVectors(vectors);
+		system.rref();
+		//System.out.println("Checking system");
+		//system.print();
+		
+		if(!Matrix.closeToZero(system.values[1][3])){
+			//System.out.println("Error, Camera.getBaseCoords(), system YZ value is nonzero: " + system.values[1][3]);
+			//system.print();
+			//System.exit(-1);
+		}
+		
+		return new int[]{(int)system.values[0][3], (int)system.values[2][3]};
+	}
+	
+	public Vector3D projectOntoPlane(Point3D planePoint, Vector3D planeNormal){
+		Vector3D projection;
+		//double t = (a*d - a*x + b*e - b*y + c*f - c*z) / 
+		//		( Math.pow(a, 2) + Math.pow(b, 2) + Math.pow(c, 2) );
+		
+		double t = (planeNormal.dx*planePoint.x - planeNormal.dx*dx + planeNormal.dy*planePoint.y - planeNormal.dy*dy + planeNormal.dz*planePoint.z - planeNormal.dz*dz) / 
+						( Math.pow(planeNormal.dx, 2) + Math.pow(planeNormal.dy, 2) + Math.pow(planeNormal.dz, 2) );
+		
+		projection = new Vector3D((dx + t*planeNormal.dx), (dy + t*planeNormal.dy), (dz + t*planeNormal.dz));
+		
+		return projection;
+	}
+	
 	public Vector3D normalize(){
 		double dist = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2) + Math.pow(dz, 2));
 		//System.out.println("dist: " + dist);
 		return new Vector3D(dx/dist, dy/dist, dz/dist);
+	}
+	
+	public double dot(Vector3D v){
+		return dx * v.dx + dy * v.dy + dz * v.dz;
 	}
 
 	public double getDx() {

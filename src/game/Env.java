@@ -7,9 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 import game_cat.GameObject;
 import game_objects.Cube;
-import polygons.Square;
 import sub.Point3D;
-import sub.Vector3D;
 
 public class Env extends Canvas implements Runnable {
 	private static final long serialVersionUID = 534748158841784372L;
