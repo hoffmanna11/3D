@@ -7,7 +7,7 @@ public class Orient3D {
 	
 	public Orient3D(Vector3D xy, Vector3D yz, Vector3D xz){
 		this.xy = xy;
-		this.yz = yz;
+		this.yz = yz;//asdf
 		this.xz = xz;//sskkkk
 	}
 }
