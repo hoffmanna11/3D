@@ -29,7 +29,7 @@ public class Camera {
 
 	public Camera(Point3D loc){
 		this.camLoc = loc;
-		rotate("XY", 10);
+		//rotate("XY", 10);
 		//this.camOrient = orient;
 	}
 	
@@ -253,7 +253,7 @@ public class Camera {
 	}
 
 	public void rotate(String plane, boolean positive){
-		double constant = 5;
+		double constant = 1;
 		if(positive){
 			rotate(plane, constant);
 		}else{

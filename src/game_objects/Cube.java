@@ -37,8 +37,12 @@ public class Cube extends GameObject {
 		int len = length / 2;
 
 		// Square 0
-		Point3D loc0 = loc.add((Vector3D)orient.yz.multiply(-1 * len));
+		//Vector3D orientXY0 = (Vector3D)orient.yz.multiply(-1);
+		//Vector3D orientYZ0 = (Vector3D)orient.xy.multiply(1);
+		//Vector3D orientXZ0 = (Vector3D)orient.xz.multiply(1);
+		Point3D loc0 = loc.add((Vector3D)orient.yz.multiply(-len));
 		squares[0] = new Square(loc0, orient, length);
+		squares[0].color = Color.red;
 
 		// Square 1
 		Vector3D orientXY1 = (Vector3D)orient.yz.multiply(-1);
@@ -170,11 +174,6 @@ public class Cube extends GameObject {
 		squares[5].color = Color.yellow;
 
 
-	}
-
-	public void setPolygons(Square[] polygons, Camera camera){
-		// Shrink the cube (polygons), then project onto the camera plane
-		// double newLength = getNewLength(viewerLoc);
 	}
 
 	public int getNewLength(Point3D viewerLoc){

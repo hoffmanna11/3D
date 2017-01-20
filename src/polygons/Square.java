@@ -40,8 +40,8 @@ public class Square extends Polygon {
 		
 		points[0] = loc.add((((Vector3D) (orient3D.xy.multiply(-len).add(orient3D.xz.multiply(len)))).toPoint3D()));
 		points[1] = loc.add((((Vector3D) (orient3D.xy.multiply(len).add(orient3D.xz.multiply(len)))).toPoint3D()));
-		points[2] = loc.add((((Vector3D) (orient3D.xy.multiply(-len).add(orient3D.xz.multiply(-len)))).toPoint3D()));
-		points[3] = loc.add((((Vector3D) (orient3D.xy.multiply(len).add(orient3D.xz.multiply(-len)))).toPoint3D()));
+		points[2] = loc.add((((Vector3D) (orient3D.xy.multiply(len).add(orient3D.xz.multiply(-len)))).toPoint3D()));
+		points[3] = loc.add((((Vector3D) (orient3D.xy.multiply(-len).add(orient3D.xz.multiply(-len)))).toPoint3D()));
 
 		System.out.println("Square points:");
 		for(int i=0; i<4; i++){
@@ -64,8 +64,15 @@ public class Square extends Polygon {
 		
 		scaledPoints[0] = loc.add((((Vector3D) (orient3D.xy.multiply(-len).add(orient3D.xz.multiply(len)))).toPoint3D()));
 		scaledPoints[1] = loc.add((((Vector3D) (orient3D.xy.multiply(len).add(orient3D.xz.multiply(len)))).toPoint3D()));
-		scaledPoints[2] = loc.add((((Vector3D) (orient3D.xy.multiply(-len).add(orient3D.xz.multiply(-len)))).toPoint3D()));
-		scaledPoints[3] = loc.add((((Vector3D) (orient3D.xy.multiply(len).add(orient3D.xz.multiply(-len)))).toPoint3D()));
+		scaledPoints[2] = loc.add((((Vector3D) (orient3D.xy.multiply(len).add(orient3D.xz.multiply(-len)))).toPoint3D()));
+		scaledPoints[3] = loc.add((((Vector3D) (orient3D.xy.multiply(-len).add(orient3D.xz.multiply(-len)))).toPoint3D()));
+		
+		if(color == Color.red){
+			System.out.println("point: ");
+			for(int i=0; i<4; i++){
+				scaledPoints[i].print();
+			}System.out.println("");
+		}
 		
 		return scaledPoints;
 	}
@@ -106,10 +113,21 @@ public class Square extends Polygon {
 		Point3D points[] = getPointsForRender(camera);
 
 		Vector3D[] projectedPoints = new Vector3D[4];
+		
 		int[] xPoints = new int[4];
 		int[] yPoints = new int[4];
+		
 		for(int i=0; i<4; i++){
 			projectedPoints[i] = points[i].projectOntoPlane(camera.getCamLoc(), camera.getYZ());
+			// If the projection involved a positive amount of the yz vector, then don't render
+			double d1 = points[i].distanceBetween(projectedPoints[i].toPoint3D());
+			double d2 = points[i].add(camera.getYZ()).distanceBetween(projectedPoints[i].toPoint3D());
+			
+			if(d2 < d1){
+				return;
+			}
+			
+			
 			// draw the projected point in terms of the xy and xz vector
 			int[] drawLoc = camera.getBaseCoords(projectedPoints[i]);
 			xPoints[i] = Env.RESWIDTH/2 + drawLoc[0];
