@@ -2,6 +2,7 @@ package game;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -33,12 +34,23 @@ public class Camera {
 	}
 	
 	public void render(Graphics g){
+		DecimalFormat df = new DecimalFormat("#.##");
 		g.setColor(Color.green);
 		g.drawString("Camerad: " + "(" + camLoc.x + "," + camLoc.y + "," + camLoc.z + ")", 10, 40);
-		g.drawString("XY: " + "(" + XY.dx + "," + XY.dy + "," + XY.dz + ")", 10, 60);
-		g.drawString("YZ: " + "(" + YZ.dx + "," + YZ.dy + "," + YZ.dz + ")", 10, 80);
-		g.drawString("XZ: " + "(" + XZ.dx + "," + XZ.dy + "," + XZ.dz + ")", 10, 100);
-		g.drawString("Dot product: " + (XY.dot(YZ)), 10, 120);
+		
+		double s1 = 0.9961946980917455;
+		double s2 = -0.08715574274765818;
+		Vector3D xydup = new Vector3D(XY.dx * s1, XY.dy * s1, XY.dz * s1);
+		Vector3D yzdup = new Vector3D(YZ.dx * s2, YZ.dy * s2, YZ.dz * s2);
+		String str1 = "  (" + df.format(xydup.dx) + "," + df.format(xydup.dy) + "," + df.format(xydup.dz) + ")";
+		String str2 = "  (" + df.format(yzdup.dx) + "," + df.format(yzdup.dy) + "," + df.format(yzdup.dz) + ")";
+		Vector3D added = (Vector3D)xydup.add(yzdup);
+		String sum = "  (" + df.format(added.dx) + "," + df.format(added.dy) + "," + df.format(added.dz) + ")";
+		
+		g.drawString("XY: " + "(" + df.format(XY.dx) + "," + df.format(XY.dy) + "," + df.format(XY.dz) + ")" + str1, 10, 60);
+		g.drawString("YZ: " + "(" + df.format(YZ.dx) + "," + df.format(YZ.dy) + "," + df.format(YZ.dz) + ")" + str2, 10, 80);
+		g.drawString("XZ: " + "(" + df.format(XZ.dx) + "," + df.format(XZ.dy) + "," + df.format(XZ.dz) + ")" + sum, 10, 100);
+		g.drawString("Dot product: " + df.format(XY.dot(YZ)), 10, 120);
 		
 		Vector3D base_XY = new Vector3D(50,0,0).projectOntoPlane(new Point3D(0,0,0), new Vector3D(-20,50,-20));
 		Vector3D base_YZ = new Vector3D(0,50,0).projectOntoPlane(new Point3D(0,0,0), new Vector3D(-20,50,-20));
@@ -68,13 +80,13 @@ public class Camera {
 		//System.out.println(Arrays.toString(projYZ));
 		//System.out.println(Arrays.toString(projXZ) + "\n");
 		
-		drawVector(g, projXY, Color.MAGENTA);
-		drawVector(g, projYZ, Color.YELLOW);
-		drawVector(g, projXZ, Color.MAGENTA);
+		drawVector(g, projXY, Color.RED);
+		drawVector(g, projYZ, Color.BLUE);
+		drawVector(g, projXZ, Color.GREEN);
 		
-		drawVector(g, baseXY, Color.RED);
-		drawVector(g, baseYZ, Color.BLUE);
-		drawVector(g, baseXZ, Color.GREEN);
+		//drawVector(g, baseXY, Color.RED);
+		//drawVector(g, baseYZ, Color.BLUE);
+		//drawVector(g, baseXZ, Color.GREEN);
 	}
 	
 	public void drawVector(Graphics g, int[] coords, Color c){
@@ -212,21 +224,24 @@ public class Camera {
 		double s2 = s1 * Math.tan(radians);
 		switch(plane){
 		case "XY":
+			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+			System.out.println("s1: " + s1 + ", s2: " + s2);
+			System.out.println("XY\n" + XY.valuesToStr());
+			System.out.println("YZ\n" + YZ.valuesToStr());
 			Vector3D newXY_1 = (Vector3D)(XY.multiply(s1).add(YZ.multiply(s2)));
-			Vector3D newYZ_1 = (Vector3D)(YZ.multiply(s1).add(new Vector3D(-XY.dx, XY.dy, XY.dz).multiply(s2)));
+			Vector3D newYZ_1 = (Vector3D)(YZ.multiply(s1).add(new Vector3D(-XY.dx, -XY.dy, -XY.dz).multiply(s2)));
 			XY = newXY_1.normalize();
 			YZ = newYZ_1.normalize();
-			System.out.println("s1: " + s1 + ", s2: " + s2);
 			break;
 		case "XZ":
-			Vector3D newXZ_2 = (Vector3D)XZ.multiply(s1).add(new Vector3D(-XY.dx, XY.dy, XY.dz).multiply(s2));
+			Vector3D newXZ_2 = (Vector3D)XZ.multiply(s1).add(new Vector3D(-XY.dx, -XY.dy, -XY.dz).multiply(s2));
 			Vector3D newXY_2 = (Vector3D)XY.multiply(s1).add(XZ.multiply(s2));
 			XZ = newXZ_2.normalize();
 			XY = newXY_2.normalize();
 			break;
 		case "YZ":
 			Vector3D newYZ_3 = (Vector3D)YZ.multiply(s1).add(XZ.multiply(s2));
-			Vector3D newXZ_3 = (Vector3D)XZ.multiply(s1).add(new Vector3D(YZ.dx, -YZ.dy, YZ.dz).multiply(s2));
+			Vector3D newXZ_3 = (Vector3D)XZ.multiply(s1).add(new Vector3D(-YZ.dx, -YZ.dy, -YZ.dz).multiply(s2));
 			YZ = newYZ_3.normalize();
 			XZ = newXZ_3.normalize();
 			break;

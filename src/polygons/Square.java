@@ -42,7 +42,6 @@ public class Square extends Polygon {
 	}
 
 	public void render(Graphics g, Camera camera){
-		
 		/*
 		// Get distance between points
 		int distance = (int)Math.sqrt(Math.pow(loc.x-camLoc.x,2) + Math.pow(loc.y-camLoc.y,2) + Math.pow(loc.z-camLoc.z, 2));

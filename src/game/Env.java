@@ -25,7 +25,7 @@ public class Env extends Canvas implements Runnable {
 	public static final int CAMERAWIDTH = 16 * CAMERASCALE;
 	public static final int CAMERAHEIGHT = 9 * CAMERASCALE;
 	public static final int maxDistance = (int)Math.sqrt(Math.pow(WORLDWIDTH, 2) + Math.pow(WORLDHEIGHT, 2));
-	public static int fps = 60;
+	public static int fps = 30;
 	public static long lastRenderTime = 0;
 	public static long desiredRenderInterval = 1000000000 / fps;
 	
