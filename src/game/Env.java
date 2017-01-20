@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import game_cat.GameObject;
 import game_objects.Cube;
 import sub.Point3D;
+import sub.Vector3D;
 
 public class Env extends Canvas implements Runnable {
 	private static final long serialVersionUID = 534748158841784372L;
@@ -33,7 +34,8 @@ public class Env extends Canvas implements Runnable {
 		handler = new Handler();
 		handler.setCamera(new Point3D(WORLDLENGTH/2, 0, WORLDHEIGHT/2));
 		//handler.addObject(new Square(new Point3D(WORLDLENGTH/2, 200, WORLDHEIGHT/2), 50));
-		handler.addObject(new Cube(new Point3D(WORLDLENGTH/2, 200, WORLDHEIGHT/2), 50));
+		//handler.addObject(new Cube(new Point3D(WORLDLENGTH/2, 200, WORLDHEIGHT/2), 50));
+		handler.addObject(new Cube(new Point3D(WORLDLENGTH/2, 200, WORLDHEIGHT/2), new Vector3D(0,1,0).normalize(), 50));
 		
 		this.addKeyListener(new KeyInput(handler));
 		window = new Window(RESWIDTH, RESHEIGHT, "3D", this);

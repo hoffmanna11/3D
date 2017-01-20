@@ -50,7 +50,8 @@ public class Camera {
 		g.drawString("XY: " + "(" + df.format(XY.dx) + "," + df.format(XY.dy) + "," + df.format(XY.dz) + ")" + str1, 10, 60);
 		g.drawString("YZ: " + "(" + df.format(YZ.dx) + "," + df.format(YZ.dy) + "," + df.format(YZ.dz) + ")" + str2, 10, 80);
 		g.drawString("XZ: " + "(" + df.format(XZ.dx) + "," + df.format(XZ.dy) + "," + df.format(XZ.dz) + ")" + sum, 10, 100);
-		g.drawString("Dot product: " + df.format(XY.dot(YZ)), 10, 120);
+		Vector3D xzguess = Vector3D.crossProduct(XY, YZ);
+		g.drawString("XZ: " + "(" + df.format(xzguess.dx) + ", " + df.format(xzguess.dy) + ", " + df.format(xzguess.dz) + ")", 10, 120);
 		
 		Vector3D base_XY = new Vector3D(50,0,0).projectOntoPlane(new Point3D(0,0,0), new Vector3D(-20,50,-20));
 		Vector3D base_YZ = new Vector3D(0,50,0).projectOntoPlane(new Point3D(0,0,0), new Vector3D(-20,50,-20));

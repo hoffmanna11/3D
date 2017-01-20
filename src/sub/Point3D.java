@@ -2,6 +2,8 @@ package sub;
 
 public class Point3D {
 	public int x, y, z;
+	
+	public static Point3D origin = new Point3D(0,0,0);
 
 	public Point3D(int x, int y, int z) {
 		this.x = x;
@@ -15,12 +17,24 @@ public class Point3D {
 		this.z = 0;
 	}
 	
+	public String toString(){
+		return new String("(" + x + "," + y + "," + z + ")");
+	}
+	
 	public Vector3D toVector3D(){
 		return new Vector3D(x, y, z);
 	}
 	
 	public void print(){
 		System.out.println("(" + x + "," + y + "," + z + ")");
+	}
+	
+	public Point3D add(Point3D p){
+		return new Point3D(x + p.x, y + p.y, z + p.z);
+	}
+	
+	public Point3D add(Vector3D v){
+		return new Point3D((int)(x + v.dx), (int)(y + v.dy), (int)(z + v.dz));
 	}
 	
 	public Vector3D projectOntoPlane(Point3D planePoint, Vector3D planeNormal){

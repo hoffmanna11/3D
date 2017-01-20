@@ -2,6 +2,10 @@ package sub;
 
 public class Vector3D extends Matrix {
 	public double dx, dy, dz;
+	
+	public static Vector3D XY = new Vector3D(1,0,0);
+	public static Vector3D YZ = new Vector3D(0,1,0);
+	public static Vector3D XZ = new Vector3D(0,0,1);
 
 	public Vector3D(double dx, double dy, double dz) {
 		super(new double[][]{
@@ -28,6 +32,10 @@ public class Vector3D extends Matrix {
 		this.dz = values[2][0];
 	}
 	
+	public Point3D toPoint3D(){
+		return new Point3D((int)dx, (int)dy, (int)dz);
+	}
+	
 	public static void main3(String args[]){
 		Vector3D a = new Vector3D(1,2,3);
 		Vector3D b = new Vector3D(4,5,6);
@@ -47,6 +55,14 @@ public class Vector3D extends Matrix {
 		v2.rotateXZ(10);
 		v2.print();
 		*/
+	}
+	
+	public static Vector3D crossProduct(Vector3D u, Vector3D v){
+		return new Vector3D(
+				(u.dy * v.dz - u.dz * v.dy),
+				(-(u.dx * v.dz - u.dz * v.dx)),
+				(u.dx * v.dy - u.dy * v.dx)
+				);
 	}
 	
 	public Matrix combineVectors(Vector3D[] vectors){

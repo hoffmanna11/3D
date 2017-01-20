@@ -6,6 +6,7 @@ import java.util.Arrays;
 import game.Camera;
 import game.Env;
 import game_cat.Polygon;
+import sub.Orient3D;
 import sub.Point3D;
 import sub.Vector3D;
 
@@ -14,11 +15,59 @@ public class Square extends Polygon {
 	public Point3D[] points;
 	boolean bg = false;
 	public Color color = null;
+	public Orient3D orient3D;
 
 	public Square(Point3D loc, int length) {
 		super(loc, null);
 		this.length = length;
 		setPoints();
+	}
+
+	public Square(Point3D loc, Orient3D orient, int length){
+		super(loc, null);
+		this.orient3D = orient;
+		this.length = length;
+		points = new Point3D[4];
+		setPointsCorrectly();
+	}
+
+	public static void main1(String args[]){
+
+	}
+
+	public void setPointsCorrectly(){
+		int len = length / 2;
+		
+		points[0] = loc.add((((Vector3D) (orient3D.xy.multiply(-len).add(orient3D.xz.multiply(len)))).toPoint3D()));
+		points[1] = loc.add((((Vector3D) (orient3D.xy.multiply(len).add(orient3D.xz.multiply(len)))).toPoint3D()));
+		points[2] = loc.add((((Vector3D) (orient3D.xy.multiply(-len).add(orient3D.xz.multiply(-len)))).toPoint3D()));
+		points[3] = loc.add((((Vector3D) (orient3D.xy.multiply(len).add(orient3D.xz.multiply(-len)))).toPoint3D()));
+
+		System.out.println("Square points:");
+		for(int i=0; i<4; i++){
+			System.out.println(points[i].toString());
+		}
+		System.out.println("");
+	}
+
+	public Point3D[] getPointsForRender(Camera camera){
+		Point3D camLoc = camera.getCamLoc();
+		// Get distance between points
+		double distance = (int)Math.sqrt(Math.pow(loc.x-camLoc.x,2) + Math.pow(loc.y-camLoc.y,2) + Math.pow(loc.z-camLoc.z, 2));
+		// Get scaling factor
+		double scaling = (500 / distance);
+
+		int halfLen = length/2;
+		int len = (int)(((double)halfLen) * scaling);
+
+		Point3D scaledPoints[] = new Point3D[4];
+		
+		scaledPoints[0] = loc.add((((Vector3D) (orient3D.xy.multiply(-len).add(orient3D.xz.multiply(len)))).toPoint3D()));
+		scaledPoints[1] = loc.add((((Vector3D) (orient3D.xy.multiply(len).add(orient3D.xz.multiply(len)))).toPoint3D()));
+		scaledPoints[2] = loc.add((((Vector3D) (orient3D.xy.multiply(-len).add(orient3D.xz.multiply(-len)))).toPoint3D()));
+		scaledPoints[3] = loc.add((((Vector3D) (orient3D.xy.multiply(len).add(orient3D.xz.multiply(-len)))).toPoint3D()));
+		
+		return scaledPoints;
 	}
 
 	// Background squares
@@ -50,9 +99,11 @@ public class Square extends Polygon {
 
 		int halfLen = length/2;
 		int scaledLen = (int)(((double)halfLen) * scaling);
-		*/
-		
+		 */
+
 		// Project points of square to camera's XY and XZ plane
+		
+		Point3D points[] = getPointsForRender(camera);
 
 		Vector3D[] projectedPoints = new Vector3D[4];
 		int[] xPoints = new int[4];
@@ -201,7 +252,7 @@ public class Square extends Polygon {
 		Point3D pointBR = new Point3D(pointBotRight[0], pointBotRight[1], pointBotRight[2]);
 		Point3D pointBL = new Point3D(pointBotLeft[0], pointBotLeft[1], pointBotLeft[2]);
 		System.out.println("Before projection: " + pointTL.x + "," + pointTL.y + "," + pointTL.z);
-		
+
 		//pointTL = pointTL.projectOntoPlane(camLoc, camOrient);
 		//pointTR = pointTR.projectOntoPlane(camLoc, camOrient);
 		//pointBR = pointBR.projectOntoPlane(camLoc, camOrient);
