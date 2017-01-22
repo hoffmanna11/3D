@@ -67,12 +67,14 @@ public class Square extends Polygon {
 		scaledPoints[2] = loc.add((((Vector3D) (orient3D.xy.multiply(len).add(orient3D.xz.multiply(-len)))).toPoint3D()));
 		scaledPoints[3] = loc.add((((Vector3D) (orient3D.xy.multiply(-len).add(orient3D.xz.multiply(-len)))).toPoint3D()));
 		
+		/*
 		if(color == Color.red){
 			System.out.println("point: ");
 			for(int i=0; i<4; i++){
 				scaledPoints[i].print();
 			}System.out.println("");
 		}
+		*/
 		
 		return scaledPoints;
 	}

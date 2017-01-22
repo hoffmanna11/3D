@@ -225,10 +225,12 @@ public class Camera {
 		double s2 = s1 * Math.tan(radians);
 		switch(plane){
 		case "XY":
+			/*
 			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 			System.out.println("s1: " + s1 + ", s2: " + s2);
 			System.out.println("XY\n" + XY.valuesToStr());
 			System.out.println("YZ\n" + YZ.valuesToStr());
+			*/
 			Vector3D newXY_1 = (Vector3D)(XY.multiply(s1).add(YZ.multiply(s2)));
 			Vector3D newYZ_1 = (Vector3D)(YZ.multiply(s1).add(new Vector3D(-XY.dx, -XY.dy, -XY.dz).multiply(s2)));
 			XY = newXY_1.normalize();
