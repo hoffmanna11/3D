@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import game_cat.GameObject;
+import game_cat.Overlay;
 import polygons.Square;
 import sub.Vector3D;
 

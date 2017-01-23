@@ -3,7 +3,7 @@ package overlays;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import game.Overlay;
+import game_cat.Overlay;
 import sub.Orient3D;
 import sub.Vector3D;
 

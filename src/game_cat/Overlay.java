@@ -1,4 +1,4 @@
-package game;
+package game_cat;
 
 import java.awt.Graphics;
 
