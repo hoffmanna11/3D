@@ -32,6 +32,9 @@ public class Env extends Canvas implements Runnable {
 	public static long lastRenderTime = 0;
 	public static long desiredRenderInterval = 1000000000 / fps;
 	
+	/*
+	 * For normal usage
+	 */
 	public Env() {
 		handler = new Handler();
 		handler.setCamera(new Vector3D(WORLDLENGTH/2, 0, WORLDHEIGHT/2), new Vector3D(0,1,0));
@@ -43,6 +46,9 @@ public class Env extends Canvas implements Runnable {
 		window = new Window(RESWIDTH, RESHEIGHT, "3D", this);
 	}
 	
+	/*
+	 * For testing
+	 */
 	public Env(Vector3D camLoc, GameObject[] gameObjects) {
 		handler = new Handler();
 		handler.setCamera(new Vector3D(WORLDLENGTH/2, 0, WORLDHEIGHT/2), new Vector3D(0,1,0));
@@ -68,6 +74,9 @@ public class Env extends Canvas implements Runnable {
 		}
 	}
 	
+	/*
+	 * Main loop of execution
+	 */
 	public void run(){
 		long timer = System.currentTimeMillis();
 		//int frames = 0;
@@ -80,8 +89,7 @@ public class Env extends Canvas implements Runnable {
 			//frames++;
 
 			if(System.currentTimeMillis() - timer > (1000)) {
-				//System.out.println("FPS: " + frames);
-				//frames = 0;
+				//System.out.println("FPS: " + frames); frames = 0;
 				timer = System.currentTimeMillis();
 			}
 		}
@@ -121,7 +129,9 @@ public class Env extends Canvas implements Runnable {
 
 		Graphics g = bs.getDrawGraphics();
 
-		// Instead of filling the screen with black, render the background
+		/*
+		 * TODO Instead of filling the screen with black, render the background
+		 */
 		
 		g.setColor(Color.black);
 		g.fillRect(0, 0, RESWIDTH, RESHEIGHT);

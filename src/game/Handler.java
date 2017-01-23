@@ -11,7 +11,7 @@ public class Handler {
 	LinkedList<GameObject> object = new LinkedList<GameObject>();
 	Camera camera;
 	Square[] background = new Square[6];
-	ArrayList<HUD> huds = new ArrayList<HUD>();
+	ArrayList<Overlay> huds = new ArrayList<Overlay>();
 
 	public void tick(){
 		for(int i = 0; i < object.size(); i++) {
@@ -32,7 +32,7 @@ public class Handler {
 		}
 		
 		for(int i=0; i<huds.size(); i++){
-			HUD tempHUD = huds.get(i);
+			Overlay tempHUD = huds.get(i);
 			
 			tempHUD.render(g);
 		}
@@ -46,11 +46,11 @@ public class Handler {
 		this.object.remove(object);
 	}
 	
-	public void addHUD(HUD hud) {
+	public void addHUD(Overlay hud) {
 		this.huds.add(hud);
 	}
 
-	public void removeHUD(HUD hud) {
+	public void removeHUD(Overlay hud) {
 		this.huds.remove(hud);
 	}
 

@@ -11,7 +11,7 @@ import sub.Vector3D;
 public class Camera {
 	public Vector3D loc;
 	public Orient3D orient;
-	
+
 	public boolean shift = false;
 	public boolean forward = false;
 	public boolean backward = false;
@@ -19,59 +19,51 @@ public class Camera {
 	public boolean right = false;
 	public boolean up = false;
 	public boolean down = false;
-	
+
 	public int speed = 2;
-	
+
 	public Camera(Vector3D loc, Vector3D yzOrient){
 		this.loc = loc;
 		this.orient = new Orient3D(yzOrient);
 	}
-	
+
+	/*
+	 * Draws:
+	 * 	text for current orient/loc
+	 * 	visual orientation vectors
+	 */
 	public void render(Graphics g){
+		drawStrings(g);
+		drawVectors(g);
+	}
+
+	public void drawStrings(Graphics g){
 		DecimalFormat df = new DecimalFormat("#.##");
 		g.setColor(Color.green);
-		g.drawString("Camerad: " + "(" + loc.dx + "," + loc.dy + "," + loc.dz + ")", 10, 40);
-		
-		double s1 = 0.9961946980917455;
-		double s2 = -0.08715574274765818;
-		Vector3D xydup = new Vector3D(this.orient.xy.dx * s1, this.orient.xy.dy * s1, this.orient.xy.dz * s1);
-		Vector3D yzdup = new Vector3D(this.orient.yz.dx * s2, this.orient.yz.dy * s2, this.orient.yz.dz * s2);
-		String str1 = "  (" + df.format(xydup.dx) + "," + df.format(xydup.dy) + "," + df.format(xydup.dz) + ")";
-		String str2 = "  (" + df.format(yzdup.dx) + "," + df.format(yzdup.dy) + "," + df.format(yzdup.dz) + ")";
-		Vector3D added = (Vector3D)xydup.add(yzdup);
-		String sum = "  (" + df.format(added.dx) + "," + df.format(added.dy) + "," + df.format(added.dz) + ")";
-		
-		g.drawString("this.orient.xy: " + "(" + df.format(this.orient.xy.dx) + "," + df.format(this.orient.xy.dy) + "," + df.format(this.orient.xy.dz) + ")" + str1, 10, 60);
-		g.drawString("this.orient.yz: " + "(" + df.format(this.orient.yz.dx) + "," + df.format(this.orient.yz.dy) + "," + df.format(this.orient.yz.dz) + ")" + str2, 10, 80);
-		g.drawString("this.orient.xz: " + "(" + df.format(this.orient.xz.dx) + "," + df.format(this.orient.xz.dy) + "," + df.format(this.orient.xz.dz) + ")" + sum, 10, 100);
-		Vector3D xzguess = Vector3D.crossProduct(this.orient.xy, this.orient.yz);
-		g.drawString("this.orient.xz: " + "(" + df.format(xzguess.dx) + ", " + df.format(xzguess.dy) + ", " + df.format(xzguess.dz) + ")", 10, 120);
-		
-		//Vector3D base_XY = new Vector3D(50,0,0).projectOntoPlane(new Vector3D(0,0,0), new Vector3D(-20,50,-20));
-		//Vector3D base_YZ = new Vector3D(0,50,0).projectOntoPlane(new Vector3D(0,0,0), new Vector3D(-20,50,-20));
-		//Vector3D base_XZ = new Vector3D(0,0,50).projectOntoPlane(new Vector3D(0,0,0), new Vector3D(-20,50,-20));
-		
+		g.drawString("camera loc: " + "(" + loc.dx + "," + loc.dy + "," + loc.dz + ")", 10, 40);
+		g.drawString("camera xy: " + "(" + df.format(this.orient.xy.dx) + "," + df.format(this.orient.xy.dy) + "," + df.format(this.orient.xy.dz) + ")", 10, 60);
+		g.drawString("camera yz: " + "(" + df.format(this.orient.yz.dx) + "," + df.format(this.orient.yz.dy) + "," + df.format(this.orient.yz.dz) + ")", 10, 80);
+		g.drawString("camera xz: " + "(" + df.format(this.orient.xz.dx) + "," + df.format(this.orient.xz.dy) + "," + df.format(this.orient.xz.dz) + ")", 10, 100);
+	}
+
+	public void drawVectors(Graphics g){
 		Vector3D XYMult = new Vector3D(this.orient.xy.dx * 50, this.orient.xy.dy * 50, this.orient.xy.dz * 50);
 		Vector3D YZMult = new Vector3D(this.orient.yz.dx * 50, this.orient.yz.dy * 50, this.orient.yz.dz * 50);
 		Vector3D XZMult = new Vector3D(this.orient.xz.dx * 50, this.orient.xz.dy * 50, this.orient.xz.dz * 50);
-		
+
 		Vector3D proj_XY = XYMult.projectOntoPlane(new Vector3D(0,0,0), new Vector3D(-20,50,-20));
 		Vector3D proj_YZ = YZMult.projectOntoPlane(new Vector3D(0,0,0), new Vector3D(-20,50,-20));
 		Vector3D proj_XZ = XZMult.projectOntoPlane(new Vector3D(0,0,0), new Vector3D(-20,50,-20));
-		
-		//int[] baseXY = base_XY.getBaseCoords(base_XY);
-		//int[] baseYZ = base_YZ.getBaseCoords(base_YZ);
-		//int[] baseXZ = base_XZ.getBaseCoords(base_XZ);
-		
+
 		int[] projXY = proj_XY.getBaseCoords(proj_XY);
 		int[] projYZ = proj_YZ.getBaseCoords(proj_YZ);
 		int[] projXZ = proj_XZ.getBaseCoords(proj_XZ);
-		
+
 		drawVector(g, projXY, Color.RED);
 		drawVector(g, projYZ, Color.BLUE);
 		drawVector(g, projXZ, Color.GREEN);
 	}
-	
+
 	public void drawVector(Graphics g, int[] coords, Color c){
 		g.setColor(c);
 		g.drawLine(200, 200, 200 + coords[0], 200 - coords[1]);
@@ -80,21 +72,22 @@ public class Camera {
 	public void tick(){
 		applyKeyInput();
 	}
-	
-	/* Check DIRECTION and opposite axial DIRECTION
-	 *   If both, do nothing
-	 *   Else If one, check for shift
-	 *     If shift, check:
-	 *       If 
-	 *     If shift, rotate in that dual axis plane
-	 *     Else move in that direction
-	 *   Else check next direction
 
-	 * Vector3D.XY: Yaw   ( left / right )
-	 * Vector3D.XZ: Roll  ( shift + left / right )
-	 * Vector3D.YZ: Pitch ( shift + forward / backward )
-	 */
 	public void applyKeyInput(){
+		/* Check DIRECTION and opposite axial DIRECTION
+		 *   If both, do nothing
+		 *   Else If one, check for shift
+		 *     If shift, check:
+		 *       If 
+		 *     If shift, rotate in that dual axis plane
+		 *     Else move in that direction
+		 *   Else check next direction
+
+		 * Vector3D.XY: Yaw   ( left / right )
+		 * Vector3D.XZ: Roll  ( shift + left / right )
+		 * Vector3D.YZ: Pitch ( shift + forward / backward )
+		 */
+
 		if(shift){
 			if(forward){
 				if(backward){
@@ -244,16 +237,16 @@ public class Camera {
 
 	public int[] getBaseCoords(Vector3D pt){
 		// Combine all vectors into a matrix
-		
+
 		// First, make the point relative to the camera loc
 		pt.values[0][0] -= loc.dx;
 		pt.values[1][0] -= loc.dy;
 		pt.values[2][0] -= loc.dz;
-		
+
 		pt.dx -= loc.dx;
 		pt.dy -= loc.dy;
 		pt.dz -= loc.dz;
-		
+
 		// Now combine all vectors into a matrix
 		// Create vector array
 		Vector3D[] vectors = new Vector3D[3];
@@ -262,7 +255,7 @@ public class Camera {
 		vectors[2] = pt;
 		Matrix system = this.orient.xy.combineVectors(vectors);
 		system.rref();
-		
+
 		return new int[]{(int)system.values[0][3], (int)system.values[2][3]};
 	}
 }
