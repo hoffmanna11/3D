@@ -13,7 +13,7 @@ import sub.Vector3D;
 public class Env extends Canvas implements Runnable {
 	private static final long serialVersionUID = 534748158841784372L;
 	static Window window;
-	static Thread thread;
+	static Thread thread;//
 	static Handler handler;
 	static boolean running = false;
 	public static final int RESSCALE = 60; // 120 = 1080p scaling
