@@ -22,6 +22,9 @@ public class Cube extends GameObject {
 		this.length = length;
 		squares = new Square[6];
 		setOrient(dir);
+		for(int i=0; i<6; i++){
+			//squares[i] = new Square();
+		}
 		setSquaresInit();
 	}
 
@@ -29,13 +32,8 @@ public class Cube extends GameObject {
 		int len = length / 2;
 
 		// Square 0
-		//Vector3D orientXY0 = (Vector3D)orient.yz.multiply(-1);
-		//Vector3D orientYZ0 = (Vector3D)orient.xy.multiply(1);
-		//Vector3D orientXZ0 = (Vector3D)orient.xz.multiply(1);
 		Point3D loc0 = loc.add((Vector3D)orient.yz.multiply(-len));
-		//System.out.println("loc0, orient.yz: " + orient.yz.valuesToStr());
 		squares[0] = new Square(loc0, orient, length);
-		//squares[0].color = Color.red;
 
 		// Square 1
 		Vector3D orientXY1 = (Vector3D)orient.yz.multiply(-1);
@@ -170,12 +168,14 @@ public class Cube extends GameObject {
 		int halfLen = length/2;
 		int len = (int)(((double)halfLen) * scaling);
 		
+		/*
 		System.out.println("Indices: ");
 		for(int i=0; i<6; i++){
 			System.out.print(indices[i] + " ");
 			squares[indices[i]].render(g, camera, len);
 		}
 		System.out.print("\n");
+		*/
 
 		// Print location
 		g.setColor(Color.green);

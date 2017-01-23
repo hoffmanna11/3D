@@ -69,6 +69,7 @@ public class Handler {
 
 	public void setBackground(){
 		// Background squares
+		/*
 		int WORLDLENGTH = Env.WORLDLENGTH;
 		int WORLDWIDTH = Env.WORLDWIDTH;
 		int WORLDHEIGHT = Env.WORLDHEIGHT;
@@ -102,6 +103,7 @@ public class Handler {
 				new Point3D(WORLDLENGTH, WORLDWIDTH, 0),
 				new Point3D(WORLDLENGTH, 0, 0),
 				new Point3D(0, 0, 0));
+		*/
 	}
 
 }
