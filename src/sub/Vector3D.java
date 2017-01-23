@@ -85,6 +85,10 @@ public class Vector3D extends Matrix {
 		return new Matrix(values);
 	}
 	
+	public double distanceBetween(Vector3D point){
+		return Math.sqrt(Math.pow((point.dx - dx), 2) + Math.pow((point.dy - dy), 2) + Math.pow((point.dz - dz), 2));
+	}
+	
 	public int[] getBaseCoords(Vector3D pt){
 		// Combine all vectors into a matrix
 		

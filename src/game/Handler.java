@@ -5,13 +5,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import game_cat.GameObject;
-import game_cat.Polygon;
 import polygons.Square;
 import sub.Point3D;
 
 public class Handler {
 	LinkedList<GameObject> object = new LinkedList<GameObject>();
-	List<Polygon> polygons = new ArrayList<Polygon>();
 	Camera camera;
 	Square[] background = new Square[6];
 	ArrayList<HUD> huds = new ArrayList<HUD>();

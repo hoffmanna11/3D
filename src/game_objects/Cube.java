@@ -131,7 +131,7 @@ public class Cube extends GameObject {
 		double dist[] = new double[6];
 		for(int i=0; i<6; i++){
 			for(int j=0; j<4; j++){
-				dist[i] += squares[i].points[j].distanceBetween(camera.getCamLoc());
+				dist[i] += squares[i].points[j].distanceBetween(camera.loc);
 			}
 		}
 		
@@ -158,9 +158,9 @@ public class Cube extends GameObject {
 		}
 		
 		// Set square locations
-		setSquareRenderLocs(camera.getCamLoc());
+		setSquareRenderLocs(camera.loc);
 
-		Point3D camLoc = camera.getCamLoc();
+		Point3D camLoc = camera.loc;
 		// Get distance between points
 		double distance = (int)Math.sqrt(Math.pow(loc.x-camLoc.x,2) + Math.pow(loc.y-camLoc.y,2) + Math.pow(loc.z-camLoc.z, 2));
 		// Get scaling factor

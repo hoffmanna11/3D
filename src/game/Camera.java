@@ -8,13 +8,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import sub.Matrix;
+import sub.Orient3D;
 import sub.Point3D;
 import sub.Vector3D;
 
 public class Camera {
-	Point3D camLoc;
-	Vector3D camOrient;
-	Set<Boolean> keysPressed = new HashSet<Boolean>();
+	public Point3D loc;
+	Orient3D orient;
+	
 	boolean shift = false;
 	boolean forward = false;
 	boolean backward = false;
@@ -22,13 +23,14 @@ public class Camera {
 	boolean right = false;
 	boolean up = false;
 	boolean down = false;
+	
 	int speed = 2;
 	Vector3D XY = new Vector3D(1,0,0);
 	Vector3D YZ = new Vector3D(0,1,0);
 	Vector3D XZ = new Vector3D(0,0,1);
 
 	public Camera(Point3D loc){
-		this.camLoc = loc;
+		this.loc = loc;
 		//rotate("XY", 10);
 		//this.camOrient = orient;
 	}
@@ -36,7 +38,7 @@ public class Camera {
 	public void render(Graphics g){
 		DecimalFormat df = new DecimalFormat("#.##");
 		g.setColor(Color.green);
-		g.drawString("Camerad: " + "(" + camLoc.x + "," + camLoc.y + "," + camLoc.z + ")", 10, 40);
+		g.drawString("Camerad: " + "(" + loc.x + "," + loc.y + "," + loc.z + ")", 10, 40);
 		
 		double s1 = 0.9961946980917455;
 		double s2 = -0.08715574274765818;
@@ -153,12 +155,12 @@ public class Camera {
 					// = Move forward
 					// Add to x, y, z speed * (normalized)[x, y, z]
 					//System.out.println("Move forward");
-					camLoc.x += (int)(YZ.dx * speed);
-					camLoc.y += (int)(YZ.dy * speed);
-					camLoc.z += (int)(YZ.dz * speed);
+					loc.x += (int)(YZ.dx * speed);
+					loc.y += (int)(YZ.dy * speed);
+					loc.z += (int)(YZ.dz * speed);
 					// WORLDLENGTH/2, 200, WORLDHEIGHT/2
-					//System.out.println("(" + (camLoc.x - Env.WORLDLENGTH/2) + "," + (camLoc.y - 200) + "," + (camLoc.z - Env.WORLDHEIGHT/2) + ")");
-					//camLoc.print();
+					//System.out.println("(" + (loc.x - Env.WORLDLENGTH/2) + "," + (loc.y - 200) + "," + (loc.z - Env.WORLDHEIGHT/2) + ")");
+					//loc.print();
 					//YZ.print();
 				}
 			}else if(backward){
@@ -166,11 +168,11 @@ public class Camera {
 				// = Move backward
 				// Add to x, y, z -1 * speed * (normalized)[x, y, z]
 				//System.out.println("Move backward");
-				camLoc.x = camLoc.x - (int)(YZ.dx * speed);
-				camLoc.y = camLoc.y - (int)(YZ.dy * speed);
-				camLoc.z = camLoc.z - (int)(YZ.dz * speed);
-				//System.out.println("(" + (camLoc.x - Env.WORLDLENGTH/2) + "," + (camLoc.y - 200) + "," + (camLoc.z - Env.WORLDHEIGHT/2) + ")");
-				//camLoc.print();
+				loc.x = loc.x - (int)(YZ.dx * speed);
+				loc.y = loc.y - (int)(YZ.dy * speed);
+				loc.z = loc.z - (int)(YZ.dz * speed);
+				//System.out.println("(" + (loc.x - Env.WORLDLENGTH/2) + "," + (loc.y - 200) + "," + (loc.z - Env.WORLDHEIGHT/2) + ")");
+				//loc.print();
 				//YZ.print();
 			}
 
@@ -199,22 +201,22 @@ public class Camera {
 					// = Up
 					// = Move upward
 					//System.out.println("Move upward");
-					camLoc.x += XZ.dx * speed;
-					camLoc.y += XZ.dy * speed;
-					camLoc.z += XZ.dz * speed;
-					//System.out.println("(" + (camLoc.x - Env.WORLDLENGTH/2) + "," + (camLoc.y - 200) + "," + (camLoc.z - Env.WORLDHEIGHT/2) + ")");
-					//camLoc.print();
+					loc.x += XZ.dx * speed;
+					loc.y += XZ.dy * speed;
+					loc.z += XZ.dz * speed;
+					//System.out.println("(" + (loc.x - Env.WORLDLENGTH/2) + "," + (loc.y - 200) + "," + (loc.z - Env.WORLDHEIGHT/2) + ")");
+					//loc.print();
 				}
 			}else if(down){
 				// Down
 				// = Down
 				// = Move downward
 				//System.out.println("Move downward");
-				camLoc.x -= XZ.dx * speed;
-				camLoc.y -= XZ.dy * speed;
-				camLoc.z -= XZ.dz * speed;
-				//System.out.println("(" + (camLoc.x - Env.WORLDLENGTH/2) + "," + (camLoc.y - 200) + "," + (camLoc.z - Env.WORLDHEIGHT/2) + ")");
-				//camLoc.print();
+				loc.x -= XZ.dx * speed;
+				loc.y -= XZ.dy * speed;
+				loc.z -= XZ.dz * speed;
+				//System.out.println("(" + (loc.x - Env.WORLDLENGTH/2) + "," + (loc.y - 200) + "," + (loc.z - Env.WORLDHEIGHT/2) + ")");
+				//loc.print();
 			}
 		}
 	}
@@ -264,23 +266,13 @@ public class Camera {
 	}
 
 	/** @category getter */
-	public Point3D getCamLoc() {
-		return camLoc;
+	public Point3D getloc() {
+		return loc;
 	}
 
 	/** @category setter */
-	public void setCamLoc(Point3D camLoc) {
-		this.camLoc = camLoc;
-	}
-
-	/** @category getter */
-	public Vector3D getCamOrient() {
-		return camOrient;
-	}
-
-	/** @category setter */
-	public void setCamOrient(Vector3D camOrient) {
-		this.camOrient = camOrient;
+	public void setloc(Point3D loc) {
+		this.loc = loc;
 	}
 
 	/** @category getter */
@@ -386,18 +378,18 @@ public class Camera {
 		// Combine all vectors into a matrix
 		
 		// First, make the point relative to the camera loc
-		pt.values[0][0] -= camLoc.x;
-		pt.values[1][0] -= camLoc.y;
-		pt.values[2][0] -= camLoc.z;
+		pt.values[0][0] -= loc.x;
+		pt.values[1][0] -= loc.y;
+		pt.values[2][0] -= loc.z;
 		
-		pt.dx -= camLoc.x;
-		pt.dy -= camLoc.y;
-		pt.dz -= camLoc.z;
+		pt.dx -= loc.x;
+		pt.dy -= loc.y;
+		pt.dz -= loc.z;
 		
 		//System.out.println("Printing point:");
 		//pt.print();
-		//System.out.println("Printing camloc:");
-		//System.out.println(camLoc.x + ", " + camLoc.y + ", " + camLoc.z);
+		//System.out.println("Printing loc:");
+		//System.out.println(loc.x + ", " + loc.y + ", " + loc.z);
 		
 		// Now combine all vectors into a matrix
 		// Create vector array
