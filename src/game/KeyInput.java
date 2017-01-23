@@ -15,38 +15,38 @@ public class KeyInput extends KeyAdapter {
 		int key = e.getKeyCode();
 
 		if(key == KeyEvent.VK_W){
-			handler.camera.setForward(true);
+			handler.camera.forward = true;
 		}
 		if(key == KeyEvent.VK_S){
-			handler.camera.setBackward(true);
+			handler.camera.backward = true;
 		}
 		if(key == KeyEvent.VK_D){
-			handler.camera.setRight(true);
+			handler.camera.right = true;
 		}
 		if(key == KeyEvent.VK_A){
-			handler.camera.setLeft(true);
+			handler.camera.left = true;
 		}
 		if(key == KeyEvent.VK_SPACE){
-			handler.camera.setUp(true);
+			handler.camera.up = true;
 		}
 		if(key == KeyEvent.VK_CONTROL){
-			handler.camera.setDown(true);
+			handler.camera.down = true;
 		}
 		if(key == KeyEvent.VK_SHIFT){
-			handler.camera.setShift(true);
+			handler.camera.shift = true;
 		}
 	}
 
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 
-		if(key == KeyEvent.VK_W) handler.camera.setForward(false);
-		if(key == KeyEvent.VK_S) handler.camera.setBackward(false);
-		if(key == KeyEvent.VK_D) handler.camera.setRight(false);
-		if(key == KeyEvent.VK_A) handler.camera.setLeft(false);
-		if(key == KeyEvent.VK_SPACE) handler.camera.setUp(false);
-		if(key == KeyEvent.VK_CONTROL) handler.camera.setDown(false);
-		if(key == KeyEvent.VK_SHIFT) handler.camera.setShift(false);
+		if(key == KeyEvent.VK_W) handler.camera.forward = false;
+		if(key == KeyEvent.VK_S) handler.camera.backward = false;
+		if(key == KeyEvent.VK_D) handler.camera.right = false;
+		if(key == KeyEvent.VK_A) handler.camera.left = false;
+		if(key == KeyEvent.VK_SPACE) handler.camera.up = false;
+		if(key == KeyEvent.VK_CONTROL) handler.camera.down = false;
+		if(key == KeyEvent.VK_SHIFT) handler.camera.shift = false;
 	}
 
 }

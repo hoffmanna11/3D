@@ -12,15 +12,15 @@ public class Camera {
 	public Vector3D loc;
 	public Orient3D orient;
 	
-	boolean shift = false;
-	boolean forward = false;
-	boolean backward = false;
-	boolean left = false;
-	boolean right = false;
-	boolean up = false;
-	boolean down = false;
+	public boolean shift = false;
+	public boolean forward = false;
+	public boolean backward = false;
+	public boolean left = false;
+	public boolean right = false;
+	public boolean up = false;
+	public boolean down = false;
 	
-	int speed = 2;
+	public int speed = 2;
 	
 	public Camera(Vector3D loc, Vector3D yzOrient){
 		this.loc = loc;
@@ -264,91 +264,5 @@ public class Camera {
 		system.rref();
 		
 		return new int[]{(int)system.values[0][3], (int)system.values[2][3]};
-	}
-	
-	/** @category getter */
-	public Vector3D getloc() {
-		return loc;
-	}
-
-	/** @category setter */
-	public void setloc(Vector3D loc) {
-		this.loc = loc;
-	}
-
-	/** @category getter */
-	public boolean isUp() {
-		return up;
-	}
-
-	/** @category setter */
-	public void setUp(boolean up) {
-		this.up = up;
-	}
-
-	/** @category getter */
-	public boolean isDown() {
-		return down;
-	}
-
-	/** @category setter */
-	public void setDown(boolean down) {
-		this.down = down;
-	}
-
-	/** @category getter */
-	public boolean isForward() {
-		return forward;
-	}
-
-	/** @category setter */
-	public void setForward(boolean forward) {
-		this.forward = forward;
-	}
-
-	/** @category getter */
-	public boolean isBackward() {
-		return backward;
-	}
-
-	/** @category setter */
-	public void setBackward(boolean backward) {
-		this.backward = backward;
-	}
-
-	/** @category getter */
-	public boolean isLeft() {
-		return left;
-	}
-
-	/** @category setter */
-	public void setLeft(boolean left) {
-		this.left = left;
-	}
-
-	/** @category getter */
-	public boolean isRight() {
-		return right;
-	}
-
-	/** @category setter */
-	public void setRight(boolean right) {
-		this.right = right;
-	}
-
-	public boolean isShift() {
-		return shift;
-	}
-
-	public void setShift(boolean shift) {
-		this.shift = shift;
-	}
-
-	public int getSpeed() {
-		return speed;
-	}
-
-	public void setSpeed(int speed) {
-		this.speed = speed;
 	}
 }

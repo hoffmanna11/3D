@@ -139,30 +139,4 @@ public class Vector3D extends Matrix {
 	public double dot(Vector3D v){
 		return dx * v.dx + dy * v.dy + dz * v.dz;
 	}
-
-	public double getDx() {
-		return dx;
-	}
-
-	public void setDx(double dx) {
-		this.dx = dx;
-	}
-
-	public double getDy() {
-		return dy;
-	}
-
-	public void setDy(double dy) {
-		this.dy = dy;
-	}
-
-	public double getDz() {
-		return dz;
-	}
-
-	public void setDz(double dz) {
-		this.dz = dz;
-	}
-	
-	
 }

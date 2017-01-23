@@ -15,16 +15,19 @@ public class Env extends Canvas implements Runnable {
 	static Thread thread;//
 	static Handler handler;
 	static boolean running = false;
+	
 	public static final int RESSCALE = 60; // 120 = 1080p scaling
 	public static final int RESWIDTH = 16 * RESSCALE;
 	public static final int RESHEIGHT = 9 * RESSCALE;
+	
 	public static final int WORLDLENGTH = 500;
 	public static final int WORLDWIDTH = 500;
 	public static final int WORLDHEIGHT = 500;
+	
 	public static final int CAMERASCALE = 30;
 	public static final int CAMERAWIDTH = 16 * CAMERASCALE;
 	public static final int CAMERAHEIGHT = 9 * CAMERASCALE;
-	public static final int maxDistance = (int)Math.sqrt(Math.pow(WORLDWIDTH, 2) + Math.pow(WORLDHEIGHT, 2));
+	
 	public static int fps = 60;
 	public static long lastRenderTime = 0;
 	public static long desiredRenderInterval = 1000000000 / fps;

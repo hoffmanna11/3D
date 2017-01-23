@@ -10,9 +10,9 @@ import sub.Orient3D;
 import sub.Vector3D;
 
 public class Cube extends GameObject {
-	int length;
-	Square[] squares;
-	Orient3D orient;
+	public int length;
+	public Square[] squares;
+	public Orient3D orient;
 
 	public Cube(Vector3D loc, Vector3D dir, int length){
 		super(loc, dir.normalize());
@@ -149,34 +149,6 @@ public class Cube extends GameObject {
 		// Print location
 		g.setColor(Color.green);
 		g.drawString("Cube: " + "(" + loc.dx + "," + loc.dy + "," + loc.dz + ")", 10, 20);
-	}
-
-	public int getNewLength(Vector3D viewerLoc){
-		double distance = Math.sqrt( 
-				Math.pow((loc.dx-viewerLoc.dx), 2) + 
-				Math.pow((loc.dy-viewerLoc.dy), 2) + 
-				Math.pow((loc.dz-viewerLoc.dz), 2) );
-		double slope = ((double)length / (double)Env.maxDistance);
-		int newLength = (2 * length) - (int)(slope * distance);
-		return newLength;
-	}
-
-	/** @category getter */
-	public int getLength() {
-		return length;
-	}
-
-	/** @category setter */
-	public void setLength(int length) {
-		this.length = length;
-	}
-
-	public Square[] getSquares() {
-		return squares;
-	}
-
-	public void setSquares(Square[] squares) {
-		this.squares = squares;
 	}
 
 }
