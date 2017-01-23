@@ -229,14 +229,17 @@ public class Matrix {
 		for(int col=0; col<values[0].length; col++){
 			values[c_addedTo][col] += mult * values[c_adder][col];
 		}
+		
+		/*
 		String sign;
 		if(mult >= 0){
 			sign = "+";
 		}else{
 			sign = "-";
 		}
-		//System.out.println("c" + c_addedTo + " " + sign + " " + Math.abs(mult) + "c" + c_adder);
-		//print();
+		System.out.println("c" + c_addedTo + " " + sign + " " + Math.abs(mult) + "c" + c_adder);
+		print();
+		*/
 	}
 	
 	public void rowMult(int row, double mult){

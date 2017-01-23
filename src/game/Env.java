@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 
 import game_cat.GameObject;
 import game_objects.Cube;
-import sub.Point3D;
 import sub.Vector3D;
 
 public class Env extends Canvas implements Runnable {
@@ -32,19 +31,18 @@ public class Env extends Canvas implements Runnable {
 	
 	public Env() {
 		handler = new Handler();
-		handler.setCamera(new Point3D(WORLDLENGTH/2, 0, WORLDHEIGHT/2));
-		//handler.addObject(new Square(new Point3D(WORLDLENGTH/2, 200, WORLDHEIGHT/2), 50));
-		//handler.addObject(new Cube(new Point3D(WORLDLENGTH/2, 200, WORLDHEIGHT/2), 50));
-		handler.addObject(new Cube(new Point3D(WORLDLENGTH/2, 200, WORLDHEIGHT/2), new Vector3D(0,1,0).normalize(), 50));
-		handler.addObject(new Cube(new Point3D(WORLDLENGTH/2 + 80, 200, WORLDHEIGHT/2 - 20), new Vector3D(0,1,0).normalize(), 50));
+		handler.setCamera(new Vector3D(WORLDLENGTH/2, 0, WORLDHEIGHT/2), new Vector3D(0,1,0));
+		
+		handler.addObject(new Cube(new Vector3D(WORLDLENGTH/2, 200, WORLDHEIGHT/2), new Vector3D(0,1,0).normalize(), 50));
+		handler.addObject(new Cube(new Vector3D(WORLDLENGTH/2 + 80, 200, WORLDHEIGHT/2 - 20), new Vector3D(0,1,0).normalize(), 50));
 		
 		this.addKeyListener(new KeyInput(handler));
 		window = new Window(RESWIDTH, RESHEIGHT, "3D", this);
 	}
 	
-	public Env(Point3D camLoc, GameObject[] gameObjects) {
+	public Env(Vector3D camLoc, GameObject[] gameObjects) {
 		handler = new Handler();
-		handler.setCamera(new Point3D(WORLDLENGTH/2, 0, WORLDHEIGHT/2));
+		handler.setCamera(new Vector3D(WORLDLENGTH/2, 0, WORLDHEIGHT/2), new Vector3D(0,1,0));
 		this.addKeyListener(new KeyInput(handler));
 		for(int i=0; i<gameObjects.length; i++){
 			handler.addObject(gameObjects[i]);
@@ -69,18 +67,18 @@ public class Env extends Canvas implements Runnable {
 	
 	public void run(){
 		long timer = System.currentTimeMillis();
-		int frames = 0;
+		//int frames = 0;
 		
 		while(running) {
 			tick();
 			render();
 			lastRenderTime = System.nanoTime();
 			sleepNanos((long)desiredRenderInterval);
-			frames++;
+			//frames++;
 
 			if(System.currentTimeMillis() - timer > (1000)) {
 				//System.out.println("FPS: " + frames);
-				frames = 0;
+				//frames = 0;
 				timer = System.currentTimeMillis();
 			}
 		}

@@ -3,9 +3,11 @@ package sub;
 public class Vector3D extends Matrix {
 	public double dx, dy, dz;
 	
-	public static Vector3D XY = new Vector3D(1,0,0);
-	public static Vector3D YZ = new Vector3D(0,1,0);
-	public static Vector3D XZ = new Vector3D(0,0,1);
+	public static final  Vector3D origin = new Vector3D(0,0,0);
+	
+	public static final Vector3D XY = new Vector3D(1,0,0);
+	public static final Vector3D YZ = new Vector3D(0,1,0);
+	public static final Vector3D XZ = new Vector3D(0,0,1);
 
 	public Vector3D(double dx, double dy, double dz) {
 		super(new double[][]{
@@ -32,8 +34,8 @@ public class Vector3D extends Matrix {
 		this.dz = values[2][0];
 	}
 	
-	public Point3D toPoint3D(){
-		return new Point3D((int)dx, (int)dy, (int)dz);
+	public Vector3D toVector3D(){
+		return new Vector3D((int)dx, (int)dy, (int)dz);
 	}
 	
 	public static void main3(String args[]){
@@ -77,7 +79,7 @@ public class Vector3D extends Matrix {
 		
 		for(int col = 1; col < cols; col++){
 			for(int row = 0; row < rows; row++){
-				double x = vectors[1].values[1][0];
+				//double x = vectors[1].values[1][0];
 				values[row][col] = vectors[col-1].values[row][0];
 			}
 		}
@@ -112,21 +114,15 @@ public class Vector3D extends Matrix {
 		//System.out.println("Checking system");
 		//system.print();
 		
-		if(!Matrix.closeToZero(system.values[1][3])){
-			//System.out.println("Error, Camera.getBaseCoords(), system YZ value is nonzero: " + system.values[1][3]);
-			//system.print();
-			//System.exit(-1);
-		}
-		
 		return new int[]{(int)system.values[0][3], (int)system.values[2][3]};
 	}
 	
-	public Vector3D projectOntoPlane(Point3D planePoint, Vector3D planeNormal){
+	public Vector3D projectOntoPlane(Vector3D planePoint, Vector3D planeNormal){
 		Vector3D projection;
 		//double t = (a*d - a*x + b*e - b*y + c*f - c*z) / 
 		//		( Math.pow(a, 2) + Math.pow(b, 2) + Math.pow(c, 2) );
 		
-		double t = (planeNormal.dx*planePoint.x - planeNormal.dx*dx + planeNormal.dy*planePoint.y - planeNormal.dy*dy + planeNormal.dz*planePoint.z - planeNormal.dz*dz) / 
+		double t = (planeNormal.dx*planePoint.dx - planeNormal.dx*dx + planeNormal.dy*planePoint.dy - planeNormal.dy*dy + planeNormal.dz*planePoint.dz - planeNormal.dz*dz) / 
 						( Math.pow(planeNormal.dx, 2) + Math.pow(planeNormal.dy, 2) + Math.pow(planeNormal.dz, 2) );
 		
 		projection = new Vector3D((dx + t*planeNormal.dx), (dy + t*planeNormal.dy), (dz + t*planeNormal.dz));

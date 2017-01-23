@@ -1,8 +1,7 @@
 package polygons;
+
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.Arrays;
-
 import game.Camera;
 import game.Env;
 import sub.Orient3D;
@@ -13,11 +12,11 @@ public class Square {
 	public Vector3D[] points;
 	boolean bg = false;
 	public Color color = null;
-	public Orient3D orient3D;
+	public Orient3D orient;
 	public Vector3D loc;
 
 	public Square(Vector3D loc, Orient3D orient, int length){
-		this.orient3D = orient;
+		this.orient = orient;
 		this.length = length;
 		// Initialize points
 		points = new Vector3D[4];
@@ -26,26 +25,8 @@ public class Square {
 		}
 	}
 
-	public void setPointsCorrectly(Vector3D cubeLoc, int len){
-		points[0] = (Vector3D) loc.add(orient3D.xy.multiply(-len).add(orient3D.xz.multiply(len)));
-		points[1] = (Vector3D) loc.add(orient3D.xy.multiply(len).add(orient3D.xz.multiply(len)));
-		points[2] = (Vector3D) loc.add(orient3D.xy.multiply(len).add(orient3D.xz.multiply(-len)));
-		points[3] = (Vector3D) loc.add(orient3D.xy.multiply(-len).add(orient3D.xz.multiply(-len)));
-	}
-	
-	public Vector3D[] getPointsForRender(Camera camera, double len){
-		Vector3D scaledPoints[] = new Vector3D[4];
-		
-		scaledPoints[0] = (Vector3D) loc.add(orient3D.xy.multiply(-len).add(orient3D.xz.multiply(len)));
-		scaledPoints[1] = (Vector3D) loc.add(orient3D.xy.multiply(len).add(orient3D.xz.multiply(len)));
-		scaledPoints[2] = (Vector3D) loc.add(orient3D.xy.multiply(len).add(orient3D.xz.multiply(-len)));
-		scaledPoints[3] = (Vector3D) loc.add(orient3D.xy.multiply(-len).add(orient3D.xz.multiply(-len)));
-		
-		return scaledPoints;
-	}
-
 	public void render(Graphics g, Camera camera, int len){
-		Vector3D points[] = getPointsForRender(camera, len);
+		setPointsForRender(camera, len);
 
 		Vector3D[] projectedPoints = new Vector3D[4];
 		
@@ -53,10 +34,10 @@ public class Square {
 		int[] yPoints = new int[4];
 		
 		for(int i=0; i<4; i++){
-			projectedPoints[i] = points[i].projectOntoPlane(camera.loc, camera.getYZ());
+			projectedPoints[i] = points[i].projectOntoPlane(camera.loc, camera.orient.yz);
 			// If the projection involved a positive amount of the yz vector, then don't render
 			double d1 = ((Vector3D)points[i]).distanceBetween(projectedPoints[i]);
-			double d2 = ((Vector3D)points[i].add(camera.getYZ())).distanceBetween(projectedPoints[i]);
+			double d2 = ((Vector3D)points[i].add(camera.orient.yz)).distanceBetween(projectedPoints[i]);
 			
 			if(d2 < d1){
 				return;
@@ -67,6 +48,16 @@ public class Square {
 			xPoints[i] = Env.RESWIDTH/2 + drawLoc[0];
 			yPoints[i] = Env.RESHEIGHT/2 - drawLoc[1];
 		}
+		
+		System.out.println("Orient:");
+		this.orient.xy.print();
+		this.orient.yz.print();
+		this.orient.xz.print();
+		
+		System.out.println("Points:");
+		for(int i=0; i<4; i++){
+			System.out.print("(" + xPoints[i] + "," + yPoints[i] + "), ");
+		}System.out.println("");
 
 		// Draw points
 		if(null != color){
@@ -86,5 +77,12 @@ public class Square {
 			g.setColor(Color.gray);
 			g.drawPolygon(xPoints, yPoints, 4);
 		}
+	}
+	
+	public void setPointsForRender(Camera camera, double len){
+		points[0] = (Vector3D) loc.add(orient.xy.multiply(-len).add(orient.xz.multiply(len)));
+		points[1] = (Vector3D) loc.add(orient.xy.multiply(len).add(orient.xz.multiply(len)));
+		points[2] = (Vector3D) loc.add(orient.xy.multiply(len).add(orient.xz.multiply(-len)));
+		points[3] = (Vector3D) loc.add(orient.xy.multiply(-len).add(orient.xz.multiply(-len)));
 	}
 }

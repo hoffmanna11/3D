@@ -7,8 +7,6 @@ import game.Env;
 import game_cat.GameObject;
 import polygons.Square;
 import sub.Orient3D;
-//import sub.ID;
-import sub.Point3D;
 import sub.Vector3D;
 
 public class Cube extends GameObject {
@@ -16,71 +14,62 @@ public class Cube extends GameObject {
 	Square[] squares;
 	Orient3D orient;
 
-	public Cube(Point3D loc, Vector3D dir, int length){
+	public Cube(Vector3D loc, Vector3D dir, int length){
 		super(loc, dir.normalize());
+		
 		dir = dir.normalize();
+		
 		this.length = length;
+		
+		this.orient = new Orient3D(dir);
+		
 		squares = new Square[6];
-		setOrient(dir);
-		for(int i=0; i<6; i++){
-			//squares[i] = new Square();
-		}
-		setSquaresInit();
+		initSquares();
 	}
 
-	public void setSquaresInit(){
-		int len = length / 2;
-
+	public void initSquares(){
+		//int len = length / 2;
+		
+		Vector3D origin = Vector3D.origin;
+		
 		// Square 0
-		Point3D loc0 = loc.add((Vector3D)orient.yz.multiply(-len));
-		squares[0] = new Square(loc0, orient, length);
+		//Vector3D loc0 = (Vector3D) loc.add(orient.yz.multiply(-len));
+		squares[0] = new Square(origin, orient, 0);
 
 		// Square 1
 		Vector3D orientXY1 = (Vector3D)orient.yz.multiply(-1);
 		Vector3D orientYZ1 = (Vector3D)orient.xy.multiply(1);
 		Vector3D orientXZ1 = (Vector3D)orient.xz.multiply(1);
-		Point3D loc1 = loc.add((Vector3D)orient.xy.multiply(-len));
-		squares[1] = new Square(loc1, new Orient3D(orientXY1, orientYZ1, orientXZ1), length);
+		//Vector3D loc1 = (Vector3D) loc.add(orient.xy.multiply(-len));
+		squares[1] = new Square(origin, new Orient3D(orientXY1, orientYZ1, orientXZ1), 0);
 
 		// Square 2
 		Vector3D orientXY2 = (Vector3D)orient.xy.multiply(-1);
 		Vector3D orientYZ2 = (Vector3D)orient.yz.multiply(-1);
 		Vector3D orientXZ2 = (Vector3D)orient.xz.multiply(1);
-		Point3D loc2 = loc.add((Vector3D)orient.yz.multiply(len));
-		squares[2] = new Square(loc2, new Orient3D(orientXY2, orientYZ2, orientXZ2), length);
+		//Vector3D loc2 = (Vector3D) loc.add(orient.yz.multiply(len));
+		squares[2] = new Square(origin, new Orient3D(orientXY2, orientYZ2, orientXZ2), 0);
 
 		// Square 3
 		Vector3D orientXY3 = (Vector3D)orient.yz.multiply(1);
 		Vector3D orientYZ3 = (Vector3D)orient.xy.multiply(-1);
 		Vector3D orientXZ3 = (Vector3D)orient.xz.multiply(1);
-		Point3D loc3 = loc.add((Vector3D)orient.xy.multiply(len));
-		squares[3] = new Square(loc3, new Orient3D(orientXY3, orientYZ3, orientXZ3), length);
+		//Vector3D loc3 = (Vector3D) loc.add(orient.xy.multiply(len));
+		squares[3] = new Square(origin, new Orient3D(orientXY3, orientYZ3, orientXZ3), 0);
 
 		// Square 4: Top
 		Vector3D orientXY4 = (Vector3D)orient.xy.multiply(1);
 		Vector3D orientYZ4 = (Vector3D)orient.xz.multiply(-1);
 		Vector3D orientXZ4 = (Vector3D)orient.yz.multiply(1);
-		Point3D loc4 = loc.add((Vector3D)orient.xz.multiply(len));
-		squares[4] = new Square(loc4, new Orient3D(orientXY4, orientYZ4, orientXZ4), length);
+		//Vector3D loc4 = (Vector3D) loc.add(orient.xz.multiply(len));
+		squares[4] = new Square(origin, new Orient3D(orientXY4, orientYZ4, orientXZ4), 0);
 
 		// Square 5: Bottom
 		Vector3D orientXY5 = (Vector3D)orient.xy.multiply(1);
 		Vector3D orientYZ5 = (Vector3D)orient.xz.multiply(1);
 		Vector3D orientXZ5 = (Vector3D)orient.yz.multiply(-1);
-		Point3D loc5 = loc.add((Vector3D)orient.xz.multiply(-len));
-		squares[5] = new Square(loc5, new Orient3D(orientXY5, orientYZ5, orientXZ5), length);
-		
-		System.out.println("Cube base location: " + loc.toString() + "\n");
-		
-		/*
-		
-		for(int i=0; i<6; i++){
-			System.out.println("Square[" + i + "]'s loc: " + squares[i].loc.toString());
-			System.out.println("Square[" + i + "]'s xy orient: \n" + squares[i].orient3D.xy.valuesToStr());
-			System.out.println("Square[" + i + "]'s yz orient: \n" + squares[i].orient3D.yz.valuesToStr());
-			System.out.println("Square[" + i + "]'s xz orient: \n" + squares[i].orient3D.xz.valuesToStr());
-		}
-		*/
+		//Vector3D loc5 = (Vector3D) loc.add(orient.xz.multiply(-len));
+		squares[5] = new Square(origin, new Orient3D(orientXY5, orientYZ5, orientXZ5), 0);
 		
 		squares[0].color = Color.red;
 		squares[1].color = Color.blue;
@@ -89,42 +78,26 @@ public class Cube extends GameObject {
 		squares[4].color = Color.green;
 		squares[5].color = Color.yellow;
 	}
-	
-	public void setSquareRenderLocs(Point3D camLoc){
+
+	public void setSquareRenderLocs(Vector3D camLoc){
 		// Get distance between points
-		double distance = (int)Math.sqrt(Math.pow(loc.x-camLoc.x,2) + Math.pow(loc.y-camLoc.y,2) + Math.pow(loc.z-camLoc.z, 2));
+		double distance = (int)Math.sqrt(Math.pow(loc.dx-camLoc.dx,2) + Math.pow(loc.dy-camLoc.dy,2) + Math.pow(loc.dz-camLoc.dz, 2));
 		// Get scaling factor
 		double scaling = (200 / distance);
 
 		int halfLen = length/2;
 		int len = (int)(((double)halfLen) * scaling);
-		
-		squares[0].loc = loc.add((Vector3D)orient.yz.multiply(-len));
-		squares[1].loc = loc.add((Vector3D)orient.xy.multiply(-len));
-		squares[2].loc = loc.add((Vector3D)orient.yz.multiply(len));
-		squares[3].loc = loc.add((Vector3D)orient.xy.multiply(len));
-		squares[4].loc = loc.add((Vector3D)orient.xz.multiply(len));
-		squares[5].loc = loc.add((Vector3D)orient.xz.multiply(-len));
-		
-		/*
-		System.out.println("Len: " + len);
-		for(int i=0; i<6; i++){
-			System.out.println("Square[" + i + "]'s loc: " + squares[i].loc.toString());
-		}
-		*/
-		//System.exit(0);
-	}
 
-	// Takes a 3D directional vector
-	// Outputs 3 basis vectors for cube
-	public void setOrient(Vector3D dir){
-		Vector3D myXZ = Vector3D.XZ.projectOntoPlane(Point3D.origin, dir).normalize();
-		Vector3D myXY = Vector3D.crossProduct(dir, myXZ).normalize();
-		this.orient = new Orient3D(myXY, dir.normalize(), myXZ);
+		squares[0].loc = (Vector3D)loc.add(orient.yz.multiply(-len));
+		squares[1].loc = (Vector3D)loc.add(orient.xy.multiply(-len));
+		squares[2].loc = (Vector3D)loc.add(orient.yz.multiply(len));
+		squares[3].loc = (Vector3D)loc.add(orient.xy.multiply(len));
+		squares[4].loc = (Vector3D)loc.add(orient.xz.multiply(len));
+		squares[5].loc = (Vector3D)loc.add(orient.xz.multiply(-len));
 	}
 
 	public void tick() {
-
+		
 	}
 
 	public void render(Graphics g, Camera camera) {
@@ -134,7 +107,7 @@ public class Cube extends GameObject {
 				dist[i] += squares[i].points[j].distanceBetween(camera.loc);
 			}
 		}
-		
+
 		int[] indices = new int[6];
 		for(int i=0; i<6; i++){
 			indices[i] = i;
@@ -150,43 +123,39 @@ public class Cube extends GameObject {
 					int tempIndex = indices[j];
 					indices[j] = indices[j+1];
 					indices[j+1] = tempIndex;
-					//Square tempSq = squares[j];
-					//squares[j] = squares[j+1];
-					//squares[j+1] = tempSq;
 				}
 			}
 		}
-		
+
 		// Set square locations
 		setSquareRenderLocs(camera.loc);
 
-		Point3D camLoc = camera.loc;
+		Vector3D camLoc = camera.loc;
 		// Get distance between points
-		double distance = (int)Math.sqrt(Math.pow(loc.x-camLoc.x,2) + Math.pow(loc.y-camLoc.y,2) + Math.pow(loc.z-camLoc.z, 2));
+		double distance = (int)Math.sqrt(Math.pow(loc.dx-camLoc.dx,2) + Math.pow(loc.dy-camLoc.dy,2) + Math.pow(loc.dz-camLoc.dz, 2));
 		// Get scaling factor
 		double scaling = (200 / distance);
 		int halfLen = length/2;
 		int len = (int)(((double)halfLen) * scaling);
+
 		
-		/*
-		System.out.println("Indices: ");
+		//System.out.println("Indices: ");
 		for(int i=0; i<6; i++){
-			System.out.print(indices[i] + " ");
+			//System.out.print(indices[i] + " ");
 			squares[indices[i]].render(g, camera, len);
 		}
-		System.out.print("\n");
-		*/
+		//System.out.print("\n");
 
 		// Print location
 		g.setColor(Color.green);
-		g.drawString("Cube: " + "(" + loc.x + "," + loc.y + "," + loc.z + ")", 10, 20);
+		g.drawString("Cube: " + "(" + loc.dx + "," + loc.dy + "," + loc.dz + ")", 10, 20);
 	}
 
-	public int getNewLength(Point3D viewerLoc){
+	public int getNewLength(Vector3D viewerLoc){
 		double distance = Math.sqrt( 
-				Math.pow((loc.x-viewerLoc.x), 2) + 
-				Math.pow((loc.y-viewerLoc.y), 2) + 
-				Math.pow((loc.z-viewerLoc.z), 2) );
+				Math.pow((loc.dx-viewerLoc.dx), 2) + 
+				Math.pow((loc.dy-viewerLoc.dy), 2) + 
+				Math.pow((loc.dz-viewerLoc.dz), 2) );
 		double slope = ((double)length / (double)Env.maxDistance);
 		int newLength = (2 * length) - (int)(slope * distance);
 		return newLength;
