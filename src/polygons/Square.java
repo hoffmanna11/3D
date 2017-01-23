@@ -41,7 +41,7 @@ public class Square {
 			double d2 = ((Vector3D)points[i].add(camera.orient.yz)).distanceBetween(projectedPoints[i]);
 			
 			if(d2 < d1){
-				return;
+				//return;
 			}
 			
 			// Draw the projected point in terms of the xy and xz vector
@@ -50,6 +50,7 @@ public class Square {
 			yPoints[i] = Env.RESHEIGHT/2 - drawLoc[1];
 		}
 		
+		/*
 		System.out.println("Orient:");
 		this.orient.xy.print();
 		this.orient.yz.print();
@@ -59,6 +60,7 @@ public class Square {
 		for(int i=0; i<4; i++){
 			System.out.print("(" + xPoints[i] + "," + yPoints[i] + "), ");
 		}System.out.println("");
+		*/
 
 		// Draw points
 		if(null != color){
@@ -69,6 +71,47 @@ public class Square {
 		}else{
 			g.setColor(Color.red);
 			g.fillPolygon(xPoints, yPoints, 4);
+			g.setColor(Color.gray);
+			g.drawPolygon(xPoints, yPoints, 4);
+		}
+	}
+	
+	public void renderOutlineOnly(Graphics g, Camera camera, int len){
+		setPointsForRender(camera, len);
+
+		Vector3D[] projectedPoints = new Vector3D[4];
+		
+		int[] xPoints = new int[4];
+		int[] yPoints = new int[4];
+		
+		for(int i=0; i<4; i++){
+			projectedPoints[i] = points[i].projectOntoPlane(camera.loc, camera.orient.yz);
+			
+			/* Always render the outline
+			// If the projection involved a positive amount of the yz vector, then don't render
+			double d1 = ((Vector3D)points[i]).distanceBetween(projectedPoints[i]);
+			double d2 = ((Vector3D)points[i].add(camera.orient.yz)).distanceBetween(projectedPoints[i]);
+			
+			if(d2 < d1){
+				return;
+			}
+			*/
+			
+			// Draw the projected point in terms of the xy and xz vector
+			int[] drawLoc = camera.getBaseCoords(projectedPoints[i]);
+			xPoints[i] = Env.RESWIDTH/2 + drawLoc[0];
+			yPoints[i] = Env.RESHEIGHT/2 - drawLoc[1];
+		}
+
+		// Draw points
+		if(null != color){
+			//g.setColor(color);
+			//g.fillPolygon(xPoints, yPoints, 4);
+			g.setColor(Color.gray);
+			g.drawPolygon(xPoints, yPoints, 4);
+		}else{
+			//g.setColor(Color.red);
+			//g.fillPolygon(xPoints, yPoints, 4);
 			g.setColor(Color.gray);
 			g.drawPolygon(xPoints, yPoints, 4);
 		}
