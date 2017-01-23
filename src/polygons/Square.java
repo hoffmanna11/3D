@@ -28,38 +28,35 @@ public class Square extends Polygon {
 		this.orient3D = orient;
 		this.length = length;
 		points = new Point3D[4];
-		setPointsCorrectly();
+		//setPointsCorrectly();
+		for(int i=0; i<4; i++){
+			points[i] = new Point3D(0,0,0);
+		}
 	}
 
-	public static void main1(String args[]){
-
-	}
-
-	public void setPointsCorrectly(){
-		int len = length / 2;
+	public void setPointsCorrectly(Point3D cubeLoc, int len){
+		//int len = length / 2;
 		
 		points[0] = loc.add((((Vector3D) (orient3D.xy.multiply(-len).add(orient3D.xz.multiply(len)))).toPoint3D()));
 		points[1] = loc.add((((Vector3D) (orient3D.xy.multiply(len).add(orient3D.xz.multiply(len)))).toPoint3D()));
 		points[2] = loc.add((((Vector3D) (orient3D.xy.multiply(len).add(orient3D.xz.multiply(-len)))).toPoint3D()));
 		points[3] = loc.add((((Vector3D) (orient3D.xy.multiply(-len).add(orient3D.xz.multiply(-len)))).toPoint3D()));
 
+		/*
+		System.out.println("Square loc: " + loc.toString());
 		System.out.println("Square points:");
 		for(int i=0; i<4; i++){
 			System.out.println(points[i].toString());
 		}
 		System.out.println("");
+		*/
 	}
 
-	public Point3D[] getPointsForRender(Camera camera){
-		Point3D camLoc = camera.getCamLoc();
-		// Get distance between points
-		double distance = (int)Math.sqrt(Math.pow(loc.x-camLoc.x,2) + Math.pow(loc.y-camLoc.y,2) + Math.pow(loc.z-camLoc.z, 2));
-		// Get scaling factor
-		double scaling = (500 / distance);
-
-		int halfLen = length/2;
-		int len = (int)(((double)halfLen) * scaling);
-
+	public void setLocProper(Point3D cubeLoc, int len){
+		
+	}
+	
+	public Point3D[] getPointsForRender(Camera camera, double len){
 		Point3D scaledPoints[] = new Point3D[4];
 		
 		scaledPoints[0] = loc.add((((Vector3D) (orient3D.xy.multiply(-len).add(orient3D.xz.multiply(len)))).toPoint3D()));
@@ -67,6 +64,12 @@ public class Square extends Polygon {
 		scaledPoints[2] = loc.add((((Vector3D) (orient3D.xy.multiply(len).add(orient3D.xz.multiply(-len)))).toPoint3D()));
 		scaledPoints[3] = loc.add((((Vector3D) (orient3D.xy.multiply(-len).add(orient3D.xz.multiply(-len)))).toPoint3D()));
 		
+		/*
+		System.out.println("Square points:");
+		for(int i=0; i<4; i++){
+			System.out.println(scaledPoints[i].toString());
+		}
+		*/
 		/*
 		if(color == Color.red){
 			System.out.println("point: ");
@@ -99,20 +102,8 @@ public class Square extends Polygon {
 		points[3] = new Point3D(loc.x - halfLen, loc.y, loc.z - halfLen);
 	}
 
-	public void render(Graphics g, Camera camera){
-		/*
-		// Get distance between points
-		int distance = (int)Math.sqrt(Math.pow(loc.x-camLoc.x,2) + Math.pow(loc.y-camLoc.y,2) + Math.pow(loc.z-camLoc.z, 2));
-		// Get scaling factor
-		double scaling = (500 / (double)distance);
-
-		int halfLen = length/2;
-		int scaledLen = (int)(((double)halfLen) * scaling);
-		 */
-
-		// Project points of square to camera's XY and XZ plane
-		
-		Point3D points[] = getPointsForRender(camera);
+	public void render(Graphics g, Camera camera, int len){
+		Point3D points[] = getPointsForRender(camera, len);
 
 		Vector3D[] projectedPoints = new Vector3D[4];
 		
@@ -129,7 +120,6 @@ public class Square extends Polygon {
 				return;
 			}
 			
-			
 			// draw the projected point in terms of the xy and xz vector
 			int[] drawLoc = camera.getBaseCoords(projectedPoints[i]);
 			xPoints[i] = Env.RESWIDTH/2 + drawLoc[0];
@@ -140,7 +130,7 @@ public class Square extends Polygon {
 		if(null != color){
 			g.setColor(color);
 			g.fillPolygon(xPoints, yPoints, 4);
-			g.setColor(Color.black);
+			g.setColor(Color.gray);
 			g.drawPolygon(xPoints, yPoints, 4);
 		}
 		else if(bg){
@@ -326,5 +316,11 @@ public class Square extends Polygon {
 		// Set the size of the four points of the square
 		// 4 points, 3 attributes (x, y, z)
 		// points = new int[3][4];
+	}
+
+	@Override
+	public void render(Graphics g, Camera camera) {
+		// TODO Auto-generated method stub
+		
 	}
 }
