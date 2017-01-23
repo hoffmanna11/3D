@@ -8,16 +8,16 @@ import sub.Orient3D;
 import sub.Vector3D;
 
 public class Square {
-	int length;
-	public Vector3D[] points;
-	boolean bg = false;
-	public Color color = null;
-	public Orient3D orient;
 	public Vector3D loc;
+	public Orient3D orient;
+	public Vector3D[] points;
+	public Color color = null;
+	public int length;
 
 	public Square(Vector3D loc, Orient3D orient, int length){
 		this.orient = orient;
 		this.length = length;
+		
 		// Initialize points
 		points = new Vector3D[4];
 		for(int i=0; i<4; i++){
@@ -43,7 +43,7 @@ public class Square {
 				return;
 			}
 			
-			// draw the projected point in terms of the xy and xz vector
+			// Draw the projected point in terms of the xy and xz vector
 			int[] drawLoc = camera.getBaseCoords(projectedPoints[i]);
 			xPoints[i] = Env.RESWIDTH/2 + drawLoc[0];
 			yPoints[i] = Env.RESHEIGHT/2 - drawLoc[1];
@@ -64,12 +64,6 @@ public class Square {
 			g.setColor(color);
 			g.fillPolygon(xPoints, yPoints, 4);
 			g.setColor(Color.gray);
-			g.drawPolygon(xPoints, yPoints, 4);
-		}
-		else if(bg){
-			g.setColor(Color.blue);
-			g.fillPolygon(xPoints, yPoints, 4);
-			g.setColor(Color.black);
 			g.drawPolygon(xPoints, yPoints, 4);
 		}else{
 			g.setColor(Color.red);

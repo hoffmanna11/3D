@@ -3,7 +3,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import game.Camera;
-import game.Env;
 import game_cat.GameObject;
 import polygons.Square;
 import sub.Orient3D;
