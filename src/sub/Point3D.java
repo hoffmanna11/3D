@@ -1,20 +1,15 @@
 package sub;
 
-public class Point3D {
+public class Point3D extends Vector3D {
 	public int x, y, z;
 	
 	public static Point3D origin = new Point3D(0,0,0);
 
 	public Point3D(int x, int y, int z) {
+		super(x,y,z);
 		this.x = x;
 		this.y = y;
 		this.z = z;
-	}
-	
-	public Point3D(){
-		this.x = 0;
-		this.y = 0;
-		this.z = 0;
 	}
 	
 	public String toString(){

@@ -21,7 +21,7 @@ public class Camera {
 	boolean left = false;
 	boolean right = false;
 	boolean up = false;
-	boolean down = false;////
+	boolean down = false;
 	int speed = 2;
 	Vector3D XY = new Vector3D(1,0,0);
 	Vector3D YZ = new Vector3D(0,1,0);

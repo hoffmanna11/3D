@@ -82,22 +82,11 @@ public class Vector3D extends Matrix {
 			}
 		}
 		
-		//System.out.println("Combined matrix:");
-		//new Matrix(values).print();
 		return new Matrix(values);
 	}
 	
 	public int[] getBaseCoords(Vector3D pt){
 		// Combine all vectors into a matrix
-		
-		// First, make the point relative to the camera loc
-		//pt.values[0][0] -= camLoc.x;
-		//pt.values[1][0] -= camLoc.y;
-		//pt.values[2][0] -= camLoc.z;
-		
-		//pt.dx += 100;
-		//pt.dy += 100;
-		//pt.dz += 100;
 		
 		Vector3D XY = new Vector3D(1,0,0);
 		Vector3D YZ = new Vector3D(0,1,0);
