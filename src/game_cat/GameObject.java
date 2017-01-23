@@ -11,8 +11,7 @@ public abstract class GameObject {
 	
 	public GameObject(Vector3D loc, Vector3D yzOrient) {
 		this.loc = loc;
-		// Set Orient3D based on yzOrient
-		//asdf
+		this.orient = new Orient3D(yzOrient);
 	}
 
 	public abstract void tick();

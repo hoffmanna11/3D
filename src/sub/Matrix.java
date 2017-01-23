@@ -143,8 +143,6 @@ public class Matrix {
 	}
 	
 	public void rref(){
-		//System.out.println("Converting values to RREF:");
-		//print();
 		int pivotRow = 0;
 		int rows = values.length;
 		int cols = values[0].length;

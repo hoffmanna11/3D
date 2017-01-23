@@ -11,7 +11,7 @@ public class Handler {
 	LinkedList<GameObject> object = new LinkedList<GameObject>();
 	Camera camera;
 	Square[] background = new Square[6];
-	ArrayList<Overlay> huds = new ArrayList<Overlay>();
+	ArrayList<Overlay> overlays = new ArrayList<Overlay>();
 
 	public void tick(){
 		for(int i = 0; i < object.size(); i++) {
@@ -31,8 +31,8 @@ public class Handler {
 			tempObject.render(g, camera);
 		}
 		
-		for(int i=0; i<huds.size(); i++){
-			Overlay tempHUD = huds.get(i);
+		for(int i=0; i<overlays.size(); i++){
+			Overlay tempHUD = overlays.get(i);
 			
 			tempHUD.render(g);
 		}
@@ -46,12 +46,12 @@ public class Handler {
 		this.object.remove(object);
 	}
 	
-	public void addHUD(Overlay hud) {
-		this.huds.add(hud);
+	public void addOverlay(Overlay overlay) {
+		this.overlays.add(overlay);
 	}
 
-	public void removeHUD(Overlay hud) {
-		this.huds.remove(hud);
+	public void removeOverlay(Overlay overlay) {
+		this.overlays.remove(overlay);
 	}
 
 	public void setCamera(Vector3D loc, Vector3D yzOrient){

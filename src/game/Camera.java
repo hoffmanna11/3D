@@ -34,7 +34,6 @@ public class Camera {
 	 */
 	public void render(Graphics g){
 		drawStrings(g);
-		drawVectors(g);
 	}
 
 	public void drawStrings(Graphics g){
@@ -44,29 +43,6 @@ public class Camera {
 		g.drawString("camera xy: " + "(" + df.format(this.orient.xy.dx) + "," + df.format(this.orient.xy.dy) + "," + df.format(this.orient.xy.dz) + ")", 10, 60);
 		g.drawString("camera yz: " + "(" + df.format(this.orient.yz.dx) + "," + df.format(this.orient.yz.dy) + "," + df.format(this.orient.yz.dz) + ")", 10, 80);
 		g.drawString("camera xz: " + "(" + df.format(this.orient.xz.dx) + "," + df.format(this.orient.xz.dy) + "," + df.format(this.orient.xz.dz) + ")", 10, 100);
-	}
-
-	public void drawVectors(Graphics g){
-		Vector3D XYMult = new Vector3D(this.orient.xy.dx * 50, this.orient.xy.dy * 50, this.orient.xy.dz * 50);
-		Vector3D YZMult = new Vector3D(this.orient.yz.dx * 50, this.orient.yz.dy * 50, this.orient.yz.dz * 50);
-		Vector3D XZMult = new Vector3D(this.orient.xz.dx * 50, this.orient.xz.dy * 50, this.orient.xz.dz * 50);
-
-		Vector3D proj_XY = XYMult.projectOntoPlane(new Vector3D(0,0,0), new Vector3D(-20,50,-20));
-		Vector3D proj_YZ = YZMult.projectOntoPlane(new Vector3D(0,0,0), new Vector3D(-20,50,-20));
-		Vector3D proj_XZ = XZMult.projectOntoPlane(new Vector3D(0,0,0), new Vector3D(-20,50,-20));
-
-		int[] projXY = proj_XY.getBaseCoords(proj_XY);
-		int[] projYZ = proj_YZ.getBaseCoords(proj_YZ);
-		int[] projXZ = proj_XZ.getBaseCoords(proj_XZ);
-
-		drawVector(g, projXY, Color.RED);
-		drawVector(g, projYZ, Color.BLUE);
-		drawVector(g, projXZ, Color.GREEN);
-	}
-
-	public void drawVector(Graphics g, int[] coords, Color c){
-		g.setColor(c);
-		g.drawLine(200, 200, 200 + coords[0], 200 - coords[1]);
 	}
 
 	public void tick(){

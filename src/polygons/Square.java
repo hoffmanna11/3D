@@ -15,6 +15,7 @@ public class Square {
 	public int length;
 
 	public Square(Vector3D loc, Orient3D orient, int length){
+		this.loc = loc;
 		this.orient = orient;
 		this.length = length;
 		

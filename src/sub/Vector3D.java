@@ -34,31 +34,6 @@ public class Vector3D extends Matrix {
 		this.dz = values[2][0];
 	}
 	
-	public Vector3D toVector3D(){
-		return new Vector3D((int)dx, (int)dy, (int)dz);
-	}
-	
-	public static void main3(String args[]){
-		Vector3D a = new Vector3D(1,2,3);
-		Vector3D b = new Vector3D(4,5,6);
-		Vector3D c = new Vector3D(3,2,1);
-		Vector3D d = new Vector3D(0,0,0);
-		Vector3D[] vs = new Vector3D[3];
-		vs[0] = b;
-		vs[1] = c;
-		vs[2] = d;
-		a.combineVectors(vs);
-		/*
-		Vector3D v1 = new Vector3D(1,0,0);
-		v1.rotateYZ(10);
-		v1.print();
-		
-		Vector3D v2 = new Vector3D(1,0,0);
-		v2.rotateXZ(10);
-		v2.print();
-		*/
-	}
-	
 	public static Vector3D crossProduct(Vector3D u, Vector3D v){
 		return new Vector3D(
 				(u.dy * v.dz - u.dz * v.dy),

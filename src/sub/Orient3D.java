@@ -11,12 +11,14 @@ public class Orient3D {
 		this.xz = xz;
 	}
 
+	// Takes a 3D directional vector
+	// Outputs 3 basis vectors assuming an upward orientation
 	public Orient3D(Vector3D yz){
 		this.xz = Vector3D.XZ.projectOntoPlane(Vector3D.origin, yz).normalize();
 		this.yz = yz;
 		this.xy = Vector3D.crossProduct(yz, xz).normalize();
 	}
-	
+
 	// Takes a 3D directional vector
 	// Outputs 3 basis vectors assuming an upward orientation
 	public Orient3D getUpwardOrient(Vector3D dir){
