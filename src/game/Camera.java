@@ -179,22 +179,22 @@ public class Camera {
 		double s2 = s1 * Math.tan(radians);
 		switch(plane){
 		case "XY":
-			Vector3D newXY_1 = (Vector3D)(this.orient.xy.multiply(s1).add(Vector3D.YZ.multiply(s2)));
+			Vector3D newXY_1 = (Vector3D)(this.orient.xy.multiply(s1).add(this.orient.yz.multiply(s2)));
 			Vector3D newYZ_1 = (Vector3D)(this.orient.yz.multiply(s1).add(new Vector3D(-this.orient.xy.dx, -this.orient.xy.dy, -this.orient.xy.dz).multiply(s2)));
 			this.orient.xy = newXY_1.normalize();
 			this.orient.yz = newYZ_1.normalize();
-			break;
-		case "XZ":
-			Vector3D newXZ_2 = (Vector3D)this.orient.xz.multiply(s1).add(new Vector3D(-this.orient.xy.dx, -this.orient.xy.dy, -this.orient.xy.dz).multiply(s2));
-			Vector3D newXY_2 = (Vector3D)this.orient.xy.multiply(s1).add(this.orient.xz.multiply(s2));
-			this.orient.xz = newXZ_2.normalize();
-			this.orient.xy = newXY_2.normalize();
 			break;
 		case "YZ":
 			Vector3D newYZ_3 = (Vector3D)this.orient.yz.multiply(s1).add(this.orient.xz.multiply(s2));
 			Vector3D newXZ_3 = (Vector3D)this.orient.xz.multiply(s1).add(new Vector3D(-this.orient.yz.dx, -this.orient.yz.dy, -this.orient.yz.dz).multiply(s2));
 			this.orient.yz = newYZ_3.normalize();
 			this.orient.xz = newXZ_3.normalize();
+			break;
+		case "XZ":
+			Vector3D newXZ_2 = (Vector3D)this.orient.xz.multiply(s1).add(new Vector3D(-this.orient.xy.dx, -this.orient.xy.dy, -this.orient.xy.dz).multiply(s2));
+			Vector3D newXY_2 = (Vector3D)this.orient.xy.multiply(s1).add(this.orient.xz.multiply(s2));
+			this.orient.xz = newXZ_2.normalize();
+			this.orient.xy = newXY_2.normalize();
 			break;
 		default:
 			System.out.println("Error, Camera.rotate, exiting");
