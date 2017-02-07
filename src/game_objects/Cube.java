@@ -66,8 +66,10 @@ public class Cube extends GameObject {
 		}
 
 		// Print location
-		g.setColor(Color.green);
-		g.drawString("Cube: " + "(" + loc.dx + "," + loc.dy + "," + loc.dz + ")", 10, 20);
+		if(length == 51){
+			g.setColor(Color.green);
+			g.drawString("cube loc: " + "(" + loc.dx + "," + loc.dy + "," + loc.dz + ")", 10, 20);
+		}
 	}
 
 	public void initSquares(){
