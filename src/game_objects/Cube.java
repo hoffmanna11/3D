@@ -21,6 +21,8 @@ public class Cube extends GameObject {
 	public void tick() {
 		
 	}
+	
+	
 
 	public void render(Graphics g, Camera camera) {
 		double dist[] = new double[6];

@@ -81,7 +81,7 @@ public class Matrix {
 	}
 
 	public boolean canMultiplyWith(Matrix m){
-		if( this.columns() == m.rows() ){
+		if(this.columns() == m.rows()){
 			return true;
 		}
 		return false;
