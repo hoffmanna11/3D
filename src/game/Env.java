@@ -100,26 +100,6 @@ public class Env extends Canvas implements Runnable {
 		stop();
 	}
 	
-	public static void sleepNanos (long nanoDuration) {
-		try {
-			long SLEEP_PRECISION = TimeUnit.MILLISECONDS.toNanos(2);
-			long SPIN_YIELD_PRECISION = TimeUnit.MILLISECONDS.toNanos(2);
-			final long end = System.nanoTime() + nanoDuration;
-			long timeLeft = nanoDuration;
-			do {
-				if (timeLeft > SLEEP_PRECISION)
-					Thread.sleep (1);
-				else
-					if (timeLeft > SPIN_YIELD_PRECISION)
-						Thread.yield();
-
-				timeLeft = end - System.nanoTime();
-			} while (timeLeft > 0);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-	
 	private void tick() {
 		handler.tick();
 	}
@@ -144,6 +124,26 @@ public class Env extends Canvas implements Runnable {
 
 		g.dispose();
 		bs.show();
+	}
+	
+	public static void sleepNanos (long nanoDuration) {
+		try {
+			long SLEEP_PRECISION = TimeUnit.MILLISECONDS.toNanos(2);
+			long SPIN_YIELD_PRECISION = TimeUnit.MILLISECONDS.toNanos(2);
+			final long end = System.nanoTime() + nanoDuration;
+			long timeLeft = nanoDuration;
+			do {
+				if (timeLeft > SLEEP_PRECISION)
+					Thread.sleep (1);
+				else
+					if (timeLeft > SPIN_YIELD_PRECISION)
+						Thread.yield();
+
+				timeLeft = end - System.nanoTime();
+			} while (timeLeft > 0);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void main(String[] args){
