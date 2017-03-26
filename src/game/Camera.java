@@ -174,6 +174,7 @@ public class Camera {
 	}
 
 	public void rotate(String plane, double theta){
+		// Why not just keep these in radians at all times?
 		double radians = Math.toRadians(theta);
 		double s1 = 1/Math.sqrt(1 + Math.pow(Math.tan(radians), 2));
 		double s2 = s1 * Math.tan(radians);

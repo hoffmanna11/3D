@@ -26,9 +26,9 @@ public class Env extends Canvas implements Runnable {
 	public static final int WORLDWIDTH = 500;
 	public static final int WORLDHEIGHT = 500;
 	
-	public static final int CAMERASCALE = 30;
-	public static final int CAMERAWIDTH = 16 * CAMERASCALE;
-	public static final int CAMERAHEIGHT = 9 * CAMERASCALE;
+	//public static final int CAMERASCALE = 30;
+	//public static final int CAMERAWIDTH = 16 * CAMERASCALE;
+	//public static final int CAMERAHEIGHT = 9 * CAMERASCALE;
 	
 	public static int fps = 60;
 	public static long lastRenderTime = 0;
