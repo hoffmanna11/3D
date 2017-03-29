@@ -21,12 +21,16 @@ public class Camera {
 	public boolean down = false;
 
 	public int speed = 2;
-
+	
 	public Camera(Vector3D loc, Vector3D yzOrient){
 		this.loc = loc;
 		this.orient = new Orient3D(yzOrient);
 	}
 
+	public void tick(){
+		applyKeyInput();
+	}
+	
 	/*
 	 * Draws:
 	 * 	text for current orient/loc
@@ -43,10 +47,6 @@ public class Camera {
 		g.drawString("camera xy: " + "(" + df.format(this.orient.xy.dx) + "," + df.format(this.orient.xy.dy) + "," + df.format(this.orient.xy.dz) + ")", 10, 60);
 		g.drawString("camera yz: " + "(" + df.format(this.orient.yz.dx) + "," + df.format(this.orient.yz.dy) + "," + df.format(this.orient.yz.dz) + ")", 10, 80);
 		g.drawString("camera xz: " + "(" + df.format(this.orient.xz.dx) + "," + df.format(this.orient.xz.dy) + "," + df.format(this.orient.xz.dz) + ")", 10, 100);
-	}
-
-	public void tick(){
-		applyKeyInput();
 	}
 
 	public void applyKeyInput(){
