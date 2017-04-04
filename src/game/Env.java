@@ -9,6 +9,7 @@ import game_cat.GameObject;
 import game_objects.BackgroundCube;
 import game_objects.Cube;
 import overlays.CameraOrientation;
+import overlays.Grid;
 import sub.Vector3D;
 
 public class Env extends Canvas implements Runnable {
@@ -40,6 +41,7 @@ public class Env extends Canvas implements Runnable {
 	public Env() {
 		handler = new Handler();
 		handler.setCamera(new Vector3D(WORLDLENGTH/2, 0, WORLDHEIGHT/2), new Vector3D(0,1,0));
+		handler.addOverlay(new Grid(handler.camera, RESWIDTH, RESHEIGHT));
 		handler.addOverlay(new CameraOrientation(handler.camera.orient));
 		
 		handler.addObject(new BackgroundCube(new Vector3D(WORLDLENGTH/2, WORLDWIDTH/2, WORLDHEIGHT/2), new Vector3D(0,1,0).normalize(), WORLDWIDTH));

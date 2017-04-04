@@ -42,7 +42,7 @@ public class Camera {
 
 	public void drawStrings(Graphics g){
 		DecimalFormat df = new DecimalFormat("#.##");
-		g.setColor(Color.green);
+		g.setColor(Color.white);
 		g.drawString("camera loc: " + "(" + loc.dx + "," + loc.dy + "," + loc.dz + ")", 10, 40);
 		g.drawString("camera xy: " + "(" + df.format(this.orient.xy.dx) + "," + df.format(this.orient.xy.dy) + "," + df.format(this.orient.xy.dz) + ")", 10, 60);
 		g.drawString("camera yz: " + "(" + df.format(this.orient.yz.dx) + "," + df.format(this.orient.yz.dy) + "," + df.format(this.orient.yz.dz) + ")", 10, 80);

@@ -17,25 +17,22 @@ public class Handler {
 	public void tick(){
 		for(int i = 0; i < object.size(); i++) {
 			GameObject tempObject = object.get(i);
-
 			tempObject.tick();
 		}
 		camera.tick();
 	}
 
 	public void render(Graphics g) {
+		for(int i=0; i<overlays.size(); i++){
+			Overlay tempOverlay = overlays.get(i);
+			tempOverlay.render(g);
+		}
+		
 		camera.render(g);
 		
 		for(int i = 0; i < object.size(); i++) {
 			GameObject tempObject = object.get(i);
-
 			tempObject.render(g, camera);
-		}
-		
-		for(int i=0; i<overlays.size(); i++){
-			Overlay tempHUD = overlays.get(i);
-			
-			tempHUD.render(g);
 		}
 	}
 

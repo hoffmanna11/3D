@@ -69,7 +69,7 @@ public class Cube extends GameObject {
 
 		// Print location
 		if(length == 51){
-			g.setColor(Color.green);
+			g.setColor(Color.white);
 			g.drawString("cube loc: " + "(" + loc.dx + "," + loc.dy + "," + loc.dz + ")", 10, 20);
 		}
 	}
