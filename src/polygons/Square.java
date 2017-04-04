@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import game.Camera;
 import game.Env;
+import overlays.Grid;
 import sub.Orient3D;
 import sub.Vector3D;
 
@@ -46,8 +47,9 @@ public class Square {
 			
 			// Draw the projected point in terms of the xy and xz vector
 			int[] drawLoc = camera.getBaseCoords(projectedPoints[i]);
-			xPoints[i] = Env.RESWIDTH/2 + drawLoc[0];
-			yPoints[i] = Env.RESHEIGHT/2 - drawLoc[1];
+			xPoints[i] = Env.RESWIDTH/2 + (Grid.convertXToGrid(drawLoc[0]) / 12);
+			yPoints[i] = Env.RESHEIGHT/2 - (Grid.convertYToGrid(drawLoc[1]) / 12);
+			System.out.println("(x,y): (" + (Env.RESWIDTH/2 + drawLoc[0]) + ", " + (Env.RESHEIGHT/2 - drawLoc[1]) + "), new: (" + xPoints[i] + ", " + yPoints[i] + ")");
 		}
 		
 		/*

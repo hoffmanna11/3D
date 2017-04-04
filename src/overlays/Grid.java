@@ -4,17 +4,21 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import game.Camera;
+import game.Env;
 import game_cat.Overlay;
 
 public class Grid extends Overlay {
 	Camera camera;
-	int resWidth;
-	int resHeight;
+	public int resWidth;
+	public int resHeight;
 	
-	Graphics g = null;
+	static Graphics g = null;
 	
-	double initXSpacingPercent = .15;
-	double initYSpacingPercent = .1;
+	static double initXSpacingPercent = .15;
+	static double initYSpacingPercent = .1;
+	
+	static double xSpacingDec = .9;
+	static double ySpacingDec = .9;
 	
 	double fociLengthPercent = 1.5;
 	
@@ -32,6 +36,40 @@ public class Grid extends Overlay {
 	private void drawGrid(){
 		drawXLines();
 		drawYLines();
+	}
+	
+	public static int convertYToGrid(int y){
+		double curYSpacing = Env.RESHEIGHT * initYSpacingPercent;
+		double curYSpace = curYSpacing;
+		
+		for(int i=0; i<Math.abs(y); i++){
+			curYSpace += curYSpacing;
+			curYSpacing *= ySpacingDec;
+		}
+		
+		if(y < 0){
+			return -(int)curYSpace;
+		}
+		return (int)curYSpace;
+	}
+	
+	public static int convertXToGrid(int x){
+		double xVal = 0;		
+		
+		double curXSpacing = Env.RESWIDTH * initXSpacingPercent;
+		
+		g.setColor(Color.green);
+		for(int i=0; i<x; i++){
+			// draw left
+			xVal += curXSpacing;
+			
+			curXSpacing *= xSpacingDec;
+		}
+		
+		if(x < 0){
+			return -(int)xVal;
+		}
+		return (int)xVal;
 	}
 	
 	private void drawXLines(){
