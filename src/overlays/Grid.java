@@ -15,6 +15,7 @@ public class Grid extends Overlay {
 	static double initYSpacingPercent = .1;
 	static double xSpacingDec = .9;
 	static double ySpacingDec = .9;
+	static double gridScale = 10;
 
 	Camera camera;
 	public int resWidth;
