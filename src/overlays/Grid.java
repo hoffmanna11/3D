@@ -29,7 +29,7 @@ public class Grid extends Overlay {
 	}
 
 	public void render(Graphics g) {
-		this.g = g;
+		Grid.g = g;
 		drawGrid();
 	}
 
