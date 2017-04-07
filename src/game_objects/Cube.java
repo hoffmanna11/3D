@@ -3,7 +3,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import game.Camera;
+import game.Handler;
 import game_cat.GameObject;
+import overlays.Grid;
 import polygons.Square;
 import sub.Orient3D;
 import sub.Vector3D;
@@ -21,8 +23,6 @@ public class Cube extends GameObject {
 	public void tick() {
 		
 	}
-	
-	
 
 	public void render(Graphics g, Camera camera) {
 		double dist[] = new double[6];
@@ -64,7 +64,10 @@ public class Cube extends GameObject {
 
 
 		for(int i=0; i<6; i++){
-			squares[indices[i]].render(g, camera, len);
+			squares[indices[i]].render(g, camera, len, Handler.grid);
+			/* old render method
+			 * squares[indices[i]].render(g, camera, len);
+			 */
 		}
 
 		// Print location

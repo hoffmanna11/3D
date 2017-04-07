@@ -17,6 +17,9 @@ public class Grid extends Overlay {
 	static double ySpacingDec = .9;
 	static double gridScale = 10;
 
+	public int fociX;
+	public int fociY;
+	
 	Camera camera;
 	public int resWidth;
 	public int resHeight;
@@ -26,6 +29,8 @@ public class Grid extends Overlay {
 		this.camera = camera;
 		this.resWidth = resWidth;
 		this.resHeight = resHeight;
+		fociX = resWidth / 2;
+		fociY = -100;
 	}
 
 	public void render(Graphics g) {
@@ -87,9 +92,6 @@ public class Grid extends Overlay {
 	private void drawYLines(){
 		double currentX1 = resWidth / 2;
 		double currentX2 = resWidth / 2;
-
-		int fociX = resWidth / 2;
-		int fociY = -100;
 
 		double curXSpacing = resWidth * initXSpacingPercent;
 

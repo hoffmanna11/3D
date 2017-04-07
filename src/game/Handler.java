@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import game_cat.GameObject;
 import game_cat.Overlay;
+import overlays.Grid;
 import polygons.Square;
 import sub.Vector3D;
 
@@ -13,6 +14,7 @@ public class Handler {
 	Camera camera;
 	Square[] background = new Square[6];
 	ArrayList<Overlay> overlays = new ArrayList<Overlay>();
+	public static Grid grid;
 
 	public void tick(){
 		for(int i = 0; i < object.size(); i++) {
@@ -34,6 +36,11 @@ public class Handler {
 			GameObject tempObject = object.get(i);
 			tempObject.render(g, camera);
 		}
+	}
+	
+	public void setGrid(Grid grid){
+		this.grid = grid;
+		addOverlay(grid);
 	}
 
 	public void addObject(GameObject object) {

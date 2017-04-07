@@ -27,13 +27,13 @@ public class CameraOrientation extends Overlay {
 		Vector3D proj_YZ = YZMult.projectOntoPlane(new Vector3D(0,0,0), new Vector3D(-20,50,-20));
 		Vector3D proj_XZ = XZMult.projectOntoPlane(new Vector3D(0,0,0), new Vector3D(-20,50,-20));
 
-		int[] projXY = proj_XY.getBaseCoords(proj_XY);
-		int[] projYZ = proj_YZ.getBaseCoords(proj_YZ);
-		int[] projXZ = proj_XZ.getBaseCoords(proj_XZ);
+		//int[] projXY = proj_XY.getBaseCoords(proj_XY);
+		//int[] projYZ = proj_YZ.getBaseCoords(proj_YZ);
+		//int[] projXZ = proj_XZ.getBaseCoords(proj_XZ);
 
-		drawVector(g, projXY, Color.RED);
-		drawVector(g, projYZ, Color.BLUE);
-		drawVector(g, projXZ, Color.GREEN);
+		//drawVector(g, projXY, Color.RED);
+		//drawVector(g, projYZ, Color.BLUE);
+		//drawVector(g, projXZ, Color.GREEN);
 	}
 
 	public void drawVector(Graphics g, int[] coords, Color c){

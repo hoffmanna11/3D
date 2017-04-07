@@ -26,6 +26,23 @@ public class Matrix {
 		return new Matrix(newValues);
 	}
 	
+	public Matrix clone(){
+		double[][] clone = new double[rows()][columns()];
+		
+		for(int i=0; i<this.rows(); i++){
+			for(int j=0; j<this.columns(); j++){
+				clone[i][j] = this.values[i][j];
+			}
+		}
+		
+		//System.out.println("Original: ");
+		//this.print();
+		//System.out.println("Clone: ");
+		//new Matrix(clone).print();
+		
+		return new Matrix(clone);
+	}
+	
 	public Matrix multiply(double d){
 		double[][] newValues = new double[values.length][values[0].length];
 		for(int i=0; i<values.length; i++){
@@ -95,9 +112,11 @@ public class Matrix {
 		return this.values[0].length;
 	}
 
+	/*
 	public boolean invalidMatch(Matrix other){
 		return false;
 	}
+	*/
 	
 	public static double[][] rref(double[][] mat)
 	{

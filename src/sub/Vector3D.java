@@ -42,20 +42,16 @@ public class Vector3D extends Matrix {
 				);
 	}
 	
-	public Matrix combineVectors(Vector3D[] vectors){
-		int cols = 1 + vectors.length;
+	public static Matrix combineVectors(Vector3D[] vectors){
+		int cols = vectors.length;
 		int rows = 3;
 		
 		double[][] values = new double[rows][cols];
-		
-		values[0][0] = dx;
-		values[1][0] = dy;
-		values[2][0] = dz;
-		
-		for(int col = 1; col < cols; col++){
+
+		for(int col = 0; col < cols; col++){
 			for(int row = 0; row < rows; row++){
 				//double x = vectors[1].values[1][0];
-				values[row][col] = vectors[col-1].values[row][0];
+				values[row][col] = vectors[col].values[row][0];
 			}
 		}
 		
@@ -66,7 +62,35 @@ public class Vector3D extends Matrix {
 		return Math.sqrt(Math.pow((point.dx - dx), 2) + Math.pow((point.dy - dy), 2) + Math.pow((point.dz - dz), 2));
 	}
 	
-	public int[] getBaseCoords(Vector3D pt){
+	public static int[] getBasisMultiples(Vector3D XY, Vector3D YZ, Vector3D XZ, Vector3D camLoc){
+		// Combine all vectors into a matrix
+		
+		// Now combine all vectors into a matrix
+		// Create vector array
+		Vector3D[] vectors = new Vector3D[4];
+		vectors[0] = XY;
+		vectors[1] = YZ;
+		vectors[2] = XZ;
+		vectors[3] = camLoc;
+		
+		//System.out.println("camLoc: ");
+		//vectors[3].print();
+		
+		Matrix system = combineVectors(vectors);
+		//System.out.println("Normal");
+		//system.print();
+		
+		//System.out.println("rref");
+		Matrix clone;
+		clone = system.clone();
+		clone.rref();
+		//clone.print();
+		//System.out.print("\n");
+		
+		return new int[]{(int)clone.values[0][3], (int)clone.values[1][3], (int)clone.values[2][3]};
+	}
+	
+	public int[] getBaseCoordsDeprecated(Vector3D pt){
 		// Combine all vectors into a matrix
 		
 		Vector3D XY = new Vector3D(1,0,0);

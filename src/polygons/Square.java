@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import game.Camera;
 import game.Env;
+import game.Handler;
 import overlays.Grid;
 import sub.Orient3D;
 import sub.Vector3D;
@@ -26,8 +27,45 @@ public class Square {
 			points[i] = new Vector3D(0,0,0);
 		}
 	}
+	
+	public void render(Graphics g, Camera camera, int len, Grid grid){
+		setPointsForRender(camera, len);
+		
+		Vector3D[] diffs = new Vector3D[4];
+		
+		for(int i=0; i<4; i++){
+			// Get the difference from the camera to the point
+			diffs[i] = new Vector3D(
+					this.points[i].dx - camera.loc.dx,
+					this.points[i].dy - camera.loc.dy,
+					this.points[i].dz - camera.loc.dz
+					);
+		}
+		
+		int[] mults1 = Vector3D.getBasisMultiples(camera.orient.xy, camera.orient.yz, camera.orient.xz, diffs[0]);
+		int[] mults2 = Vector3D.getBasisMultiples(camera.orient.xy, camera.orient.yz, camera.orient.xz, diffs[1]);
+		int[] mults3 = Vector3D.getBasisMultiples(camera.orient.xy, camera.orient.yz, camera.orient.xz, diffs[2]);
+		int[] mults4 = Vector3D.getBasisMultiples(camera.orient.xy, camera.orient.yz, camera.orient.xz, diffs[3]);
+		
+		int[] screenLoc1 = getScreenLoc(mults1, camera);
+		int[] screenLoc2 = getScreenLoc(mults2, camera);
+		int[] screenLoc3 = getScreenLoc(mults3, camera);
+		int[] screenLoc4 = getScreenLoc(mults4, camera);
+	}
+	
+	public int[] getScreenLoc(int[] mults, Camera camera){
+		Grid grid = Handler.grid;
+		//grid.fociX;
+		//grid.fociY;
+		
+		return null;
+	}
+	
+	public void renderOutlineOnly(Graphics g, Camera camera, int len){
+		
+	}
 
-	public void render(Graphics g, Camera camera, int len){
+	public void renderOld(Graphics g, Camera camera, int len){
 		setPointsForRender(camera, len);
 
 		Vector3D[] projectedPoints = new Vector3D[4];
@@ -47,9 +85,12 @@ public class Square {
 			
 			// Draw the projected point in terms of the xy and xz vector
 			int[] drawLoc = camera.getBaseCoords(projectedPoints[i]);
+			
+			
+			
 			xPoints[i] = Env.RESWIDTH/2 + (Grid.convertXToGrid(drawLoc[0]) / 12);
 			yPoints[i] = Env.RESHEIGHT/2 - (Grid.convertYToGrid(drawLoc[1]) / 12);
-			System.out.println("(x,y): (" + (Env.RESWIDTH/2 + drawLoc[0]) + ", " + (Env.RESHEIGHT/2 - drawLoc[1]) + "), new: (" + xPoints[i] + ", " + yPoints[i] + ")");
+			//System.out.println("(x,y): (" + (Env.RESWIDTH/2 + drawLoc[0]) + ", " + (Env.RESHEIGHT/2 - drawLoc[1]) + "), new: (" + xPoints[i] + ", " + yPoints[i] + ")");
 		}
 		
 		/*
@@ -78,7 +119,7 @@ public class Square {
 		}
 	}
 	
-	public void renderOutlineOnly(Graphics g, Camera camera, int len){
+	public void renderOutlineOnlyOld(Graphics g, Camera camera, int len){
 		setPointsForRender(camera, len);
 
 		Vector3D[] projectedPoints = new Vector3D[4];
