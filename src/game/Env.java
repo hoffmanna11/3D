@@ -27,10 +27,6 @@ public class Env extends Canvas implements Runnable {
 	public static final int WORLDWIDTH = 500;
 	public static final int WORLDHEIGHT = 500;
 	
-	//public static final int CAMERASCALE = 30;
-	//public static final int CAMERAWIDTH = 16 * CAMERASCALE;
-	//public static final int CAMERAHEIGHT = 9 * CAMERASCALE;
-	
 	public static int fps = 60;
 	public static long lastRenderTime = 0;
 	public static long desiredRenderInterval = 1000000000 / fps;
@@ -40,14 +36,15 @@ public class Env extends Canvas implements Runnable {
 	 */
 	public Env() {
 		handler = new Handler();
-		handler.setCamera(new Vector3D(WORLDLENGTH/2, 0, WORLDHEIGHT/2), new Vector3D(0,1,0));
+		Camera camera = new Camera(new Vector3D(WORLDLENGTH/2, 0, WORLDHEIGHT/2), new Vector3D(0,1,0));
+		handler.setCamera(camera);
 		Grid grid = new Grid(handler.camera, RESWIDTH, RESHEIGHT);
 		handler.setGrid(grid);
-		handler.addOverlay(new CameraOrientation(handler.camera.orient));
+		handler.addOverlay(new CameraOrientation(handler.camera.orient, camera));
 		
-		handler.addObject(new BackgroundCube(new Vector3D(WORLDLENGTH/2, WORLDWIDTH/2, WORLDHEIGHT/2), new Vector3D(0,1,0).normalize(), WORLDWIDTH));
+		//handler.addObject(new BackgroundCube(new Vector3D(WORLDLENGTH/2, WORLDWIDTH/2, WORLDHEIGHT/2), new Vector3D(0,1,0).normalize(), WORLDWIDTH));
 		handler.addObject(new Cube(new Vector3D(WORLDLENGTH/2, 200, WORLDHEIGHT/2), new Vector3D(0,1,0).normalize(), 51));
-		handler.addObject(new Cube(new Vector3D(WORLDLENGTH/2 + 80, 200, WORLDHEIGHT/2 - 20), new Vector3D(0,1,0).normalize(), 50));
+		//handler.addObject(new Cube(new Vector3D(WORLDLENGTH/2 + 80, 200, WORLDHEIGHT/2 - 20), new Vector3D(0,1,0).normalize(), 50));
 		
 		this.addKeyListener(new KeyInput(handler));
 		window = new Window(RESWIDTH, RESHEIGHT, "3D", this);
@@ -58,7 +55,7 @@ public class Env extends Canvas implements Runnable {
 	 */
 	public Env(Vector3D camLoc, GameObject[] gameObjects) {
 		handler = new Handler();
-		handler.setCamera(new Vector3D(WORLDLENGTH/2, 0, WORLDHEIGHT/2), new Vector3D(0,1,0));
+		//handler.setCamera(new Vector3D(WORLDLENGTH/2, 0, WORLDHEIGHT/2), new Vector3D(0,1,0));
 		this.addKeyListener(new KeyInput(handler));
 		for(int i=0; i<gameObjects.length; i++){
 			handler.addObject(gameObjects[i]);

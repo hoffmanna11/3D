@@ -34,6 +34,10 @@ public class Vector3D extends Matrix {
 		this.dz = values[2][0];
 	}
 	
+	public void print(){
+		System.out.println("(" + dx + ", " + dy + ", " + dz + ")");
+	}
+	
 	public static Vector3D crossProduct(Vector3D u, Vector3D v){
 		return new Vector3D(
 				(u.dy * v.dz - u.dz * v.dy),
@@ -62,7 +66,7 @@ public class Vector3D extends Matrix {
 		return Math.sqrt(Math.pow((point.dx - dx), 2) + Math.pow((point.dy - dy), 2) + Math.pow((point.dz - dz), 2));
 	}
 	
-	public static int[] getBasisMultiples(Vector3D XY, Vector3D YZ, Vector3D XZ, Vector3D camLoc){
+	public static Vector3D getBasisMultiples(Vector3D XY, Vector3D YZ, Vector3D XZ, Vector3D camLoc){
 		// Combine all vectors into a matrix
 		
 		// Now combine all vectors into a matrix
@@ -87,7 +91,7 @@ public class Vector3D extends Matrix {
 		//clone.print();
 		//System.out.print("\n");
 		
-		return new int[]{(int)clone.values[0][3], (int)clone.values[1][3], (int)clone.values[2][3]};
+		return new Vector3D((int)clone.values[0][3], (int)clone.values[1][3], (int)clone.values[2][3]);
 	}
 	
 	public int[] getBaseCoordsDeprecated(Vector3D pt){

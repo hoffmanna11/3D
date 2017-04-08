@@ -26,4 +26,11 @@ public class Orient3D {
 		Vector3D myXY = Vector3D.crossProduct(dir, myXZ).normalize();
 		return new Orient3D(myXY, dir.normalize(), myXZ);
 	}
+	
+	public void print(){
+		System.out.println("Orientation:");
+		System.out.println("XY: (" + xy.dx + ", " + xy.dy + ", " + xy.dz + ")");
+		System.out.println("YZ: (" + yz.dx + ", " + yz.dy + ", " + yz.dz + ")");
+		System.out.println("XZ: (" + xz.dx + ", " + xz.dy + ", " + xz.dz + ")");
+	}
 }

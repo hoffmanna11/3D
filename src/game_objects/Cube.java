@@ -24,7 +24,7 @@ public class Cube extends GameObject {
 		
 	}
 
-	public void render(Graphics g, Camera camera) {
+	public void render(Graphics g, Camera camera, Grid grid) {
 		double dist[] = new double[6];
 		for(int i=0; i<6; i++){
 			for(int j=0; j<4; j++){
@@ -64,7 +64,7 @@ public class Cube extends GameObject {
 
 
 		for(int i=0; i<6; i++){
-			squares[indices[i]].render(g, camera, len, Handler.grid);
+			squares[indices[i]].render(g, camera, len, grid);
 			/* old render method
 			 * squares[indices[i]].render(g, camera, len);
 			 */
@@ -81,37 +81,37 @@ public class Cube extends GameObject {
 		squares = new Square[6];
 
 		// Square 0
-		squares[0] = new Square(Vector3D.origin, orient, 0);
+		squares[0] = new Square(Vector3D.origin, orient, 0, 0);
 
 		// Square 1
 		Vector3D orientXY1 = (Vector3D)orient.yz.multiply(-1);
 		Vector3D orientYZ1 = (Vector3D)orient.xy.multiply(1);
 		Vector3D orientXZ1 = (Vector3D)orient.xz.multiply(1);
-		squares[1] = new Square(Vector3D.origin, new Orient3D(orientXY1, orientYZ1, orientXZ1), 0);
+		squares[1] = new Square(Vector3D.origin, new Orient3D(orientXY1, orientYZ1, orientXZ1), 0, 1);
 
 		// Square 2
 		Vector3D orientXY2 = (Vector3D)orient.xy.multiply(-1);
 		Vector3D orientYZ2 = (Vector3D)orient.yz.multiply(-1);
 		Vector3D orientXZ2 = (Vector3D)orient.xz.multiply(1);
-		squares[2] = new Square(Vector3D.origin, new Orient3D(orientXY2, orientYZ2, orientXZ2), 0);
+		squares[2] = new Square(Vector3D.origin, new Orient3D(orientXY2, orientYZ2, orientXZ2), 0, 2);
 
 		// Square 3
 		Vector3D orientXY3 = (Vector3D)orient.yz.multiply(1);
 		Vector3D orientYZ3 = (Vector3D)orient.xy.multiply(-1);
 		Vector3D orientXZ3 = (Vector3D)orient.xz.multiply(1);
-		squares[3] = new Square(Vector3D.origin, new Orient3D(orientXY3, orientYZ3, orientXZ3), 0);
+		squares[3] = new Square(Vector3D.origin, new Orient3D(orientXY3, orientYZ3, orientXZ3), 0, 3);
 
 		// Square 4: Top
 		Vector3D orientXY4 = (Vector3D)orient.xy.multiply(1);
 		Vector3D orientYZ4 = (Vector3D)orient.xz.multiply(-1);
 		Vector3D orientXZ4 = (Vector3D)orient.yz.multiply(1);
-		squares[4] = new Square(Vector3D.origin, new Orient3D(orientXY4, orientYZ4, orientXZ4), 0);
+		squares[4] = new Square(Vector3D.origin, new Orient3D(orientXY4, orientYZ4, orientXZ4), 0, 4);
 
 		// Square 5: Bottom
 		Vector3D orientXY5 = (Vector3D)orient.xy.multiply(1);
 		Vector3D orientYZ5 = (Vector3D)orient.xz.multiply(1);
 		Vector3D orientXZ5 = (Vector3D)orient.yz.multiply(-1);
-		squares[5] = new Square(Vector3D.origin, new Orient3D(orientXY5, orientYZ5, orientXZ5), 0);
+		squares[5] = new Square(Vector3D.origin, new Orient3D(orientXY5, orientYZ5, orientXZ5), 0, 5);
 
 		squares[0].color = Color.red;
 		squares[1].color = Color.blue;

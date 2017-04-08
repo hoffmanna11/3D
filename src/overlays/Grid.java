@@ -5,9 +5,10 @@ import java.awt.Graphics;
 
 import game.Camera;
 import game.Env;
-import game_cat.Overlay;
+import game_cat.Underlay;
+import sub.Vector3D;
 
-public class Grid extends Overlay {
+public class Grid extends Underlay {
 	// Had to make these static for the static methods
 	// Should probably find another way to do that
 	static Graphics g = null;
@@ -19,7 +20,7 @@ public class Grid extends Overlay {
 
 	public int fociX;
 	public int fociY;
-	
+
 	Camera camera;
 	public int resWidth;
 	public int resHeight;
@@ -39,11 +40,51 @@ public class Grid extends Overlay {
 	}
 
 	private void drawGrid(){
+		drawCenter();
 		drawXLines();
 		drawYLines();
 	}
 
-	public static int convertYToGrid(int y){
+	public static void drawCenter(){
+		g.setColor(Color.RED);
+		g.fillOval(Env.RESWIDTH/2 - 10, Env.RESHEIGHT/2 - 10, 20, 20);
+	}
+
+	public int[] getScreenLoc(Vector3D mults, Camera camera){
+		int x, y, z;
+
+		// Calculate the lengths
+		x = distToPix(mults.dx);
+		y = distToPix(mults.dy);
+		z = distToPix(mults.dz);
+		
+		//System.out.println("mults: " + mults.dx + ", distToPix: " + x);
+		//System.out.println("mults: " + mults.dy + ", distToPix: " + y);
+		//System.out.println("mults: " + mults.dz + ", distToPix: " + z);
+
+		double[] centerPlusXOffset = {Env.RESWIDTH / 2 + x, Env.RESHEIGHT / 2};
+		double[] vectorToFoci = {fociX - centerPlusXOffset[0], fociY - centerPlusXOffset[1]};
+
+		// Normalize the vector
+		double normalizeValue = Math.sqrt(Math.pow(vectorToFoci[0], 2) + Math.pow(vectorToFoci[1], 2));
+		vectorToFoci[0] = (vectorToFoci[0] / normalizeValue);
+		vectorToFoci[1] = (vectorToFoci[1] / normalizeValue);
+		// Multiply by y length
+		vectorToFoci[0] = vectorToFoci[0] * y;
+		vectorToFoci[1] = vectorToFoci[1] * y;
+
+		int[] finalLoc = new int[2];
+		finalLoc[0] = (int)vectorToFoci[0] + x + Env.RESWIDTH / 2;
+		finalLoc[1] = (Env.RESHEIGHT/2) - (int)vectorToFoci[1] - z;
+		
+		// Checking if the lengths added up
+		//double length = Math.sqrt(Math.pow(vectorToFoci[0], 2) + Math.pow(vectorToFoci[1], 2));
+		//System.out.println("This: " + length + " should == this: " + y);
+
+		return finalLoc;
+	}
+
+	public static int convertYToGridOld(int y){
 		double curYSpacing = Env.RESHEIGHT * initYSpacingPercent;
 		double curYSpace = curYSpacing;
 
@@ -58,7 +99,7 @@ public class Grid extends Overlay {
 		return (int)curYSpace;
 	}
 
-	public static int convertXToGrid(int x){
+	public static int convertXToGridOld(int x){
 		double xVal = 0;		
 
 		double curXSpacing = Env.RESWIDTH * initXSpacingPercent;
@@ -78,6 +119,40 @@ public class Grid extends Overlay {
 	}
 
 	private void drawXLines(){
+		g.setColor(Color.green);
+
+		int curDist = 0;
+
+		for(int i=0; i<30; i++){
+			int curY = (int)(Env.RESHEIGHT - distToPix(curDist) - 1);
+			g.drawLine(0, curY, Env.RESWIDTH, curY);
+			curDist += 50;
+		}
+	}
+	
+	public static int distToPix(double dist){
+		int val = (int) (1 * Math.pow(Math.abs(dist), .8));
+		if(dist < 0){
+			return -1 * val;
+		}
+		return val;
+	}
+
+	private void drawYLines(){
+		g.setColor(Color.green);
+		g.drawLine(Env.RESWIDTH/2, 0, Env.RESWIDTH/2, Env.RESHEIGHT);
+		
+		int curDist = 50;
+		
+		for(int i=0; i<100; i++){
+			int curX = distToPix(curDist);
+			g.drawLine(Env.RESWIDTH/2 - curX, Env.RESHEIGHT, fociX, fociY);
+			g.drawLine(Env.RESWIDTH/2 + curX, Env.RESHEIGHT, fociX, fociY);
+			curDist += 50;
+		}
+	}
+
+	private void drawXLinesOld(){
 		double curYSpacing = resHeight * initYSpacingPercent;
 		double curYSpace = curYSpacing;
 
@@ -89,7 +164,7 @@ public class Grid extends Overlay {
 		}
 	}
 
-	private void drawYLines(){
+	private void drawYLinesOld(){
 		double currentX1 = resWidth / 2;
 		double currentX2 = resWidth / 2;
 

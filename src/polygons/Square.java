@@ -15,11 +15,13 @@ public class Square {
 	public Vector3D[] points;
 	public Color color = null;
 	public int length;
+	int id;
 
-	public Square(Vector3D loc, Orient3D orient, int length){
+	public Square(Vector3D loc, Orient3D orient, int length, int id){
 		this.loc = loc;
 		this.orient = orient;
 		this.length = length;
+		this.id = id;
 		
 		// Initialize points
 		points = new Vector3D[4];
@@ -29,6 +31,11 @@ public class Square {
 	}
 	
 	public void render(Graphics g, Camera camera, int len, Grid grid){
+		//int[] myX = {456, 504, 504, 456};
+		//int[] myY = {406, 406, 500, 500};
+		
+		if(id != 7){
+		
 		setPointsForRender(camera, len);
 		
 		Vector3D[] diffs = new Vector3D[4];
@@ -42,23 +49,36 @@ public class Square {
 					);
 		}
 		
-		int[] mults1 = Vector3D.getBasisMultiples(camera.orient.xy, camera.orient.yz, camera.orient.xz, diffs[0]);
-		int[] mults2 = Vector3D.getBasisMultiples(camera.orient.xy, camera.orient.yz, camera.orient.xz, diffs[1]);
-		int[] mults3 = Vector3D.getBasisMultiples(camera.orient.xy, camera.orient.yz, camera.orient.xz, diffs[2]);
-		int[] mults4 = Vector3D.getBasisMultiples(camera.orient.xy, camera.orient.yz, camera.orient.xz, diffs[3]);
+		System.out.println("Square " + id + ": ");
 		
-		int[] screenLoc1 = getScreenLoc(mults1, camera);
-		int[] screenLoc2 = getScreenLoc(mults2, camera);
-		int[] screenLoc3 = getScreenLoc(mults3, camera);
-		int[] screenLoc4 = getScreenLoc(mults4, camera);
-	}
-	
-	public int[] getScreenLoc(int[] mults, Camera camera){
-		Grid grid = Handler.grid;
-		//grid.fociX;
-		//grid.fociY;
+		Vector3D mults[] = new Vector3D[4];
+		for(int i=0; i<4; i++){
+			mults[i] = Vector3D.getBasisMultiples(camera.orient.xy, camera.orient.yz, camera.orient.xz, diffs[i]);
+			System.out.println("Basis multiples: (" + mults[i].dx + ", " + mults[i].dy + ", " + mults[i].dz + ")");
+		}
 		
-		return null;
+		int xPoints[] = new int[4];
+		int yPoints[] = new int[4];
+		for(int i=0; i<4; i++){
+			int[] screenLoc = grid.getScreenLoc(mults[i], camera);
+			xPoints[i] = screenLoc[0];
+			yPoints[i] = screenLoc[1];
+		}
+		
+		for(int i=0; i<4; i++){
+			System.out.println("Screen loc: (" + xPoints[i] + ", " + yPoints[i] + ")");
+		}System.out.println();
+		
+		System.out.print("loc: "); loc.print();
+		orient.print();
+		
+		System.out.println();
+		
+		g.setColor(Color.RED);
+		g.fillPolygon(xPoints, yPoints, 4);
+		g.setColor(Color.WHITE);
+		g.drawPolygon(xPoints, yPoints, 4);
+		}
 	}
 	
 	public void renderOutlineOnly(Graphics g, Camera camera, int len){
@@ -86,10 +106,8 @@ public class Square {
 			// Draw the projected point in terms of the xy and xz vector
 			int[] drawLoc = camera.getBaseCoords(projectedPoints[i]);
 			
-			
-			
-			xPoints[i] = Env.RESWIDTH/2 + (Grid.convertXToGrid(drawLoc[0]) / 12);
-			yPoints[i] = Env.RESHEIGHT/2 - (Grid.convertYToGrid(drawLoc[1]) / 12);
+			xPoints[i] = Env.RESWIDTH/2 + (Grid.convertXToGridOld(drawLoc[0]) / 12);
+			yPoints[i] = Env.RESHEIGHT/2 - (Grid.convertYToGridOld(drawLoc[1]) / 12);
 			//System.out.println("(x,y): (" + (Env.RESWIDTH/2 + drawLoc[0]) + ", " + (Env.RESHEIGHT/2 - drawLoc[1]) + "), new: (" + xPoints[i] + ", " + yPoints[i] + ")");
 		}
 		
