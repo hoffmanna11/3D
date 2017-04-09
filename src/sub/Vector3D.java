@@ -36,6 +36,7 @@ public class Vector3D extends Matrix {
 	
 	public void print(){
 		System.out.println("(" + dx + ", " + dy + ", " + dz + ")");
+		//super.print();
 	}
 	
 	public static Vector3D crossProduct(Vector3D u, Vector3D v){

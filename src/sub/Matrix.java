@@ -271,6 +271,10 @@ public class Matrix {
 		System.out.println(valuesToStr());
 	}
 	
+	public void printMatrix(){
+		System.out.println(valuesToStr());
+	}
+	
 	public String valuesToStr(){
 		int spaces = getSpacing();
 		String str = "";

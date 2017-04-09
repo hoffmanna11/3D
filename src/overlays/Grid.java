@@ -123,7 +123,7 @@ public class Grid extends Underlay {
 
 		int curDist = 0;
 
-		for(int i=0; i<30; i++){
+		for(int i=0; i<100; i++){
 			int curY = (int)(Env.RESHEIGHT - distToPix(curDist) - 1);
 			g.drawLine(0, curY, Env.RESWIDTH, curY);
 			curDist += 50;
@@ -131,7 +131,7 @@ public class Grid extends Underlay {
 	}
 	
 	public static int distToPix(double dist){
-		int val = (int) (1 * Math.pow(Math.abs(dist), .8));
+		int val = (int) (4 * Math.pow(Math.abs(dist), .7));
 		if(dist < 0){
 			return -1 * val;
 		}
