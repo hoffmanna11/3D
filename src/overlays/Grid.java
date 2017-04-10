@@ -84,40 +84,6 @@ public class Grid extends Underlay {
 		return finalLoc;
 	}
 
-	public static int convertYToGridOld(int y){
-		double curYSpacing = Env.RESHEIGHT * initYSpacingPercent;
-		double curYSpace = curYSpacing;
-
-		for(int i=0; i<Math.abs(y); i++){
-			curYSpace += curYSpacing;
-			curYSpacing *= ySpacingDec;
-		}
-
-		if(y < 0){
-			return -(int)curYSpace;
-		}
-		return (int)curYSpace;
-	}
-
-	public static int convertXToGridOld(int x){
-		double xVal = 0;		
-
-		double curXSpacing = Env.RESWIDTH * initXSpacingPercent;
-
-		g.setColor(Color.green);
-		for(int i=0; i<x; i++){
-			// draw left
-			xVal += curXSpacing;
-
-			curXSpacing *= xSpacingDec;
-		}
-
-		if(x < 0){
-			return -(int)xVal;
-		}
-		return (int)xVal;
-	}
-
 	private void drawXLines(){
 		g.setColor(Color.green);
 
@@ -128,14 +94,6 @@ public class Grid extends Underlay {
 			g.drawLine(0, curY, Env.RESWIDTH, curY);
 			curDist += 50;
 		}
-	}
-	
-	public static int distToPix(double dist){
-		int val = (int) (4 * Math.pow(Math.abs(dist), .7));
-		if(dist < 0){
-			return -1 * val;
-		}
-		return val;
 	}
 
 	private void drawYLines(){
@@ -151,37 +109,13 @@ public class Grid extends Underlay {
 			curDist += 50;
 		}
 	}
-
-	private void drawXLinesOld(){
-		double curYSpacing = resHeight * initYSpacingPercent;
-		double curYSpace = curYSpacing;
-
-		g.setColor(Color.green);
-		for(int i=0; i<100; i++){
-			g.drawLine(0, (int)(resHeight - curYSpace), resWidth, (int)(resHeight - curYSpace));
-			curYSpace += curYSpacing;
-			curYSpacing *= .90;
+	
+	public static int distToPix(double dist){
+		int val = (int) (4 * Math.pow(Math.abs(dist), .7));
+		if(dist < 0){
+			return -1 * val;
 		}
+		return val;
 	}
-
-	private void drawYLinesOld(){
-		double currentX1 = resWidth / 2;
-		double currentX2 = resWidth / 2;
-
-		double curXSpacing = resWidth * initXSpacingPercent;
-
-		g.setColor(Color.green);
-		for(int i=0; i<25; i++){
-			// draw left
-			g.drawLine((int)currentX1, resHeight, fociX, fociY);
-			currentX1 -= curXSpacing;
-
-			// draw right
-			g.drawLine((int)currentX2, resHeight, fociX, fociY);
-			currentX2 += curXSpacing;
-
-			curXSpacing *= .90;
-		}
-	}
-
+	
 }
