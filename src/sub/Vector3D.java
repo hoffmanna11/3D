@@ -95,7 +95,7 @@ public class Vector3D extends Matrix {
 		return new Vector3D((int)clone.values[0][3], (int)clone.values[1][3], (int)clone.values[2][3]);
 	}
 	
-	public int[] getBaseCoordsDeprecated(Vector3D pt){
+	public int[] getBaseCoordsDeprecated(){
 		// Combine all vectors into a matrix
 		
 		Vector3D XY = new Vector3D(1,0,0);
@@ -109,14 +109,13 @@ public class Vector3D extends Matrix {
 		
 		// Now combine all vectors into a matrix
 		// Create vector array
-		Vector3D[] vectors = new Vector3D[3];
-		vectors[0] = YZ;
-		vectors[1] = XZ;
-		vectors[2] = pt;
-		Matrix system = XY.combineVectors(vectors);
+		Vector3D[] vectors = new Vector3D[4];
+		vectors[0] = XY;
+		vectors[1] = YZ;
+		vectors[2] = XZ;
+		vectors[3] = this;
+		Matrix system = combineVectors(vectors);
 		system.rref();
-		//System.out.println("Checking system");
-		//system.print();
 		
 		return new int[]{(int)system.values[0][3], (int)system.values[2][3]};
 	}

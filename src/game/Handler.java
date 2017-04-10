@@ -28,8 +28,6 @@ public class Handler {
 	}
 
 	public void render(Graphics g) {
-		//camera.render(g);
-		
 		for(int i=0; i<underlays.size(); i++){
 			Underlay tempUnderlay = underlays.get(i);
 			tempUnderlay.render(g);
@@ -73,45 +71,6 @@ public class Handler {
 
 	public void setCamera(Camera camera){
 		this.camera = camera;
-	}
-
-	public void setBackground(){
-		// Background squares
-		/*
-		int WORLDLENGTH = Env.WORLDLENGTH;
-		int WORLDWIDTH = Env.WORLDWIDTH;
-		int WORLDHEIGHT = Env.WORLDHEIGHT;
-		background[0] = new Square( 
-				new Vector3D(0, 0, WORLDHEIGHT),
-				new Vector3D(WORLDLENGTH, 0, WORLDHEIGHT),
-				new Vector3D(WORLDLENGTH, 0, 0),
-				new Vector3D(0, 0, 0));
-		background[1] = new Square( 
-				new Vector3D(0, 0, WORLDHEIGHT),
-				new Vector3D(0, WORLDWIDTH, WORLDHEIGHT),
-				new Vector3D(0, WORLDWIDTH, 0),
-				new Vector3D(0, 0, 0));
-		background[2] = new Square( 
-				new Vector3D(0, WORLDWIDTH, WORLDHEIGHT),
-				new Vector3D(WORLDLENGTH, WORLDWIDTH, WORLDHEIGHT),
-				new Vector3D(WORLDLENGTH, WORLDWIDTH, 0),
-				new Vector3D(0, WORLDWIDTH, 0));
-		background[3] = new Square( 
-				new Vector3D(WORLDLENGTH, WORLDWIDTH, WORLDHEIGHT),
-				new Vector3D(WORLDLENGTH, 0, WORLDHEIGHT),
-				new Vector3D(WORLDLENGTH, 0, 0),
-				new Vector3D(WORLDLENGTH, WORLDWIDTH, 0));
-		background[4] = new Square( 
-				new Vector3D(0, WORLDWIDTH, WORLDHEIGHT),
-				new Vector3D(WORLDLENGTH, WORLDWIDTH, WORLDHEIGHT),
-				new Vector3D(WORLDLENGTH, 0, WORLDHEIGHT),
-				new Vector3D(0, 0, 0));
-		background[5] = new Square( 
-				new Vector3D(0, WORLDWIDTH, 0),
-				new Vector3D(WORLDLENGTH, WORLDWIDTH, 0),
-				new Vector3D(WORLDLENGTH, 0, 0),
-				new Vector3D(0, 0, 0));
-		*/
 	}
 
 }

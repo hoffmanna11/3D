@@ -6,39 +6,35 @@ import java.text.DecimalFormat;
 
 import game.Camera;
 import game_cat.Overlay;
+import sub.Matrix;
 import sub.Orient3D;
 import sub.Vector3D;
 
 public class CameraOrientation extends Overlay {
-	private Orient3D cameraOrient;
 	private Camera camera;
 	
-	public CameraOrientation(Orient3D cameraOrient, Camera camera){
-		this.cameraOrient = cameraOrient;
+	public CameraOrientation(Camera camera){
 		this.camera = camera;
 	}
 	
 	public void render(Graphics g) {
-		//drawVectors(g);
+		drawVectors(g);
+		System.out.println("Here");
 		drawStrings(g);
 	}
 	
 	public void drawVectors(Graphics g){
-		Vector3D XYMult = new Vector3D(this.cameraOrient.xy.dx * 50, this.cameraOrient.xy.dy * 50, this.cameraOrient.xy.dz * 50);
-		Vector3D YZMult = new Vector3D(this.cameraOrient.yz.dx * 50, this.cameraOrient.yz.dy * 50, this.cameraOrient.yz.dz * 50);
-		Vector3D XZMult = new Vector3D(this.cameraOrient.xz.dx * 50, this.cameraOrient.xz.dy * 50, this.cameraOrient.xz.dz * 50);
-
-		Vector3D proj_XY = XYMult.projectOntoPlane(new Vector3D(0,0,0), new Vector3D(-20,50,-20));
-		Vector3D proj_YZ = YZMult.projectOntoPlane(new Vector3D(0,0,0), new Vector3D(-20,50,-20));
-		Vector3D proj_XZ = XZMult.projectOntoPlane(new Vector3D(0,0,0), new Vector3D(-20,50,-20));
-
-		int[] projXY = proj_XY.getBaseCoordsDeprecated(proj_XY);
-		int[] projYZ = proj_YZ.getBaseCoordsDeprecated(proj_YZ);
-		int[] projXZ = proj_XZ.getBaseCoordsDeprecated(proj_XZ);
-
-		//drawVector(g, projXY, Color.RED);
-		//drawVector(g, projYZ, Color.BLUE);
-		//drawVector(g, projXZ, Color.GREEN);
+		Vector3D projXY = ((Vector3D)(camera.orient.xy.multiply(50))).projectOntoPlane(Vector3D.origin, new Vector3D(-20,50,-20));
+		Vector3D projYZ = ((Vector3D)(camera.orient.yz.multiply(50))).projectOntoPlane(Vector3D.origin, new Vector3D(-20,50,-20));
+		Vector3D projXZ = ((Vector3D)(camera.orient.xz.multiply(50))).projectOntoPlane(Vector3D.origin, new Vector3D(-20,50,-20));
+		
+		int[] coordsXY = projXY.getBaseCoordsDeprecated();
+		int[] coordsYZ = projYZ.getBaseCoordsDeprecated();
+		int[] coordsXZ = projXZ.getBaseCoordsDeprecated();
+		
+		drawVector(g, coordsXY, Color.BLUE);
+		drawVector(g, coordsYZ, Color.GREEN);
+		drawVector(g, coordsXZ, Color.RED);
 	}
 	
 	/*
@@ -56,7 +52,7 @@ public class CameraOrientation extends Overlay {
 
 	public void drawVector(Graphics g, int[] coords, Color c){
 		g.setColor(c);
-		g.drawLine(200, 200, 200 + coords[0], 200 - coords[1]);
+		g.drawLine(200, 50, 200 + coords[0], 50 - coords[1]);
 	}
 	
 }

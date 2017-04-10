@@ -6,7 +6,6 @@ import java.awt.image.BufferStrategy;
 import java.util.concurrent.TimeUnit;
 
 import game_cat.GameObject;
-import game_objects.BackgroundCube;
 import game_objects.Cube;
 import overlays.CameraOrientation;
 import overlays.Grid;
@@ -40,7 +39,7 @@ public class Env extends Canvas implements Runnable {
 		handler.setCamera(camera);
 		Grid grid = new Grid(handler.camera, RESWIDTH, RESHEIGHT);
 		handler.setGrid(grid);
-		handler.addOverlay(new CameraOrientation(handler.camera.orient, camera));
+		handler.addOverlay(new CameraOrientation(camera));
 		
 		//handler.addObject(new BackgroundCube(new Vector3D(WORLDLENGTH/2, WORLDWIDTH/2, WORLDHEIGHT/2), new Vector3D(0,1,0).normalize(), WORLDWIDTH));
 		handler.addObject(new Cube(new Vector3D(WORLDLENGTH/2, 200, WORLDHEIGHT/2), new Vector3D(0,1,0).normalize(), 51));

@@ -31,7 +31,7 @@ public class Grid extends Underlay {
 		this.resWidth = resWidth;
 		this.resHeight = resHeight;
 		fociX = resWidth / 2;
-		fociY = -100;
+		fociY = 0;
 	}
 
 	public void render(Graphics g) {
@@ -98,7 +98,7 @@ public class Grid extends Underlay {
 
 	private void drawYLines(){
 		g.setColor(Color.green);
-		g.drawLine(Env.RESWIDTH/2, 0, Env.RESWIDTH/2, Env.RESHEIGHT);
+		g.drawLine(Env.RESWIDTH/2, Env.RESHEIGHT, fociX, fociY);
 		
 		int curDist = 50;
 		
