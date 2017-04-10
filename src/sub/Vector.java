@@ -1,15 +1,24 @@
 package sub;
 
-public class Vector {
+public class Vector extends Matrix {
 	double[][] values;
 	
 	Vector(double[][] values){
-		
+		super(values);
+		checkInvalidVector(values);
 	}
-	
-	boolean validVector(double[][] values){
-		// Evaluate all invalid vector cases
-		
-		return true;
+
+	void checkInvalidVector(double[][] values){
+		if(!
+		(values.length == 1 ||
+		values[0].length == 1))
+		{
+			invalidVector("Not single dimensional");
+		}
+	}
+
+	void invalidVector(String reason){
+		System.err.println("Invalid vector (" + reason + "), exiting");
+		System.exit(-1);
 	}
 }

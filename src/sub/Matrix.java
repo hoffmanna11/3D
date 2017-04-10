@@ -4,7 +4,24 @@ public class Matrix {
 	public double[][] values;
 
 	public Matrix(double[][] values){
+		checkInvalidMatrix(values);
 		this.values = values;
+	}
+	
+	void checkInvalidMatrix(double[][] values){
+		if(null == values){
+			invalidMatrix("Null pointer");
+		}
+		if(values.length == 0) {
+			invalidMatrix("Size 0 Array, 1");
+		}else if(values[0].length == 0){
+			invalidMatrix("Size 0 Array, 2");
+		}
+	}
+	
+	void invalidMatrix(String reason){
+		System.err.println("Invalid matrix (" + reason + "), exiting");
+		System.exit(-1);
 	}
 	
 	public Matrix add(Matrix matrix){
