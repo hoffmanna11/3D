@@ -19,7 +19,6 @@ public class CameraOrientation extends Overlay {
 	
 	public void render(Graphics g) {
 		drawVectors(g);
-		System.out.println("Here");
 		drawStrings(g);
 	}
 	
