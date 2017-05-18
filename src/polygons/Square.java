@@ -36,6 +36,10 @@ public class Square {
 	}
 
 	public void render(Graphics g, Camera camera, Grid grid){
+		if(id != 0){
+			//return;
+		}
+		
 		Vector3D[] diffs = new Vector3D[4];
 
 		for(int i=0; i<4; i++){
@@ -50,6 +54,7 @@ public class Square {
 		Vector3D mults[] = new Vector3D[4];
 		for(int i=0; i<4; i++){
 			mults[i] = Vector3D.getBasisMultiples(camera.orient.xy, camera.orient.yz, camera.orient.xz, diffs[i]);
+			System.out.println("mult[" + i + "]: { " + mults[i].dx + ", " + mults[i].dy + ", " + mults[i].dz + " }");
 		}
 
 		int xPoints[] = new int[4];
