@@ -28,6 +28,7 @@ public class Cube extends GameObject {
 	
 	public void render(Graphics g, Camera camera, Grid grid){
 		for(int i=0; i<6; i++){
+			//squares[new Random().nextInt(6)].render(g, camera, grid);
 			squares[i].render(g, camera, grid);
 		}
 	}

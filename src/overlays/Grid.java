@@ -54,9 +54,9 @@ public class Grid extends Underlay {
 		int x, y, z;
 
 		// Calculate the lengths
-		x = distToPix(mults.dx);
-		y = distToPix(mults.dy);
-		z = distToPix(mults.dz);
+		x = distToPixX(mults.dx);
+		y = distToPixY(mults.dy);
+		z = distToPixY(mults.dz);
 		
 		//System.out.println("mults: " + mults.dx + ", distToPix: " + x);
 		//System.out.println("mults: " + mults.dy + ", distToPix: " + y);
@@ -90,7 +90,7 @@ public class Grid extends Underlay {
 		int curDist = 0;
 
 		for(int i=0; i<100; i++){
-			int curY = (int)(Env.RESHEIGHT - distToPix(curDist) - 1);
+			int curY = (int)(Env.RESHEIGHT - distToPixY(curDist) - 1);
 			g.drawLine(0, curY, Env.RESWIDTH, curY);
 			curDist += 50;
 		}
@@ -103,15 +103,23 @@ public class Grid extends Underlay {
 		int curDist = 50;
 		
 		for(int i=0; i<100; i++){
-			int curX = distToPix(curDist);
+			int curX = distToPixX(curDist);
 			g.drawLine(Env.RESWIDTH/2 - curX, Env.RESHEIGHT, fociX, fociY);
 			g.drawLine(Env.RESWIDTH/2 + curX, Env.RESHEIGHT, fociX, fociY);
 			curDist += 50;
 		}
 	}
 	
-	public static int distToPix(double dist){
-		int val = (int) (4 * Math.pow(Math.abs(dist), .7));
+	public static int distToPixX(double dist){
+		int val = (int) (4 * Math.pow(Math.abs(dist), .9));
+		if(dist < 0){
+			return -1 * val;
+		}
+		return val;
+	}
+	
+	public static int distToPixY(double dist){
+		int val = (int) (4 * Math.pow(Math.abs(dist), .80));
 		if(dist < 0){
 			return -1 * val;
 		}

@@ -36,6 +36,17 @@ public class Square {
 	}
 
 	public void render(Graphics g, Camera camera, Grid grid){
+		if(! ( (id == 0) || (id == 2) ) ){
+			return;
+		}
+		
+		System.out.print(id + ": ");
+		loc.print();
+		
+		if(id == 5){
+			System.out.println("");
+		}
+		
 		if(id != 0){
 			//return;
 		}
@@ -56,6 +67,8 @@ public class Square {
 			mults[i] = Vector3D.getBasisMultiples(camera.orient.xy, camera.orient.yz, camera.orient.xz, diffs[i]);
 			System.out.println("mult[" + i + "]: { " + mults[i].dx + ", " + mults[i].dy + ", " + mults[i].dz + " }");
 		}
+		
+		
 
 		int xPoints[] = new int[4];
 		int yPoints[] = new int[4];
@@ -63,6 +76,11 @@ public class Square {
 			int[] screenLoc = grid.getScreenLoc(mults[i], camera);
 			xPoints[i] = screenLoc[0];
 			yPoints[i] = screenLoc[1];
+			System.out.println("Point " + i + ": (" + (xPoints[i]-450) + ", " + (yPoints[i]-450) + ")");
+		}
+		
+		if(id == 5){
+			System.out.println("");
 		}
 
 		g.setColor(this.color);
