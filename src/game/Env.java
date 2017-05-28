@@ -35,15 +35,32 @@ public class Env extends Canvas implements Runnable {
 	 */
 	public Env() {
 		handler = new Handler();
-		Camera camera = new Camera(new Vector3D(WORLDLENGTH/2, 0, WORLDHEIGHT/2), new Vector3D(0,1,0));
+		
+		// Using for easier location
+		Camera camera = new Camera(new Vector3D(0, 0, 0), new Vector3D(0,1,0));
+		/* Use this normally
+		 * Camera camera = new Camera(new Vector3D(WORLDLENGTH/2, 0, WORLDHEIGHT/2), new Vector3D(0,1,0));
+		 */
+		
 		handler.setCamera(camera);
 		Grid grid = new Grid(handler.camera, RESWIDTH, RESHEIGHT);
 		handler.setGrid(grid);
 		handler.addOverlay(new CameraOrientation(camera));
 		
-		//handler.addObject(new BackgroundCube(new Vector3D(WORLDLENGTH/2, WORLDWIDTH/2, WORLDHEIGHT/2), new Vector3D(0,1,0).normalize(), WORLDWIDTH));
-		handler.addObject(new Cube(new Vector3D(WORLDLENGTH/2, 200, WORLDHEIGHT/2), new Vector3D(0,1,0).normalize(), 51));
-		//handler.addObject(new Cube(new Vector3D(WORLDLENGTH/2 + 80, 200, WORLDHEIGHT/2 - 20), new Vector3D(0,1,0).normalize(), 50));
+		/* Old background cube thing
+		 * handler.addObject(new BackgroundCube(new Vector3D(WORLDLENGTH/2, WORLDWIDTH/2, WORLDHEIGHT/2), new Vector3D(0,1,0).normalize(), WORLDWIDTH));
+		 */
+		
+		// Using easy location to make debugging easier
+		handler.addObject(new Cube(new Vector3D(0, 200, 0), new Vector3D(0,1,0).normalize(), 40));
+		
+		/* Use this normally
+		 handler.addObject(new Cube(new Vector3D(WORLDLENGTH/2, 200, WORLDHEIGHT/2), new Vector3D(0,1,0).normalize(), 51));
+		*/
+		
+		/* Not sure what this was used for
+		 * handler.addObject(new Cube(new Vector3D(WORLDLENGTH/2 + 80, 200, WORLDHEIGHT/2 - 20), new Vector3D(0,1,0).normalize(), 50));
+		 */
 		
 		this.addKeyListener(new KeyInput(handler));
 		window = new Window(RESWIDTH, RESHEIGHT, "3D", this);

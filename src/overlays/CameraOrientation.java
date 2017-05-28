@@ -32,7 +32,7 @@ public class CameraOrientation extends Overlay {
 		int[] coordsXZ = projXZ.getBaseCoordsDeprecated();
 		
 		drawVector(g, coordsXY, Color.BLUE);
-		drawVector(g, coordsYZ, Color.GREEN);
+		drawVector(g, coordsYZ, Color.gray);
 		drawVector(g, coordsXZ, Color.RED);
 	}
 	

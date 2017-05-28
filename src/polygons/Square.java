@@ -15,13 +15,16 @@ public class Square {
 	public Color color = null;
 	public int length;
 	int id;
+	
+	public static int time = 0;
+	public static int indexThing = 0;
 
-	public Square(Vector3D loc, Orient3D orient, int length, int id){
+	public Square(Vector3D cubeLoc, Orient3D orient, int length, int id){
 		this.orient = orient;
 		this.length = length;
 		this.id = id;
 
-		this.loc = (Vector3D)loc.add(orient.yz.multiply(-length/2));
+		this.loc = (Vector3D)cubeLoc.add(orient.yz.multiply(-length/2));
 
 		// Initialize points
 		points = new Vector3D[4];
@@ -36,24 +39,32 @@ public class Square {
 	}
 
 	public void render(Graphics g, Camera camera, Grid grid){
+		/*
 		if(! ( (id == 0) || (id == 2) ) ){
 			return;
 		}
+		*/
 		
-		System.out.print(id + ": ");
-		loc.print();
-		
-		if(id == 5){
-			System.out.println("");
+		if(time == 0){
+			for(int i=0; i<10; i++){
+				System.out.println("");
+			}
 		}
 		
-		if(id != 0){
-			//return;
+		if(time == 0){
+			System.out.print(id + ": ");
+			loc.print();
+			orient.print();
 		}
 		
 		Vector3D[] diffs = new Vector3D[4];
 
 		for(int i=0; i<4; i++){
+			if(time == 0){
+				System.out.print("Point " + i + " loc: ");
+				points[i].print();
+			}
+			
 			// Get the difference from the camera to the point
 			diffs[i] = new Vector3D(
 					this.points[i].dx - camera.loc.dx,
@@ -65,7 +76,9 @@ public class Square {
 		Vector3D mults[] = new Vector3D[4];
 		for(int i=0; i<4; i++){
 			mults[i] = Vector3D.getBasisMultiples(camera.orient.xy, camera.orient.yz, camera.orient.xz, diffs[i]);
-			System.out.println("mult[" + i + "]: { " + mults[i].dx + ", " + mults[i].dy + ", " + mults[i].dz + " }");
+			if(time == 0){
+				System.out.println("mult[" + i + "]: { " + mults[i].dx + ", " + mults[i].dy + ", " + mults[i].dz + " }");
+			}
 		}
 		
 		
@@ -76,17 +89,17 @@ public class Square {
 			int[] screenLoc = grid.getScreenLoc(mults[i], camera);
 			xPoints[i] = screenLoc[0];
 			yPoints[i] = screenLoc[1];
-			System.out.println("Point " + i + ": (" + (xPoints[i]-450) + ", " + (yPoints[i]-450) + ")");
-		}
-		
-		if(id == 5){
-			System.out.println("");
+			if(time == 0){
+				System.out.println("Point " + i + ": (" + (xPoints[i]-450) + ", " + (yPoints[i]-450) + ")");
+			}
 		}
 
 		g.setColor(this.color);
-		g.fillPolygon(xPoints, yPoints, 4);
+		//g.fillPolygon(xPoints, yPoints, 4);
 		g.setColor(Color.WHITE);
 		g.drawPolygon(xPoints, yPoints, 4);
+		
+		time++;
 	}
 
 }
