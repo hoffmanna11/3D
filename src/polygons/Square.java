@@ -95,7 +95,7 @@ public class Square {
 		}
 
 		g.setColor(this.color);
-		//g.fillPolygon(xPoints, yPoints, 4);
+		g.fillPolygon(xPoints, yPoints, 4);
 		g.setColor(Color.WHITE);
 		g.drawPolygon(xPoints, yPoints, 4);
 		
