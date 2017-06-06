@@ -79,21 +79,26 @@ public class Square {
 			if(time == 0){
 				System.out.println("mult[" + i + "]: { " + mults[i].dx + ", " + mults[i].dy + ", " + mults[i].dz + " }");
 			}
+			if(mults[i].dy < 0){
+				return;
+			}
 		}
-		
-		
 
 		int xPoints[] = new int[4];
 		int yPoints[] = new int[4];
+		double xyAngle = 25;
+		double xzAngle = 40;
 		for(int i=0; i<4; i++){
-			int[] screenLoc = grid.getScreenLoc(mults[i], camera);
+			int[] screenLoc = grid.getScreenLoc2(mults[i], xyAngle, xzAngle);
+			
+			//int[] screenLoc = grid.getScreenLoc(mults[i], camera);
 			xPoints[i] = screenLoc[0];
 			yPoints[i] = screenLoc[1];
 			if(time == 0){
 				System.out.println("Point " + i + ": (" + (xPoints[i]-450) + ", " + (yPoints[i]-450) + ")");
 			}
 		}
-
+		
 		g.setColor(this.color);
 		g.fillPolygon(xPoints, yPoints, 4);
 		g.setColor(Color.WHITE);

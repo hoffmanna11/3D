@@ -50,6 +50,22 @@ public class Grid extends Underlay {
 		g.fillOval(Env.RESWIDTH/2 - 10, Env.RESHEIGHT/2 - 10, 20, 20);
 	}
 
+	public int[] getScreenLoc2(Vector3D mults, double xyAngle, double xzAngle){
+		double dx = mults.dx;
+		double dy = mults.dy;
+		double dz = mults.dz;
+		xyAngle = Math.toRadians(xyAngle);
+		xzAngle = Math.toRadians(xzAngle);
+		
+		double resXHalf = Env.RESWIDTH / 2;
+		double resYHalf = Env.RESHEIGHT / 2;
+		
+		int x = (int) ( resXHalf + ( dx * Math.tan(xyAngle) / dy * resXHalf) );
+		int y = (int) ( resYHalf - ( dz * Math.tan(xzAngle) / dy * resYHalf) );
+		
+		return new int[]{x,y};
+	}
+	
 	public int[] getScreenLoc(Vector3D mults, Camera camera){
 		int x, y, z;
 
