@@ -86,8 +86,8 @@ public class Square {
 
 		int xPoints[] = new int[4];
 		int yPoints[] = new int[4];
-		double xyAngle = 25;
-		double xzAngle = 40;
+		double xyAngle = 30;
+		double xzAngle = 45;
 		for(int i=0; i<4; i++){
 			int[] screenLoc = grid.getScreenLoc2(mults[i], xyAngle, xzAngle);
 			

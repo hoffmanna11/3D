@@ -32,6 +32,62 @@ public class Camera {
 	}
 
 	public void applyKeyInput(){
+		if(shift){
+			if(forward){
+				if(backward){
+				}else{
+					rotate("YZ", false);
+				}
+			}else if(backward){
+				rotate("YZ", true);
+			}
+			if(left){
+				if(right){
+				}else{
+					rotate("XZ", true);
+				}
+			}else if(right){
+				rotate("XZ", false);
+			}
+		}else{
+			// No shift
+			if(forward){
+				if(backward){
+				}else{
+					loc.dx += (int)(this.orient.yz.dx * speed);
+					loc.dy += (int)(this.orient.yz.dy * speed);
+					loc.dz += (int)(this.orient.yz.dz * speed);
+				}
+			}else if(backward){
+				loc.dx = loc.dx - (int)(this.orient.yz.dx * speed);
+				loc.dy = loc.dy - (int)(this.orient.yz.dy * speed);
+				loc.dz = loc.dz - (int)(this.orient.yz.dz * speed);
+			}
+
+			if(left){
+				if(right){
+				}else{
+					loc = (Vector3D) loc.add(orient.xy.multiply(-1 * speed));
+				}
+			}else if(right){
+				loc = (Vector3D) loc.add(orient.xy.multiply(speed));
+			}
+			if(up){
+				if(down){
+				}else{
+					loc.dx += this.orient.xz.dx * speed;
+					loc.dy += this.orient.xz.dy * speed;
+					loc.dz += this.orient.xz.dz * speed;
+				}
+			}else if(down){
+				loc.dx -= this.orient.xz.dx * speed;
+				loc.dy -= this.orient.xz.dy * speed;
+				loc.dz -= this.orient.xz.dz * speed;
+			}
+		}
+	}
+	
+	public void applyKeyInput_RotateVersion(){
 		/* Check DIRECTION and opposite axial DIRECTION
 		 *   If both, do nothing
 		 *   Else If one, check for shift
