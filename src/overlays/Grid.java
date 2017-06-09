@@ -51,9 +51,9 @@ public class Grid extends Underlay {
 	}
 
 	public int[] getScreenLoc2(Vector3D mults, double xyAngle, double xzAngle){
-		double dx = mults.dx;
-		double dy = mults.dy;
-		double dz = mults.dz;
+		double dx = mults.dx();
+		double dy = mults.dy();
+		double dz = mults.dz();
 		xyAngle = Math.toRadians(xyAngle);
 		xzAngle = Math.toRadians(xzAngle);
 		
@@ -70,9 +70,9 @@ public class Grid extends Underlay {
 		int x, y, z;
 
 		// Calculate the lengths
-		x = distToPixX(mults.dx);
-		y = distToPixY(mults.dy);
-		z = distToPixY(mults.dz);
+		x = distToPixX(mults.dx());
+		y = distToPixY(mults.dy());
+		z = distToPixY(mults.dz());
 		
 		//System.out.println("mults: " + mults.dx + ", distToPix: " + x);
 		//System.out.println("mults: " + mults.dy + ", distToPix: " + y);

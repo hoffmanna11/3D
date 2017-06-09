@@ -139,7 +139,7 @@ public class Cube extends GameObject {
 
 	public void setSquareRenderLocs(Vector3D camLoc){
 		// Get distance between points
-		double distance = (int)Math.sqrt(Math.pow(loc.dx-camLoc.dx,2) + Math.pow(loc.dy-camLoc.dy,2) + Math.pow(loc.dz-camLoc.dz, 2));
+		double distance = (int)Math.sqrt(Math.pow(loc.dx()-camLoc.dx(),2) + Math.pow(loc.dy()-camLoc.dy(),2) + Math.pow(loc.dz()-camLoc.dz(), 2));
 		// Get scaling factor
 		double scaling = (200 / distance);
 

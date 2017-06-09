@@ -1,7 +1,7 @@
 package sub;
 
 public class Vector3D extends Matrix {
-	public double dx, dy, dz;
+	private double dx, dy, dz;
 	
 	public static final  Vector3D origin = new Vector3D(0,0,0);
 	
@@ -142,4 +142,64 @@ public class Vector3D extends Matrix {
 	public double dot(Vector3D v){
 		return dx * v.dx + dy * v.dy + dz * v.dz;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public double dx(){
+		return values[0][0];
+	}
+	
+	public double dy(){
+		return values[1][0];
+	}
+	
+	public double dz(){
+		return values[2][0];
+	}
+	
+	public void setDX(double dx){
+		values[0][0] = dx;
+	}
+	
+	public void setDY(double dy){
+		values[1][0] = dy;
+	}
+	
+	public void setDZ(double dz){
+		values[2][0] = dz;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

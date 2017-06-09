@@ -67,9 +67,9 @@ public class Square {
 			
 			// Get the difference from the camera to the point
 			diffs[i] = new Vector3D(
-					this.points[i].dx - camera.loc.dx,
-					this.points[i].dy - camera.loc.dy,
-					this.points[i].dz - camera.loc.dz
+					this.points[i].dx() - camera.loc.dx(),
+					this.points[i].dy() - camera.loc.dy(),
+					this.points[i].dz() - camera.loc.dz()
 					);
 		}
 
@@ -77,9 +77,9 @@ public class Square {
 		for(int i=0; i<4; i++){
 			mults[i] = Vector3D.getBasisMultiples(camera.orient.xy, camera.orient.yz, camera.orient.xz, diffs[i]);
 			if(time == 0){
-				System.out.println("mult[" + i + "]: { " + mults[i].dx + ", " + mults[i].dy + ", " + mults[i].dz + " }");
+				System.out.println("mult[" + i + "]: { " + mults[i].dx() + ", " + mults[i].dy() + ", " + mults[i].dz() + " }");
 			}
-			if(mults[i].dy < 0){
+			if(mults[i].dy() < 0){
 				return;
 			}
 		}

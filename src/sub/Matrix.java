@@ -24,6 +24,11 @@ public class Matrix {
 		System.exit(-1);
 	}
 	
+	public Matrix add$(Matrix matrix){
+		this.values = this.add(matrix).values;
+		return this;
+	}
+	
 	public Matrix add(Matrix matrix){
 		if(
 				(values.length != matrix.values.length) ||
@@ -34,6 +39,8 @@ public class Matrix {
 		double[][] newValues = new double[values.length][values[0].length];
 		for(int i=0; i<values.length; i++){
 			for(int j=0; j<values[0].length; j++){
+				System.out.println("add: values[i][j]: " + values[i][j]);
+				System.out.println("add: matrix.values[i][j]: " + matrix.values[i][j]);
 				newValues[i][j] = values[i][j] + matrix.values[i][j];
 			}
 		}

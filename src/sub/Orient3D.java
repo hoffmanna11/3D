@@ -29,8 +29,8 @@ public class Orient3D {
 	
 	public void print(){
 		System.out.println("Orientation:");
-		System.out.println("XY: (" + xy.dx + ", " + xy.dy + ", " + xy.dz + ")");
-		System.out.println("YZ: (" + yz.dx + ", " + yz.dy + ", " + yz.dz + ")");
-		System.out.println("XZ: (" + xz.dx + ", " + xz.dy + ", " + xz.dz + ")");
+		System.out.println("XY: (" + xy.dx() + ", " + xy.dy() + ", " + xy.dz() + ")");
+		System.out.println("YZ: (" + yz.dx() + ", " + yz.dy() + ", " + yz.dz() + ")");
+		System.out.println("XZ: (" + xz.dx() + ", " + xz.dy() + ", " + xz.dz() + ")");
 	}
 }

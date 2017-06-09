@@ -43,10 +43,10 @@ public class CameraOrientation extends Overlay {
 	public void drawStrings(Graphics g){
 		DecimalFormat df = new DecimalFormat("#.##");
 		g.setColor(Color.white);
-		g.drawString("camera loc: " + "(" + camera.loc.dx + "," + camera.loc.dy + "," + camera.loc.dz + ")", 10, 40);
-		g.drawString("camera xy: " + "(" + df.format(camera.orient.xy.dx) + "," + df.format(camera.orient.xy.dy) + "," + df.format(camera.orient.xy.dz) + ")", 10, 60);
-		g.drawString("camera yz: " + "(" + df.format(camera.orient.yz.dx) + "," + df.format(camera.orient.yz.dy) + "," + df.format(camera.orient.yz.dz) + ")", 10, 80);
-		g.drawString("camera xz: " + "(" + df.format(camera.orient.xz.dx) + "," + df.format(camera.orient.xz.dy) + "," + df.format(camera.orient.xz.dz) + ")", 10, 100);
+		g.drawString("camera loc: " + "(" + camera.loc.dx() + "," + camera.loc.dy() + "," + camera.loc.dz() + ")", 10, 40);
+		g.drawString("camera xy: " + "(" + df.format(camera.orient.xy.dx()) + "," + df.format(camera.orient.xy.dy()) + "," + df.format(camera.orient.xy.dz()) + ")", 10, 60);
+		g.drawString("camera yz: " + "(" + df.format(camera.orient.yz.dx()) + "," + df.format(camera.orient.yz.dy()) + "," + df.format(camera.orient.yz.dz()) + ")", 10, 80);
+		g.drawString("camera xz: " + "(" + df.format(camera.orient.xz.dx()) + "," + df.format(camera.orient.xz.dy()) + "," + df.format(camera.orient.xz.dz()) + ")", 10, 100);
 	}
 
 	public void drawVector(Graphics g, int[] coords, Color c){

@@ -1,9 +1,5 @@
 package game;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.text.DecimalFormat;
-
 import sub.Matrix;
 import sub.Orient3D;
 import sub.Vector3D;
@@ -49,40 +45,73 @@ public class Camera {
 			}else if(right){
 				rotate("XZ", false);
 			}
-		}else{
-			// No shift
+		// No shift
+		}else{			
 			if(forward){
 				if(backward){
 				}else{
-					loc.dx += (int)(this.orient.yz.dx * speed);
-					loc.dy += (int)(this.orient.yz.dy * speed);
-					loc.dz += (int)(this.orient.yz.dz * speed);
+					loc.add$(orient.yz.multiply(speed));
+					/*
+					loc.setDX(loc.dx() + (int)(this.orient.yz.dx() * speed) );
+					loc.setDY(loc.dy() + (int)(this.orient.yz.dy() * speed) );
+					loc.setDZ(loc.dz() + (int)(this.orient.yz.dz() * speed) );
+					*/ 
+					
 				}
 			}else if(backward){
-				loc.dx = loc.dx - (int)(this.orient.yz.dx * speed);
-				loc.dy = loc.dy - (int)(this.orient.yz.dy * speed);
-				loc.dz = loc.dz - (int)(this.orient.yz.dz * speed);
+				loc.add$(orient.yz.multiply(-speed));
+				/*
+				loc.dx -= (int)(this.orient.yz.dx * speed);
+				loc.dy -= (int)(this.orient.yz.dy * speed);
+				loc.dz -= (int)(this.orient.yz.dz * speed);
+				*/
 			}
 
 			if(left){
 				if(right){
 				}else{
-					loc = (Vector3D) loc.add(orient.xy.multiply(-1 * speed));
+					//loc.dx += (int)(this.orient.xy.dx * -speed);
+					//loc.dy += (int)(this.orient.xy.dy * -speed);
+					//loc.dz += (int)(this.orient.xy.dz * -speed);
+					
+					/*
+					System.out.println("Before: ");
+					System.out.println("loc: ");
+					loc.print();
+					System.out.println("orient.xy: ");
+					orient.xy.print();
+					System.out.println("orient.xy.multiply(-1 * speed): ");
+					Vector3D temp1 = (Vector3D) this.orient.xy.multiply(-1 * speed);
+					temp1.print();
+					System.out.println("loc.add(...): ");
+					*/
+					loc.add$(this.orient.xy.multiply(-1 * speed));
+					/*
+					loc.print();
+					System.out.println("Exiting");
+					System.exit(0);
+					*/
 				}
 			}else if(right){
-				loc = (Vector3D) loc.add(orient.xy.multiply(speed));
+				loc.add$(this.orient.xy.multiply(speed));
 			}
 			if(up){
 				if(down){
 				}else{
+					loc.add$(orient.xz.multiply(speed));
+					/*
 					loc.dx += this.orient.xz.dx * speed;
 					loc.dy += this.orient.xz.dy * speed;
 					loc.dz += this.orient.xz.dz * speed;
+					*/
 				}
 			}else if(down){
+				loc.add$(orient.xz.multiply(-speed));
+				/*
 				loc.dx -= this.orient.xz.dx * speed;
 				loc.dy -= this.orient.xz.dy * speed;
 				loc.dz -= this.orient.xz.dz * speed;
+				*/
 			}
 		}
 	}
@@ -102,6 +131,7 @@ public class Camera {
 		 * Vector3D.YZ: Pitch ( shift + forward / backward )
 		 */
 
+		/*
 		if(shift){
 			if(forward){
 				if(backward){
@@ -209,6 +239,7 @@ public class Camera {
 				loc.dz -= this.orient.xz.dz * speed;
 			}
 		}
+		*/
 	}
 
 	public void rotate(String plane, double theta){
@@ -219,18 +250,18 @@ public class Camera {
 		switch(plane){
 		case "XY":
 			Vector3D newXY_1 = (Vector3D)(this.orient.xy.multiply(s1).add(this.orient.yz.multiply(s2)));
-			Vector3D newYZ_1 = (Vector3D)(this.orient.yz.multiply(s1).add(new Vector3D(-this.orient.xy.dx, -this.orient.xy.dy, -this.orient.xy.dz).multiply(s2)));
+			Vector3D newYZ_1 = (Vector3D)(this.orient.yz.multiply(s1).add(new Vector3D(-this.orient.xy.dx(), -this.orient.xy.dy(), -this.orient.xy.dz()).multiply(s2)));
 			this.orient.xy = newXY_1.normalize();
 			this.orient.yz = newYZ_1.normalize();
 			break;
 		case "YZ":
 			Vector3D newYZ_3 = (Vector3D)this.orient.yz.multiply(s1).add(this.orient.xz.multiply(s2));
-			Vector3D newXZ_3 = (Vector3D)this.orient.xz.multiply(s1).add(new Vector3D(-this.orient.yz.dx, -this.orient.yz.dy, -this.orient.yz.dz).multiply(s2));
+			Vector3D newXZ_3 = (Vector3D)this.orient.xz.multiply(s1).add(new Vector3D(-this.orient.yz.dx(), -this.orient.yz.dy(), -this.orient.yz.dz()).multiply(s2));
 			this.orient.yz = newYZ_3.normalize();
 			this.orient.xz = newXZ_3.normalize();
 			break;
 		case "XZ":
-			Vector3D newXZ_2 = (Vector3D)this.orient.xz.multiply(s1).add(new Vector3D(-this.orient.xy.dx, -this.orient.xy.dy, -this.orient.xy.dz).multiply(s2));
+			Vector3D newXZ_2 = (Vector3D)this.orient.xz.multiply(s1).add(new Vector3D(-this.orient.xy.dx(), -this.orient.xy.dy(), -this.orient.xy.dz()).multiply(s2));
 			Vector3D newXY_2 = (Vector3D)this.orient.xy.multiply(s1).add(this.orient.xz.multiply(s2));
 			this.orient.xz = newXZ_2.normalize();
 			this.orient.xy = newXY_2.normalize();
@@ -254,13 +285,13 @@ public class Camera {
 		// Combine all vectors into a matrix
 
 		// First, make the point relative to the camera loc
-		pt.values[0][0] -= loc.dx;
-		pt.values[1][0] -= loc.dy;
-		pt.values[2][0] -= loc.dz;
+		pt.values[0][0] -= loc.dx();
+		pt.values[1][0] -= loc.dy();
+		pt.values[2][0] -= loc.dz();
 
-		pt.dx -= loc.dx;
-		pt.dy -= loc.dy;
-		pt.dz -= loc.dz;
+		pt.setDX(pt.dx() - loc.dx());
+		pt.setDY(pt.dy() - loc.dy());
+		pt.setDZ(pt.dz() - loc.dz());
 
 		// Now combine all vectors into a matrix
 		// Create vector array
