@@ -1,11 +1,13 @@
 package game;
 
 import java.awt.Graphics;
+import java.awt.Polygon;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import game_cat.GameObject;
 import game_cat.Overlay;
 import game_cat.Underlay;
+import game_objects.Cube;
 import overlays.Grid;
 import polygons.Square;
 import sub.Vector3D;
@@ -14,7 +16,7 @@ public class Handler {
 	Grid grid;
 	Camera camera;
 	Square[] background = new Square[6];
-	
+
 	LinkedList<GameObject> object = new LinkedList<GameObject>();
 	ArrayList<Overlay> overlays = new ArrayList<Overlay>();
 	ArrayList<Underlay> underlays = new ArrayList<Underlay>();
@@ -32,23 +34,101 @@ public class Handler {
 			Underlay tempUnderlay = underlays.get(i);
 			tempUnderlay.render(g);
 		}
-		
-		for(int i = 0; i < object.size(); i++) {
-			GameObject tempObject = object.get(i);
-			tempObject.render(g, camera, grid);
-		}
-		
+
+		renderGameObjects(g);
+
 		for(int i=0; i<overlays.size(); i++){
 			Overlay tempOverlay = overlays.get(i);
 			tempOverlay.render(g);
 		}
 	}
+
+	public void renderGameObjects(Graphics g){
+		// Collect all the polygons
+		ArrayList<Cube> cubes = new ArrayList<Cube>();
+		ArrayList<Square> squares = new ArrayList<Square>();
+		
+		for(int i=0; i<object.size(); i++){
+			GameObject tempObject = object.get(i);
+			if(tempObject.getClass().equals(Cube.class)){
+				cubes.add((Cube)tempObject);
+			}
+		}
+		
+		for(int i=0; i<cubes.size(); i++){
+			for(int j=0; j<6; j++){
+				squares.add(cubes.get(i).squares[j]);
+			}
+		}
+		
+		render(g, camera, grid, squares);
+
+		/*
+		for(int i = 0; i < object.size(); i++) {
+			GameObject tempObject = object.get(i);
+			tempObject.render(g, camera, grid);
+		}
+		*/
+	}
 	
+	public void specialRender(Graphics g, Camera camera, Grid grid, ArrayList<Square> squares){
+		double[] distances = new double[6];
+		for(int i=0; i<6; i++){
+			distances[i] = camera.loc.distanceBetween(squares.get(i).loc);
+		}
+		
+		int[] indexArr = {0,1,2,3,4,5};
+		sort(distances, indexArr);
+		for(int i=5; i>=0; i--){
+			squares.get(i).render(g,camera,grid);
+		}
+	}
+	
+	public void sort(double[] arr, int[] indexArr){
+		for(int i=0; i<arr.length-1; i++){
+			for(int j=0; j<arr.length-1; j++){
+				if(arr[j] > arr[j+1]){
+					double temp = arr[j];
+					arr[j] = arr[j+1];
+					arr[j+1] = temp;
+					
+					int tempInt = indexArr[j];
+					indexArr[j] = indexArr[j+1];
+					indexArr[j+1] = tempInt;
+				}
+			}
+		}
+		
+		/*
+		System.out.print("Sorted arr: ");
+		for(int i=0; i<6; i++){
+			System.out.print(arr[i] + ", ");
+		}
+		System.out.println("");
+		*/
+	}
+	
+	public void render(Graphics g, Camera camera, Grid grid, ArrayList<Square> squares){
+		specialRender(g, camera, grid, squares);
+		
+		if(Square.time >= 90){
+			// Once square has been rendered X times, switch to next index
+			Square.time = 0;
+			Square.indexThing = (Square.indexThing + 1) % 6;
+		}else{
+			// If not rendered X times yet, keep going
+		}
+		
+		if(new Integer(2) == 2){
+			return;
+		}
+	}
+
 	public void setGrid(Grid grid){
 		this.grid = grid;
 		addUnderlay(grid);
 	}
-	
+
 	public void addUnderlay(Underlay underlay){
 		this.underlays.add(underlay);
 	}
@@ -60,7 +140,7 @@ public class Handler {
 	public void removeObject(GameObject object) {
 		this.object.remove(object);
 	}
-	
+
 	public void addOverlay(Overlay overlay) {
 		this.overlays.add(overlay);
 	}

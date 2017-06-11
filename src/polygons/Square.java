@@ -37,14 +37,8 @@ public class Square {
 		points[2] = (Vector3D) loc.add(orient.xy.multiply(length/2).add(orient.xz.multiply(-length/2)));
 		points[3] = (Vector3D) loc.add(orient.xy.multiply(-length/2).add(orient.xz.multiply(-length/2)));
 	}
-
-	public void render(Graphics g, Camera camera, Grid grid){
-		/*
-		if(! ( (id == 0) || (id == 2) ) ){
-			return;
-		}
-		*/
-		
+	
+	public int[] getRender(Graphics g, Camera camera, Grid grid){
 		if(time == 0){
 			for(int i=0; i<10; i++){
 				System.out.println("");
@@ -74,14 +68,22 @@ public class Square {
 		}
 
 		Vector3D mults[] = new Vector3D[4];
+		boolean atLeastOneIsVisible = false;
 		for(int i=0; i<4; i++){
 			mults[i] = Vector3D.getBasisMultiples(camera.orient.xy, camera.orient.yz, camera.orient.xz, diffs[i]);
 			if(time == 0){
 				System.out.println("mult[" + i + "]: { " + mults[i].dx() + ", " + mults[i].dy() + ", " + mults[i].dz() + " }");
 			}
-			if(mults[i].dy() < 0){
-				return;
+			if(mults[i].dy() > 0){
+				atLeastOneIsVisible = true;
 			}
+		}
+		
+		if(atLeastOneIsVisible){
+			// Then draw it
+		}else{
+			// If no visible, no draw
+			return null;
 		}
 
 		int xPoints[] = new int[4];
@@ -97,6 +99,29 @@ public class Square {
 			if(time == 0){
 				System.out.println("Point " + i + ": (" + (xPoints[i]-450) + ", " + (yPoints[i]-450) + ")");
 			}
+		}
+		
+		int[] points = new int[8];
+		for(int i=0; i<4; i++){
+			points[i] = xPoints[i];
+			points[i+4] = yPoints[i];
+		}
+		return points;
+	}
+
+	public void render(Graphics g, Camera camera, Grid grid){
+		int[] points = new int[8];
+		int[] xPoints = new int[4];
+		int[] yPoints = new int[4];
+		
+		points = getRender(g, camera, grid);
+		if(null == points){
+			return;
+		}
+		
+		for(int i=0; i<4; i++){
+			xPoints[i] = points[i];
+			yPoints[i] = points[i+4];
 		}
 		
 		g.setColor(this.color);
