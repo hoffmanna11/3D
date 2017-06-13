@@ -35,7 +35,7 @@ public class Env extends Canvas implements Runnable {
 	 */
 	public Env() {
 		handler = new Handler();
-		
+		 
 		// Using for easier location
 		Camera camera = new Camera(new Vector3D(0, 0, 0), new Vector3D(0,1,0));
 		/* Use this normally
