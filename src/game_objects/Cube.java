@@ -1,11 +1,8 @@
 package game_objects;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.Random;
 
 import game.Camera;
-import game.Handler;
 import game_cat.GameObject;
 import overlays.Grid;
 import polygons.Square;

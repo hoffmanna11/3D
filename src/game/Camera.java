@@ -299,6 +299,7 @@ public class Camera {
 		vectors[0] = this.orient.yz;
 		vectors[1] = this.orient.xz;
 		vectors[2] = pt;
+		@SuppressWarnings("static-access")
 		Matrix system = this.orient.xy.combineVectors(vectors);
 		system.rref();
 

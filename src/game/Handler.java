@@ -1,7 +1,6 @@
 package game;
 
 import java.awt.Graphics;
-import java.awt.Polygon;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import game_cat.GameObject;
@@ -10,7 +9,6 @@ import game_cat.Underlay;
 import game_objects.Cube;
 import overlays.Grid;
 import polygons.Square;
-import sub.Vector3D;
 
 public class Handler {
 	Grid grid;

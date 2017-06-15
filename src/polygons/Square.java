@@ -16,6 +16,8 @@ public class Square {
 	public int length;
 	int id;
 	
+	public static boolean debug1 = false;
+	
 	public static int time = 0;
 	public static int indexThing = 0;
 
@@ -38,18 +40,35 @@ public class Square {
 		points[3] = (Vector3D) loc.add(orient.xy.multiply(-length/2).add(orient.xz.multiply(-length/2)));
 	}
 	
+	public int[] getScreenLoc(Vector3D mults, double xyAngle, double xzAngle){
+		double dx = mults.dx();
+		double dy = mults.dy();
+		double dz = mults.dz();
+		xyAngle = Math.toRadians(xyAngle);
+		xzAngle = Math.toRadians(xzAngle);
+		
+		double resXHalf = Env.RESWIDTH / 2;
+		double resYHalf = Env.RESHEIGHT / 2;
+		
+		int x = (int) ( resXHalf + ( dx * Math.tan(xyAngle) / dy * resXHalf) );
+		int y = (int) ( resYHalf - ( dz * Math.tan(xzAngle) / dy * resYHalf) );
+		
+		return new int[]{x,y};
+	}
+	
 	public int[] getRender(Graphics g, Camera camera, Grid grid){
 		
-		if(id != 4){
-			//return null;
+		if(id == 0){
+			return null;
 		}
-		if(time == 0){
+		
+		if(debug1 && time == 0){
 			for(int i=0; i<10; i++){
 				System.out.println("");
 			}
 		}
 		
-		if(time == 0){
+		if(debug1 && time == 0){
 			System.out.print(id + ": ");
 			loc.print();
 			orient.print();
@@ -58,7 +77,7 @@ public class Square {
 		Vector3D[] diffs = new Vector3D[4];
 
 		for(int i=0; i<4; i++){
-			if(time == 0){
+			if(debug1 && time == 0){
 				System.out.print("Point " + i + " loc: ");
 				points[i].print();
 			}
@@ -75,7 +94,7 @@ public class Square {
 		boolean atLeastOneIsVisible = false;
 		for(int i=0; i<4; i++){
 			mults[i] = Vector3D.getBasisMultiples(camera.orient.xy, camera.orient.yz, camera.orient.xz, diffs[i]);
-			if(time == 0){
+			if(debug1 && time == 0){
 				System.out.println("mult[" + i + "]: { " + mults[i].dx() + ", " + mults[i].dy() + ", " + mults[i].dz() + " }");
 			}
 			if(mults[i].dy() > 0){
@@ -95,12 +114,11 @@ public class Square {
 		double xyAngle = 30;
 		double xzAngle = 45;
 		for(int i=0; i<4; i++){
-			int[] screenLoc = grid.getScreenLoc2(mults[i], xyAngle, xzAngle);
+			int[] screenLoc = getScreenLoc(mults[i], xyAngle, xzAngle);
 			
-			//int[] screenLoc = grid.getScreenLoc(mults[i], camera);
 			xPoints[i] = screenLoc[0];
 			yPoints[i] = screenLoc[1];
-			if(time == 0){
+			if(debug1 && time == 0){
 				System.out.println("Point " + i + ": (" + (xPoints[i]-450) + ", " + (yPoints[i]-450) + ")");
 			} 
 		}
