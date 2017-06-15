@@ -98,7 +98,7 @@ public class Square {
 			yPoints[i] = screenLoc[1];
 			if(time == 0){
 				System.out.println("Point " + i + ": (" + (xPoints[i]-450) + ", " + (yPoints[i]-450) + ")");
-			}
+			} 
 		}
 		
 		int[] points = new int[8];

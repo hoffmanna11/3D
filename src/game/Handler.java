@@ -74,13 +74,17 @@ public class Handler {
 	public void specialRender(Graphics g, Camera camera, Grid grid, ArrayList<Square> squares){
 		double[] distances = new double[6];
 		for(int i=0; i<6; i++){
-			distances[i] = camera.loc.distanceBetween(squares.get(i).loc);
+			distances[i] = 0;
+			// Add up distances between four points on square to get an average
+			for(int j=0; j<4; j++){
+				distances[i] += camera.loc.distanceBetween(squares.get(i).points[j]);
+			}
 		}
 		
 		int[] indexArr = {0,1,2,3,4,5};
 		sort(distances, indexArr);
 		for(int i=5; i>=0; i--){
-			squares.get(i).render(g,camera,grid);
+			squares.get(indexArr[i]).render(g,camera,grid);
 		}
 	}
 	
