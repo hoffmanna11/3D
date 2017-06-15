@@ -39,6 +39,10 @@ public class Square {
 	}
 	
 	public int[] getRender(Graphics g, Camera camera, Grid grid){
+		
+		if(id != 4){
+			//return null;
+		}
 		if(time == 0){
 			for(int i=0; i<10; i++){
 				System.out.println("");

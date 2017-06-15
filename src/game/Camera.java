@@ -40,10 +40,10 @@ public class Camera {
 			if(left){
 				if(right){
 				}else{
-					rotate("XZ", true);
+					rotate("XY", true);
 				}
 			}else if(right){
-				rotate("XZ", false);
+				rotate("XY", false);
 			}
 		// No shift
 		}else{			

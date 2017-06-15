@@ -53,14 +53,6 @@ public class Cube extends GameObject {
 				}
 			}
 		}
-		
-		/*
-		System.out.print("Sorted arr: ");
-		for(int i=0; i<6; i++){
-			System.out.print(arr[i] + ", ");
-		}
-		System.out.println("");
-		*/
 	}
 	
 	public void render(Graphics g, Camera camera, Grid grid){
@@ -73,22 +65,6 @@ public class Cube extends GameObject {
 		}else{
 			// If not rendered X times yet, keep going
 		}
-		
-		if(new Integer(2) == 2){
-			return;
-		}
-		
-		// Every 3
-		//if(Square.time % 3 == 0){
-			squares[Square.indexThing].render(g, camera, grid);
-		//}
-		
-		/*
-		for(int i=0; i<6; i++){
-			//squares[new Random().nextInt(6)].render(g, camera, grid);
-			squares[i].render(g, camera, grid);
-		}
-		*/
 	}
 
 	public void initSquares(){
@@ -135,23 +111,6 @@ public class Cube extends GameObject {
 		squares[3].color = Color.orange;
 		squares[4].color = Color.green;
 		squares[5].color = Color.yellow;
-	}
-
-	public void setSquareRenderLocs(Vector3D camLoc){
-		// Get distance between points
-		double distance = (int)Math.sqrt(Math.pow(loc.dx()-camLoc.dx(),2) + Math.pow(loc.dy()-camLoc.dy(),2) + Math.pow(loc.dz()-camLoc.dz(), 2));
-		// Get scaling factor
-		double scaling = (200 / distance);
-
-		int halfLen = length/2;
-		int len = (int)(((double)halfLen) * scaling);
-
-		squares[0].loc = (Vector3D)loc.add(orient.yz.multiply(-len));
-		squares[1].loc = (Vector3D)loc.add(orient.xy.multiply(-len));
-		squares[2].loc = (Vector3D)loc.add(orient.yz.multiply(len));
-		squares[3].loc = (Vector3D)loc.add(orient.xy.multiply(len));
-		squares[4].loc = (Vector3D)loc.add(orient.xz.multiply(len));
-		squares[5].loc = (Vector3D)loc.add(orient.xz.multiply(-len));
 	}
 
 }
