@@ -56,6 +56,26 @@ public class Square {
 		return new int[]{x,y};
 	}
 	
+	public double getDYMultSum(Camera camera){
+		Vector3D[] diffs = new Vector3D[4];
+
+		for(int i=0; i<4; i++){
+			// Get the difference from the camera to the point
+			diffs[i] = new Vector3D(
+					this.points[i].dx() - camera.loc.dx(),
+					this.points[i].dy() - camera.loc.dy(),
+					this.points[i].dz() - camera.loc.dz()
+					);
+		}
+		
+		double dyMultSum = 0;
+		for(int i=0; i<4; i++){
+			dyMultSum += Vector3D.getBasisMultiples(camera.orient.xy, camera.orient.yz, camera.orient.xz, diffs[i]).dy();
+		}
+		
+		return dyMultSum;
+	}
+	
 	public int[] getRender(Graphics g, Camera camera, Grid grid){
 		Vector3D[] diffs = new Vector3D[4];
 
@@ -69,6 +89,8 @@ public class Square {
 		}
 
 		Vector3D mults[] = new Vector3D[4];
+		
+		//Vector3D mults[] = new Vector3D[4];
 		boolean atLeastOneIsVisible = false;
 		for(int i=0; i<4; i++){
 			mults[i] = Vector3D.getBasisMultiples(camera.orient.xy, camera.orient.yz, camera.orient.xz, diffs[i]);
@@ -111,7 +133,7 @@ public class Square {
 		
 		points = getRender(g, camera, grid);
 		if(null == points){
-			System.out.println("Square " + id);
+			System.out.println(System.currentTimeMillis() + " | Square " + id);
 			return;
 		}
 		
