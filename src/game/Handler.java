@@ -60,16 +60,9 @@ public class Handler {
 		}
 		
 		render(g, camera, grid, squares);
-
-		/*
-		for(int i = 0; i < object.size(); i++) {
-			GameObject tempObject = object.get(i);
-			tempObject.render(g, camera, grid);
-		}
-		*/
 	}
 	
-	public void specialRender(Graphics g, Camera camera, Grid grid, ArrayList<Square> squares){
+	public void render(Graphics g, Camera camera, Grid grid, ArrayList<Square> squares){
 		double[] distances = new double[6];
 		for(int i=0; i<6; i++){
 			distances[i] = 0;
@@ -83,6 +76,14 @@ public class Handler {
 		sort(distances, indexArr);
 		for(int i=5; i>=0; i--){
 			squares.get(indexArr[i]).render(g,camera,grid);
+		}
+		
+		if(Square.time >= 90){
+			// Once square has been rendered X times, switch to next index
+			Square.time = 0;
+			Square.indexThing = (Square.indexThing + 1) % 6;
+		}else{
+			// If not rendered X times yet, keep going
 		}
 	}
 	
@@ -99,30 +100,6 @@ public class Handler {
 					indexArr[j+1] = tempInt;
 				}
 			}
-		}
-		
-		/*
-		System.out.print("Sorted arr: ");
-		for(int i=0; i<6; i++){
-			System.out.print(arr[i] + ", ");
-		}
-		System.out.println("");
-		*/
-	}
-	
-	public void render(Graphics g, Camera camera, Grid grid, ArrayList<Square> squares){
-		specialRender(g, camera, grid, squares);
-		
-		if(Square.time >= 90){
-			// Once square has been rendered X times, switch to next index
-			Square.time = 0;
-			Square.indexThing = (Square.indexThing + 1) % 6;
-		}else{
-			// If not rendered X times yet, keep going
-		}
-		
-		if(new Integer(2) == 2){
-			return;
 		}
 	}
 

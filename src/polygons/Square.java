@@ -43,7 +43,7 @@ public class Square {
 	public int[] getScreenLoc(Vector3D mults, double xyAngle, double xzAngle){
 		double dx = mults.dx();
 		double dy = mults.dy();
-		double dz = mults.dz();
+		double dz = mults.dz(); 
 		xyAngle = Math.toRadians(xyAngle);
 		xzAngle = Math.toRadians(xzAngle);
 		
@@ -57,31 +57,9 @@ public class Square {
 	}
 	
 	public int[] getRender(Graphics g, Camera camera, Grid grid){
-		
-		if(id == 0){
-			return null;
-		}
-		
-		if(debug1 && time == 0){
-			for(int i=0; i<10; i++){
-				System.out.println("");
-			}
-		}
-		
-		if(debug1 && time == 0){
-			System.out.print(id + ": ");
-			loc.print();
-			orient.print();
-		}
-		
 		Vector3D[] diffs = new Vector3D[4];
 
 		for(int i=0; i<4; i++){
-			if(debug1 && time == 0){
-				System.out.print("Point " + i + " loc: ");
-				points[i].print();
-			}
-			
 			// Get the difference from the camera to the point
 			diffs[i] = new Vector3D(
 					this.points[i].dx() - camera.loc.dx(),
@@ -94,9 +72,6 @@ public class Square {
 		boolean atLeastOneIsVisible = false;
 		for(int i=0; i<4; i++){
 			mults[i] = Vector3D.getBasisMultiples(camera.orient.xy, camera.orient.yz, camera.orient.xz, diffs[i]);
-			if(debug1 && time == 0){
-				System.out.println("mult[" + i + "]: { " + mults[i].dx() + ", " + mults[i].dy() + ", " + mults[i].dz() + " }");
-			}
 			if(mults[i].dy() > 0){
 				atLeastOneIsVisible = true;
 			}
@@ -113,14 +88,12 @@ public class Square {
 		int yPoints[] = new int[4];
 		double xyAngle = 30;
 		double xzAngle = 45;
+		
 		for(int i=0; i<4; i++){
 			int[] screenLoc = getScreenLoc(mults[i], xyAngle, xzAngle);
 			
 			xPoints[i] = screenLoc[0];
-			yPoints[i] = screenLoc[1];
-			if(debug1 && time == 0){
-				System.out.println("Point " + i + ": (" + (xPoints[i]-450) + ", " + (yPoints[i]-450) + ")");
-			} 
+			yPoints[i] = screenLoc[1]; 
 		}
 		
 		int[] points = new int[8];
@@ -138,6 +111,7 @@ public class Square {
 		
 		points = getRender(g, camera, grid);
 		if(null == points){
+			System.out.println("Square " + id);
 			return;
 		}
 		
