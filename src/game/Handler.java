@@ -65,15 +65,8 @@ public class Handler {
 	public void render(Graphics g, Camera camera, Grid grid, ArrayList<Square> squares){
 		double[] distances = new double[6];
 		for(int i=0; i<6; i++){
-			/*
-			distances[i] = 0;
-			// Add up distances between four points on square to get an average
-			
-			for(int j=0; j<4; j++){
-				distances[i] += camera.loc.distanceBetween(squares.get(i).points[j]);
-			}
-			*/
-			distances[i] = squares.get(i).getDYMultSum(camera);
+			//distances[i] = squares.get(i).getDYMultSum(camera);
+			distances[i] = squares.get(i).loc.distanceBetween(camera.loc);
 		}
 		
 		int[] indexArr = {0,1,2,3,4,5};

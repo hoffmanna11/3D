@@ -15,6 +15,7 @@ public class Camera {
 	public boolean right = false;
 	public boolean up = false;
 	public boolean down = false;
+	public boolean rightClick = false;
 
 	public int speed = 2;
 	
