@@ -50,8 +50,12 @@ public class Square {
 		double resXHalf = Env.RESWIDTH / 2;
 		double resYHalf = Env.RESHEIGHT / 2;
 		
-		int x = (int) ( resXHalf + ( dx * Math.tan(xyAngle) / dy * resXHalf) );
-		int y = (int) ( resYHalf - ( dz * Math.tan(xzAngle) / dy * resYHalf) );
+		int x = (int) ( resXHalf + ( dx * Math.tan(xyAngle) / dy * resXHalf ) );
+		int y = (int) ( resYHalf - ( dz * Math.tan(xzAngle) / dy * resYHalf ) );
+		
+		if(id == 1){
+			System.out.println("x,y: (" + x + "," + y + ")");
+		}
 		
 		return new int[]{x,y};
 	}
@@ -92,10 +96,12 @@ public class Square {
 		
 		//Vector3D mults[] = new Vector3D[4];
 		boolean atLeastOneIsVisible = false;
+		int visibleCount = 0;
 		for(int i=0; i<4; i++){
 			mults[i] = Vector3D.getBasisMultiples(camera.orient.xy, camera.orient.yz, camera.orient.xz, diffs[i]);
 			if(mults[i].dy() > 0){
 				atLeastOneIsVisible = true;
+				visibleCount++;
 			}
 		}
 		
