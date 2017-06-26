@@ -1,5 +1,7 @@
 package game;
 
+import java.awt.Point;
+
 import sub.Matrix;
 import sub.Orient3D;
 import sub.Vector3D;
@@ -7,6 +9,10 @@ import sub.Vector3D;
 public class Camera {
 	public Vector3D loc;
 	public Orient3D orient;
+	
+	public KeyInput keyInput;
+	
+	public Env env;
 
 	public boolean shift = false;
 	public boolean forward = false;
@@ -19,9 +25,11 @@ public class Camera {
 
 	public int speed = 2;
 	
-	public Camera(Vector3D loc, Vector3D yzOrient){
+	public Camera(Vector3D loc, Vector3D yzOrient, KeyInput keyInput, Env env){
 		this.loc = loc;
 		this.orient = new Orient3D(yzOrient);
+		this.keyInput = keyInput;
+		this.env = env;
 	}
 
 	public void tick(){
@@ -29,6 +37,30 @@ public class Camera {
 	}
 
 	public void applyKeyInput(){
+		if(rightClick){
+			Point p = env.getMousePosition();
+			if(null != p){
+				double mouseXNew = env.getMousePosition().getX();
+				double mouseYNew = env.getMousePosition().getY();
+				
+				if(keyInput.mouseX == -1){
+					// No change to apply since we don't have any previous input to gauge a (dx, dy) from
+				}else{
+					double mouseDX = mouseXNew - keyInput.mouseX;
+					double mouseDY = mouseYNew - keyInput.mouseY;
+					
+					// Percentage of screen
+					double mouseDXPercent = mouseDX / (double)Env.RESWIDTH;
+					double mouseDYPercent = mouseDY / (double)Env.RESHEIGHT;
+					rotate("YZ", -mouseDYPercent * 100 * 2);
+					rotate("XY", -mouseDXPercent * 100 * 4);
+				}
+				
+				keyInput.mouseX = mouseXNew;
+				keyInput.mouseY = mouseYNew;
+			}
+		}
+		
 		if(shift){
 			if(forward){
 				if(backward){
@@ -115,132 +147,6 @@ public class Camera {
 				*/
 			}
 		}
-	}
-	
-	public void applyKeyInput_RotateVersion(){
-		/* Check DIRECTION and opposite axial DIRECTION
-		 *   If both, do nothing
-		 *   Else If one, check for shift
-		 *     If shift, check:
-		 *       If 
-		 *     If shift, rotate in that dual axis plane
-		 *     Else move in that direction
-		 *   Else check next direction
-
-		 * Vector3D.XY: Yaw   ( left / right )
-		 * Vector3D.XZ: Roll  ( shift + left / right )
-		 * Vector3D.YZ: Pitch ( shift + forward / backward )
-		 */
-
-		/*
-		if(shift){
-			if(forward){
-				if(backward){
-					// Do nothing
-				}else{
-					// Shift + forward
-					// = Pitch down
-					// = Rotate on this.orient.yz CW : Negative
-					//System.out.println("Pitch down");
-					rotate("YZ", false);
-				}
-			}else if(backward){
-				// Shift + backward
-				// = Pitch up
-				// = Rotate on this.orient.yz CCW : Positive
-				rotate("YZ", true);
-				//System.out.println("Pitch up");
-			}
-			if(left){
-				if(right){
-					// Do nothing
-				}else{
-					// Shift + left
-					// = Roll left
-					// = Rotate on this.orient.xz CCW : Positive
-					//System.out.println("Roll left");
-					rotate("XZ", true);
-				}
-			}else if(right){
-				// Shift + right
-				// = Roll right
-				// = Rotate on this.orient.xz CW : Negative
-				//System.out.println("Roll right");
-				rotate("XZ", false);
-			}
-		}else{
-			// No shift
-			if(forward){
-				if(backward){
-					// Do nothing
-				}else{
-					// Forward
-					// = Move forward
-					// Add to x, y, z speed * (normalized)[x, y, z]
-					//System.out.println("Move forward");
-					loc.dx += (int)(this.orient.yz.dx * speed);
-					loc.dy += (int)(this.orient.yz.dy * speed);
-					loc.dz += (int)(this.orient.yz.dz * speed);
-					// WORLDLENGTH/2, 200, WORLDHEIGHT/2
-					//System.out.println("(" + (loc.x - Env.WORLDLENGTH/2) + "," + (loc.y - 200) + "," + (loc.z - Env.WORLDHEIGHT/2) + ")");
-					//loc.print();
-					//this.orient.yz.print();
-				}
-			}else if(backward){
-				// Backward
-				// = Move backward
-				// Add to x, y, z -1 * speed * (normalized)[x, y, z]
-				//System.out.println("Move backward");
-				loc.dx = loc.dx - (int)(this.orient.yz.dx * speed);
-				loc.dy = loc.dy - (int)(this.orient.yz.dy * speed);
-				loc.dz = loc.dz - (int)(this.orient.yz.dz * speed);
-				//System.out.println("(" + (loc.x - Env.WORLDLENGTH/2) + "," + (loc.y - 200) + "," + (loc.z - Env.WORLDHEIGHT/2) + ")");
-				//loc.print();
-				//this.orient.yz.print();
-			}
-
-			if(left){
-				if(right){
-					// Do nothing
-				}else{
-					// Left
-					// = Left
-					// = Rotate on this.orient.xy CCW : Positive
-					//System.out.println("Rotate left (yaw)");
-					rotate("XY", true);
-				}
-			}else if(right){
-				// Right
-				// = Right
-				// = Rotate on this.orient.xy CW : Negative
-				//System.out.println("Rotate right (yaw)");
-				rotate("XY", false);
-			}
-			if(up){
-				if(down){
-					// Do nothing
-				}else{
-					// Up
-					// = Up
-					// = Move upward
-					//System.out.println("Move upward");
-					loc.dx += this.orient.xz.dx * speed;
-					loc.dy += this.orient.xz.dy * speed;
-					loc.dz += this.orient.xz.dz * speed;
-					//System.out.println("(" + (loc.x - Env.WORLDLENGTH/2) + "," + (loc.y - 200) + "," + (loc.z - Env.WORLDHEIGHT/2) + ")");
-					//loc.print();
-				}
-			}else if(down){
-				// Down
-				// = Down
-				// = Move downward
-				//System.out.println("Move downward");
-				loc.dx -= this.orient.xz.dx * speed;
-				loc.dy -= this.orient.xz.dy * speed;
-				loc.dz -= this.orient.xz.dz * speed;
-			}
-		}
-		*/
 	}
 
 	public void rotate(String plane, double theta){

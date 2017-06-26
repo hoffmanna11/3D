@@ -2,6 +2,7 @@ package game;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
 import java.awt.image.BufferStrategy;
 import java.util.concurrent.TimeUnit;
 
@@ -35,9 +36,13 @@ public class Env extends Canvas implements Runnable {
 	 */
 	public Env() {
 		handler = new Handler();
-		 
+		
+		KeyInput keyInput = new KeyInput(handler);
+		this.addMouseListener(keyInput);
+		this.addKeyListener(keyInput);
+		
 		// Using for easier location
-		Camera camera = new Camera(new Vector3D(0, 0, 0), new Vector3D(0,1,0));
+		Camera camera = new Camera(new Vector3D(0, 0, 0), new Vector3D(0,1,0), keyInput, this);
 		/* Use this normally
 		 * Camera camera = new Camera(new Vector3D(WORLDLENGTH/2, 0, WORLDHEIGHT/2), new Vector3D(0,1,0));
 		 */
@@ -63,7 +68,6 @@ public class Env extends Canvas implements Runnable {
 		 * handler.addObject(new Cube(new Vector3D(WORLDLENGTH/2 + 80, 200, WORLDHEIGHT/2 - 20), new Vector3D(0,1,0).normalize(), 50));
 		 */
 		
-		this.addKeyListener(new KeyInput(handler));
 		window = new Window(RESWIDTH, RESHEIGHT, "3D", this);
 	}
 	

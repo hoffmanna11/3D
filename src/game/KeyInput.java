@@ -2,9 +2,15 @@ package game;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class KeyInput extends KeyAdapter {
+import javax.swing.SwingUtilities;
 
+public class KeyInput extends KeyAdapter implements MouseListener {
+	public double mouseX = -1;
+	public double mouseY = -1;
+	
 	private Handler handler;
 
 	public KeyInput(Handler handler) {
@@ -47,6 +53,37 @@ public class KeyInput extends KeyAdapter {
 		if(key == KeyEvent.VK_SPACE) handler.camera.up = false;
 		if(key == KeyEvent.VK_CONTROL) handler.camera.down = false;
 		if(key == KeyEvent.VK_SHIFT) handler.camera.shift = false;
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		if(SwingUtilities.isRightMouseButton(arg0)){
+			handler.camera.rightClick = true;
+		}
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		if(SwingUtilities.isRightMouseButton(arg0)){
+			handler.camera.rightClick = false;
+			mouseX = -1;
+			mouseY = -1;
+		}
 	}
 
 }
