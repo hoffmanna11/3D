@@ -40,8 +40,8 @@ public class Camera {
 		if(rightClick){
 			Point p = env.getMousePosition();
 			if(null != p){
-				double mouseXNew = env.getMousePosition().getX();
-				double mouseYNew = env.getMousePosition().getY();
+				double mouseXNew = p.getX();
+				double mouseYNew = p.getY();
 				
 				if(keyInput.mouseX == -1){
 					// No change to apply since we don't have any previous input to gauge a (dx, dy) from
