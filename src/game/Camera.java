@@ -2,7 +2,6 @@ package game;
 
 import java.awt.Point;
 
-import sub.Matrix;
 import sub.Orient3D;
 import sub.Vector3D;
 
@@ -186,30 +185,5 @@ public class Camera {
 		}else{
 			rotate(plane, -constant);
 		}
-	}
-
-	public int[] getBaseCoords(Vector3D pt){
-		// Combine all vectors into a matrix
-
-		// First, make the point relative to the camera loc
-		pt.values[0][0] -= loc.dx();
-		pt.values[1][0] -= loc.dy();
-		pt.values[2][0] -= loc.dz();
-
-		pt.setDX(pt.dx() - loc.dx());
-		pt.setDY(pt.dy() - loc.dy());
-		pt.setDZ(pt.dz() - loc.dz());
-
-		// Now combine all vectors into a matrix
-		// Create vector array
-		Vector3D[] vectors = new Vector3D[3];
-		vectors[0] = this.orient.yz;
-		vectors[1] = this.orient.xz;
-		vectors[2] = pt;
-		@SuppressWarnings("static-access")
-		Matrix system = this.orient.xy.combineVectors(vectors);
-		system.rref();
-
-		return new int[]{(int)system.values[0][3], (int)system.values[2][3]};
 	}
 }

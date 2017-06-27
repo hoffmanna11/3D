@@ -9,7 +9,7 @@ import sub.Orient3D;
 import sub.Vector3D;
 
 public class Square {
-	public Vector3D loc;
+	private Vector3D loc;
 	public Orient3D orient;
 	public Vector3D[] points;
 	public Color color = null;
@@ -26,14 +26,14 @@ public class Square {
 		this.length = length;
 		this.id = id;
 
-		this.loc = (Vector3D)cubeLoc.add(orient.yz.multiply(-length/2));
-
+		this.loc = (Vector3D)cubeLoc.add(orient.yz.multiply(( -1.0 * (double)length)/2.0));
+		
 		// Initialize points
 		points = new Vector3D[4];
 		for(int i=0; i<4; i++){
 			points[i] = new Vector3D(0,0,0);
 		}
-
+		
 		points[0] = (Vector3D) loc.add(orient.xy.multiply(-length/2).add(orient.xz.multiply(length/2)));
 		points[1] = (Vector3D) loc.add(orient.xy.multiply(length/2).add(orient.xz.multiply(length/2)));
 		points[2] = (Vector3D) loc.add(orient.xy.multiply(length/2).add(orient.xz.multiply(-length/2)));
@@ -53,10 +53,6 @@ public class Square {
 		int x = (int) ( resXHalf + ( dx * Math.tan(xyAngle) / dy * resXHalf ) );
 		int y = (int) ( resYHalf - ( dz * Math.tan(xzAngle) / dy * resYHalf ) );
 		
-		if(id == 1){
-			System.out.println("x,y: (" + x + "," + y + ") [Square, getScreenLoc]");
-		}
-		
 		return new int[]{x,y};
 	}
 	
@@ -74,7 +70,7 @@ public class Square {
 		
 		double dyMultSum = 0;
 		for(int i=0; i<4; i++){
-			dyMultSum += Vector3D.getBasisMultiples(camera.orient.xy, camera.orient.yz, camera.orient.xz, diffs[i]).dy();
+			dyMultSum += Vector3D.getBasisMultiples(camera.orient, diffs[i]).dy();
 		}
 		
 		return dyMultSum;
@@ -98,7 +94,7 @@ public class Square {
 		boolean atLeastOneIsVisible = false;
 		//int visibleCount = 0;
 		for(int i=0; i<4; i++){
-			mults[i] = Vector3D.getBasisMultiples(camera.orient.xy, camera.orient.yz, camera.orient.xz, diffs[i]);
+			mults[i] = Vector3D.getBasisMultiples(camera.orient, diffs[i]);
 			if(mults[i].dy() > 0){
 				atLeastOneIsVisible = true;
 				//visibleCount++;
@@ -117,9 +113,6 @@ public class Square {
 		double xyAngle = 30;
 		double xzAngle = 45;
 		
-		if(id == 1){
-			System.out.println("Debugging screen loc, square id #" + id + " [Square, getRender]");
-		}
 		for(int i=0; i<4; i++){
 			int[] screenLoc = getScreenLoc(mults[i], xyAngle, xzAngle);
 			
@@ -157,6 +150,10 @@ public class Square {
 		g.drawPolygon(xPoints, yPoints, 4);
 		
 		time++;
+	}
+	
+	public Vector3D loc(){
+		return this.loc;
 	}
 
 }

@@ -1,7 +1,7 @@
 package sub;
 
 public class Matrix {
-	public double[][] values;
+	private double[][] values;
 
 	public Matrix(double[][] values){
 		checkInvalidMatrix(values);
@@ -58,11 +58,6 @@ public class Matrix {
 				clone[i][j] = this.values[i][j];
 			}
 		}
-		
-		//System.out.println("Original: ");
-		//this.print();
-		//System.out.println("Clone: ");
-		//new Matrix(clone).print();
 		
 		return new Matrix(clone);
 	}
@@ -135,12 +130,6 @@ public class Matrix {
 	public int columns(){
 		return this.values[0].length;
 	}
-
-	/*
-	public boolean invalidMatch(Matrix other){
-		return false;
-	}
-	*/
 	
 	public static double[][] rref(double[][] mat)
 	{
@@ -354,6 +343,10 @@ public class Matrix {
 			return true;
 		}
 		return false;
+	}
+	
+	protected double[][] values(){
+		return this.values;
 	}
 	
 }

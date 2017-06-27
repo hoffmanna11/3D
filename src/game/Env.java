@@ -57,7 +57,7 @@ public class Env extends Canvas implements Runnable {
 		
 		// Using easy location to make debugging easier
 		handler.addObject(new Cube(new Vector3D(0, 200, 0), new Vector3D(0,1,0).normalize(), 40));
-		handler.addObject(new Cube(new Vector3D(0, 0, 0), new Vector3D(0,1,0).normalize(), 5000));
+		//handler.addObject(new Cube(new Vector3D(0, 0, 0), new Vector3D(0,1,0).normalize(), 5000));
 		
 		/* Use this normally
 		 handler.addObject(new Cube(new Vector3D(WORLDLENGTH/2, 200, WORLDHEIGHT/2), new Vector3D(0,1,0).normalize(), 51));

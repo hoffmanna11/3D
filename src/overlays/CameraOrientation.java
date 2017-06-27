@@ -6,8 +6,6 @@ import java.text.DecimalFormat;
 
 import game.Camera;
 import game_cat.Overlay;
-import sub.Matrix;
-import sub.Orient3D;
 import sub.Vector3D;
 
 public class CameraOrientation extends Overlay {
@@ -27,18 +25,13 @@ public class CameraOrientation extends Overlay {
 		Vector3D projYZ = ((Vector3D)(camera.orient.yz.multiply(50))).projectOntoPlane(Vector3D.origin, new Vector3D(-20,50,-20));
 		Vector3D projXZ = ((Vector3D)(camera.orient.xz.multiply(50))).projectOntoPlane(Vector3D.origin, new Vector3D(-20,50,-20));
 		
-		int[] coordsXY = projXY.getBaseCoordsDeprecated();
-		int[] coordsYZ = projYZ.getBaseCoordsDeprecated();
-		int[] coordsXZ = projXZ.getBaseCoordsDeprecated();
-		
-		drawVector(g, coordsXY, Color.BLUE);
-		drawVector(g, coordsYZ, Color.gray);
-		drawVector(g, coordsXZ, Color.RED);
+		drawVector(g, new int[]{(int)projXY.dx(), (int)projXY.dz()}, Color.BLUE);
+		drawVector(g, new int[]{(int)projYZ.dx(), (int)projYZ.dz()}, Color.gray);
+		drawVector(g, new int[]{(int)projXZ.dx(), (int)projXZ.dz()}, Color.RED);
 	}
 	
-	/*
-	 * Draws:
-	 * 	text for current orient/loc
+	/* 
+	 * Draws text for current orient/loc 
 	 */
 	public void drawStrings(Graphics g){
 		DecimalFormat df = new DecimalFormat("#.##");

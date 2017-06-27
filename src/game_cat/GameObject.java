@@ -7,7 +7,7 @@ import sub.Orient3D;
 import sub.Vector3D;
 
 public abstract class GameObject {
-	public  Vector3D loc;
+	public Vector3D loc;
 	public Orient3D orient;
 	
 	public GameObject(Vector3D loc, Vector3D yzOrient) {

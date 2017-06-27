@@ -20,13 +20,12 @@ public class Cube extends GameObject {
 	}
 	
 	public void tick() {
-		
 	}
 	
 	public void specialRender(Graphics g, Camera camera, Grid grid){
 		double[] distances = new double[6];
 		for(int i=0; i<6; i++){
-			distances[i] = camera.loc.distanceBetween(squares[i].loc);
+			distances[i] = camera.loc.distanceBetween(squares[i].loc());
 		}
 		
 		int[] indexArr = {0,1,2,3,4,5};
