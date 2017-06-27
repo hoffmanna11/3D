@@ -54,7 +54,7 @@ public class Square {
 		int y = (int) ( resYHalf - ( dz * Math.tan(xzAngle) / dy * resYHalf ) );
 		
 		if(id == 1){
-			System.out.println("x,y: (" + x + "," + y + ")");
+			System.out.println("x,y: (" + x + "," + y + ") [Square, getScreenLoc]");
 		}
 		
 		return new int[]{x,y};
@@ -96,12 +96,12 @@ public class Square {
 		
 		//Vector3D mults[] = new Vector3D[4];
 		boolean atLeastOneIsVisible = false;
-		int visibleCount = 0;
+		//int visibleCount = 0;
 		for(int i=0; i<4; i++){
 			mults[i] = Vector3D.getBasisMultiples(camera.orient.xy, camera.orient.yz, camera.orient.xz, diffs[i]);
 			if(mults[i].dy() > 0){
 				atLeastOneIsVisible = true;
-				visibleCount++;
+				//visibleCount++;
 			}
 		}
 		
@@ -117,6 +117,9 @@ public class Square {
 		double xyAngle = 30;
 		double xzAngle = 45;
 		
+		if(id == 1){
+			System.out.println("Debugging screen loc, square id #" + id + " [Square, getRender]");
+		}
 		for(int i=0; i<4; i++){
 			int[] screenLoc = getScreenLoc(mults[i], xyAngle, xzAngle);
 			

@@ -71,6 +71,13 @@ public class Handler {
 		
 		int[] indexArr = {0,1,2,3,4,5};
 		sort(distances, indexArr);
+		
+		System.out.println("Checking render order: [Handler, render]");
+		for(int i=5; i>=0; i--){
+			System.out.println("square id: " + (indexArr[i]+1) + ", distance: " + distances[i] + " [Handler, render]");
+			System.out.println("square loc: (" + squares.get(indexArr[i]).loc.dx() + "," + squares.get(indexArr[i]).loc.dx() + ") [Handler, render]");
+		}
+		
 		for(int i=5; i>=0; i--){
 			squares.get(indexArr[i]).render(g,camera,grid);
 		}
