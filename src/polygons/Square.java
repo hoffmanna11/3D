@@ -43,7 +43,7 @@ public class Square {
 	public int[] getScreenLoc(Vector3D mults, double xyAngle, double xzAngle){
 		double dx = mults.dx();
 		double dy = mults.dy();
-		double dz = mults.dz(); 
+		double dz = mults.dz();
 		xyAngle = Math.toRadians(xyAngle);
 		xzAngle = Math.toRadians(xzAngle);
 		
@@ -52,6 +52,8 @@ public class Square {
 		
 		int x = (int) ( resXHalf + ( dx * Math.tan(xyAngle) / dy * resXHalf ) );
 		int y = (int) ( resYHalf - ( dz * Math.tan(xzAngle) / dy * resYHalf ) );
+		
+		System.out.println("dy: " + dy);
 		
 		return new int[]{x,y};
 	}
@@ -129,6 +131,10 @@ public class Square {
 	}
 
 	public void render(Graphics g, Camera camera, Grid grid){
+		if(id != 0){
+			return;
+		}
+		
 		int[] points = new int[8];
 		int[] xPoints = new int[4];
 		int[] yPoints = new int[4];
