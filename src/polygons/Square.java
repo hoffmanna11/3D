@@ -21,8 +21,8 @@ public class Square {
 	public static int time = 0;
 	public static int indexThing = 0;
 
-	public Square(Vector3D cubeLoc, Orient3D orient, int length, int id){
-		this.orient = orient;
+	public Square(Vector3D cubeLoc, Orient3D squareOrient, int length, int id){
+		this.orient = squareOrient;
 		this.length = length;
 		this.id = id;
 
@@ -40,6 +40,17 @@ public class Square {
 		points[3] = (Vector3D) loc.add(orient.xy.multiply(-length/2).add(orient.xz.multiply(-length/2)));
 	}
 	
+	public void setPoints(Vector3D cubeLoc, Orient3D cubeOrient){
+		// Figure out the square's new orientation given the cubeOrient and the square id
+		
+		
+		
+		points[0] = (Vector3D) loc.add(orient.xy.multiply(-length/2).add(orient.xz.multiply(length/2)));
+		points[1] = (Vector3D) loc.add(orient.xy.multiply(length/2).add(orient.xz.multiply(length/2)));
+		points[2] = (Vector3D) loc.add(orient.xy.multiply(length/2).add(orient.xz.multiply(-length/2)));
+		points[3] = (Vector3D) loc.add(orient.xy.multiply(-length/2).add(orient.xz.multiply(-length/2)));
+	}
+	
 	public int[] getScreenLoc(Vector3D mults, double xyAngle, double xzAngle){
 		double dx = mults.dx();
 		double dy = mults.dy();
@@ -50,10 +61,14 @@ public class Square {
 		double resXHalf = Env.RESWIDTH / 2;
 		double resYHalf = Env.RESHEIGHT / 2;
 		
+		if(dy <= 0){
+			return null;
+		}
+		
 		int x = (int) ( resXHalf + ( dx * Math.tan(xyAngle) / dy * resXHalf ) );
 		int y = (int) ( resYHalf - ( dz * Math.tan(xzAngle) / dy * resYHalf ) );
 		
-		System.out.println("dy: " + dy);
+		System.out.println("dy: " + dy + ", ( " + x + ", " + y + " )");
 		
 		return new int[]{x,y};
 	}
@@ -116,7 +131,12 @@ public class Square {
 		double xzAngle = 45;
 		
 		for(int i=0; i<4; i++){
+			System.out.print(i + ": ");
 			int[] screenLoc = getScreenLoc(mults[i], xyAngle, xzAngle);
+			
+			if(null == screenLoc){
+				return null;
+			}
 			
 			xPoints[i] = screenLoc[0];
 			yPoints[i] = screenLoc[1]; 
@@ -131,17 +151,13 @@ public class Square {
 	}
 
 	public void render(Graphics g, Camera camera, Grid grid){
-		if(id != 0){
-			return;
-		}
-		
 		int[] points = new int[8];
 		int[] xPoints = new int[4];
 		int[] yPoints = new int[4];
 		
 		points = getRender(g, camera, grid);
 		if(null == points){
-			System.out.println(System.currentTimeMillis() + " | Square " + id);
+			System.out.println("Square is now behind you: " + System.currentTimeMillis() + " | Square " + id);
 			return;
 		}
 		

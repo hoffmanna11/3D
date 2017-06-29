@@ -20,6 +20,7 @@ public class Cube extends GameObject {
 	}
 	
 	public void tick() {
+		this.orient.rotate("XY", true);
 	}
 	
 	public void specialRender(Graphics g, Camera camera, Grid grid){
@@ -61,6 +62,46 @@ public class Cube extends GameObject {
 		}else{
 			// If not rendered X times yet, keep going
 		}
+	}
+	
+	/*
+	 * Adjusts their location and orientation
+	 */
+	public void recalcSquares(){
+		Vector3D cubeLoc = loc;
+
+		// Square 0
+		squares[0] = new Square(cubeLoc, orient, length, 0);
+		
+		// Square 1
+		Vector3D orientXY1 = (Vector3D)orient.yz.multiply(-1);
+		Vector3D orientYZ1 = (Vector3D)orient.xy.multiply(1);
+		Vector3D orientXZ1 = (Vector3D)orient.xz.multiply(1);
+		squares[1] = new Square(cubeLoc, new Orient3D(orientXY1, orientYZ1, orientXZ1), length, 1);
+
+		// Square 2
+		Vector3D orientXY2 = (Vector3D)orient.xy.multiply(-1);
+		Vector3D orientYZ2 = (Vector3D)orient.yz.multiply(-1);
+		Vector3D orientXZ2 = (Vector3D)orient.xz.multiply(1);
+		squares[2] = new Square(cubeLoc, new Orient3D(orientXY2, orientYZ2, orientXZ2), length, 2);
+
+		// Square 3
+		Vector3D orientXY3 = (Vector3D)orient.yz.multiply(1);
+		Vector3D orientYZ3 = (Vector3D)orient.xy.multiply(-1);
+		Vector3D orientXZ3 = (Vector3D)orient.xz.multiply(1);
+		squares[3] = new Square(cubeLoc, new Orient3D(orientXY3, orientYZ3, orientXZ3), length, 3);
+
+		// Square 4: Top
+		Vector3D orientXY4 = (Vector3D)orient.xy.multiply(1);
+		Vector3D orientYZ4 = (Vector3D)orient.xz.multiply(-1);
+		Vector3D orientXZ4 = (Vector3D)orient.yz.multiply(1);
+		squares[4] = new Square(cubeLoc, new Orient3D(orientXY4, orientYZ4, orientXZ4), length, 4);
+
+		// Square 5: Bottom
+		Vector3D orientXY5 = (Vector3D)orient.xy.multiply(1);
+		Vector3D orientYZ5 = (Vector3D)orient.xz.multiply(1);
+		Vector3D orientXZ5 = (Vector3D)orient.yz.multiply(-1);
+		squares[5] = new Square(cubeLoc, new Orient3D(orientXY5, orientYZ5, orientXZ5), length, 5);
 	}
 
 	public void initSquares(){
