@@ -76,12 +76,26 @@ public class KeyInput extends KeyAdapter implements MouseListener {
 			handler.camera.rightClick = true;
 		}
 		if(SwingUtilities.isLeftMouseButton(arg0)){
-			handler.camera.speedUp = true;
-			handler.camera.speedUp();
+			if(handler.camera.forward == true ||
+					handler.camera.backward == true ||
+					handler.camera.down == true ||
+					handler.camera.left == true ||
+					handler.camera.up == true ||
+					handler.camera.right == true){
+				handler.camera.speedUp = true;
+				handler.camera.speedUp();
+			}
 		}
 		if(SwingUtilities.isMiddleMouseButton(arg0)){
-			handler.camera.slowDown = true;
-			handler.camera.slowDown();
+			if(handler.camera.forward == true ||
+					handler.camera.backward == true ||
+					handler.camera.down == true ||
+					handler.camera.left == true ||
+					handler.camera.up == true ||
+					handler.camera.right == true){
+				handler.camera.slowDown = true;
+				handler.camera.slowDown();
+			}
 		}
 	}
 

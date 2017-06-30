@@ -63,13 +63,13 @@ public class Handler {
 	}
 	
 	public void render(Graphics g, Camera camera, Grid grid, ArrayList<Square> squares){
-		double[] distances = new double[6];
-		for(int i=0; i<6; i++){
-			//distances[i] = squares.get(i).getDYMultSum(camera);
+		int numSquares = squares.size();
+		double[] distances = new double[numSquares];
+		int[] indexArr = new int[squares.size()];
+		
+		for(int i=0; i<numSquares; i++){
 			distances[i] = squares.get(i).loc().distanceBetween(camera.loc);
 		}
-		
-		int[] indexArr = new int[squares.size()];
 		
 		for(int i=0; i<squares.size(); i++){
 			indexArr[i] = i;
