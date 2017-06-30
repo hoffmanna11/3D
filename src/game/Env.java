@@ -3,6 +3,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import game_cat.GameObject;
@@ -22,9 +23,9 @@ public class Env extends Canvas implements Runnable {
 	public static final int RESWIDTH = 16 * RESSCALE;
 	public static final int RESHEIGHT = 9 * RESSCALE;
 	
-	public static final int WORLDLENGTH = 500;
-	public static final int WORLDWIDTH = 500;
-	public static final int WORLDHEIGHT = 500;
+	public static final int worldLength = 500;
+	public static final int worldWidth = 500;
+	public static final int worldHeight = 500;
 	
 	public static int fps = 60;
 	public static long lastRenderTime = 0;
@@ -57,6 +58,11 @@ public class Env extends Canvas implements Runnable {
 		
 		// Using easy location to make debugging easier
 		handler.addObject(new Cube(new Vector3D(0, 200, 0), new Vector3D(0,1,0).normalize(), 40));
+		
+		for(int i=0; i<1000; i++){
+			handler.addObject(new Cube(new Vector3D((int)rand(0, worldLength), (int)rand(0, worldWidth), (int)rand(0, worldHeight)), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), (int)rand(20, 100)));
+		}
+		
 		//handler.addObject(new Cube(new Vector3D(0, 0, 0), new Vector3D(0,1,0).normalize(), 5000));
 		
 		/* Use this normally
@@ -68,6 +74,13 @@ public class Env extends Canvas implements Runnable {
 		 */
 		
 		window = new Window(RESWIDTH, RESHEIGHT, "3D", this);
+	}
+	
+	public double rand(double low, double high){
+		Random random = new Random();
+		double r = Math.abs(random.nextDouble());
+		r = low + (r * (high - low));
+		return r;
 	}
 	
 	/*

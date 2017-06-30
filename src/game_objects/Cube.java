@@ -6,7 +6,6 @@ import game.Camera;
 import game_cat.GameObject;
 import overlays.Grid;
 import polygons.Square;
-import sub.Orient3D;
 import sub.Vector3D;
 
 public class Cube extends GameObject {
@@ -20,7 +19,8 @@ public class Cube extends GameObject {
 	}
 	
 	public void tick() {
-		this.orient.rotate("XY", true);
+		this.orient.rotate("XY", 40);
+		recalcSquares();
 	}
 	
 	public void specialRender(Graphics g, Camera camera, Grid grid){
@@ -68,80 +68,20 @@ public class Cube extends GameObject {
 	 * Adjusts their location and orientation
 	 */
 	public void recalcSquares(){
-		Vector3D cubeLoc = loc;
-
-		// Square 0
-		squares[0] = new Square(cubeLoc, orient, length, 0);
-		
-		// Square 1
-		Vector3D orientXY1 = (Vector3D)orient.yz.multiply(-1);
-		Vector3D orientYZ1 = (Vector3D)orient.xy.multiply(1);
-		Vector3D orientXZ1 = (Vector3D)orient.xz.multiply(1);
-		squares[1] = new Square(cubeLoc, new Orient3D(orientXY1, orientYZ1, orientXZ1), length, 1);
-
-		// Square 2
-		Vector3D orientXY2 = (Vector3D)orient.xy.multiply(-1);
-		Vector3D orientYZ2 = (Vector3D)orient.yz.multiply(-1);
-		Vector3D orientXZ2 = (Vector3D)orient.xz.multiply(1);
-		squares[2] = new Square(cubeLoc, new Orient3D(orientXY2, orientYZ2, orientXZ2), length, 2);
-
-		// Square 3
-		Vector3D orientXY3 = (Vector3D)orient.yz.multiply(1);
-		Vector3D orientYZ3 = (Vector3D)orient.xy.multiply(-1);
-		Vector3D orientXZ3 = (Vector3D)orient.xz.multiply(1);
-		squares[3] = new Square(cubeLoc, new Orient3D(orientXY3, orientYZ3, orientXZ3), length, 3);
-
-		// Square 4: Top
-		Vector3D orientXY4 = (Vector3D)orient.xy.multiply(1);
-		Vector3D orientYZ4 = (Vector3D)orient.xz.multiply(-1);
-		Vector3D orientXZ4 = (Vector3D)orient.yz.multiply(1);
-		squares[4] = new Square(cubeLoc, new Orient3D(orientXY4, orientYZ4, orientXZ4), length, 4);
-
-		// Square 5: Bottom
-		Vector3D orientXY5 = (Vector3D)orient.xy.multiply(1);
-		Vector3D orientYZ5 = (Vector3D)orient.xz.multiply(1);
-		Vector3D orientXZ5 = (Vector3D)orient.yz.multiply(-1);
-		squares[5] = new Square(cubeLoc, new Orient3D(orientXY5, orientYZ5, orientXZ5), length, 5);
+		for(int i=0; i<6; i++){
+			squares[i].setOrient(this.orient);
+			squares[i].setLoc(this.loc, this.orient);
+			squares[i].setPoints();
+		}
 	}
 
 	public void initSquares(){
-		Vector3D cubeLoc = loc;
-		
 		squares = new Square[6];
-
-		// Square 0
-		squares[0] = new Square(cubeLoc, orient, length, 0);
-
-		// Square 1
-		Vector3D orientXY1 = (Vector3D)orient.yz.multiply(-1);
-		Vector3D orientYZ1 = (Vector3D)orient.xy.multiply(1);
-		Vector3D orientXZ1 = (Vector3D)orient.xz.multiply(1);
-		squares[1] = new Square(cubeLoc, new Orient3D(orientXY1, orientYZ1, orientXZ1), length, 1);
-
-		// Square 2
-		Vector3D orientXY2 = (Vector3D)orient.xy.multiply(-1);
-		Vector3D orientYZ2 = (Vector3D)orient.yz.multiply(-1);
-		Vector3D orientXZ2 = (Vector3D)orient.xz.multiply(1);
-		squares[2] = new Square(cubeLoc, new Orient3D(orientXY2, orientYZ2, orientXZ2), length, 2);
-
-		// Square 3
-		Vector3D orientXY3 = (Vector3D)orient.yz.multiply(1);
-		Vector3D orientYZ3 = (Vector3D)orient.xy.multiply(-1);
-		Vector3D orientXZ3 = (Vector3D)orient.xz.multiply(1);
-		squares[3] = new Square(cubeLoc, new Orient3D(orientXY3, orientYZ3, orientXZ3), length, 3);
-
-		// Square 4: Top
-		Vector3D orientXY4 = (Vector3D)orient.xy.multiply(1);
-		Vector3D orientYZ4 = (Vector3D)orient.xz.multiply(-1);
-		Vector3D orientXZ4 = (Vector3D)orient.yz.multiply(1);
-		squares[4] = new Square(cubeLoc, new Orient3D(orientXY4, orientYZ4, orientXZ4), length, 4);
-
-		// Square 5: Bottom
-		Vector3D orientXY5 = (Vector3D)orient.xy.multiply(1);
-		Vector3D orientYZ5 = (Vector3D)orient.xz.multiply(1);
-		Vector3D orientXZ5 = (Vector3D)orient.yz.multiply(-1);
-		squares[5] = new Square(cubeLoc, new Orient3D(orientXY5, orientYZ5, orientXZ5), length, 5);
-
+		
+		for(int i=0; i<6; i++){
+			squares[i] = new Square(this.loc, this.orient, length, i);
+		}
+		
 		squares[0].color = Color.red;
 		squares[1].color = Color.blue;
 		squares[2].color = Color.pink;

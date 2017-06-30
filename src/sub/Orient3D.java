@@ -73,4 +73,8 @@ public class Orient3D {
 			rotate(plane, -constant);
 		}
 	}
+	
+	public Orient3D clone(){
+		return new Orient3D((Vector3D)xy.clone(), (Vector3D)yz.clone(), (Vector3D)xz.clone());
+	}
 }

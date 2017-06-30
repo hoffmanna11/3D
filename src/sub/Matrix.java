@@ -59,6 +59,10 @@ public class Matrix {
 			}
 		}
 		
+		if(getClass() == Vector3D.class){
+			return new Vector3D(clone);
+		}
+		
 		return new Matrix(clone);
 	}
 	

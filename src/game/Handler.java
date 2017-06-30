@@ -69,10 +69,15 @@ public class Handler {
 			distances[i] = squares.get(i).loc().distanceBetween(camera.loc);
 		}
 		
-		int[] indexArr = {0,1,2,3,4,5};
+		int[] indexArr = new int[squares.size()];
+		
+		for(int i=0; i<squares.size(); i++){
+			indexArr[i] = i;
+		}
+		
 		sort(distances, indexArr);
 		
-		for(int i=5; i>=0; i--){
+		for(int i=squares.size() - 1; i>=0; i--){
 			squares.get(indexArr[i]).render(g,camera,grid);
 		}
 		

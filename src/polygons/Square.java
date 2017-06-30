@@ -15,40 +15,87 @@ public class Square {
 	public Color color = null;
 	public int length;
 	int id;
-	
+
 	public static boolean debug1 = false;
-	
+
 	public static int time = 0;
 	public static int indexThing = 0;
 
-	public Square(Vector3D cubeLoc, Orient3D squareOrient, int length, int id){
-		this.orient = squareOrient;
+	public Square(Vector3D cubeLoc, Orient3D cubeOrient, int length, int id){
 		this.length = length;
 		this.id = id;
 
-		this.loc = (Vector3D)cubeLoc.add(orient.yz.multiply(( -1.0 * (double)length)/2.0));
-		
 		// Initialize points
 		points = new Vector3D[4];
 		for(int i=0; i<4; i++){
 			points[i] = new Vector3D(0,0,0);
 		}
-		
+
+		// Calculate cubes orient
+		setOrient(cubeOrient);
+
+		// Get location according to cubeLoc
+		setLoc(cubeLoc, cubeOrient);
+
+		setPoints();
+	}
+
+	public void setPoints(){
 		points[0] = (Vector3D) loc.add(orient.xy.multiply(-length/2).add(orient.xz.multiply(length/2)));
 		points[1] = (Vector3D) loc.add(orient.xy.multiply(length/2).add(orient.xz.multiply(length/2)));
 		points[2] = (Vector3D) loc.add(orient.xy.multiply(length/2).add(orient.xz.multiply(-length/2)));
 		points[3] = (Vector3D) loc.add(orient.xy.multiply(-length/2).add(orient.xz.multiply(-length/2)));
 	}
-	
-	public void setPoints(Vector3D cubeLoc, Orient3D cubeOrient){
-		// Figure out the square's new orientation given the cubeOrient and the square id
+
+	public Vector3D setLoc(Vector3D cubeLoc, Orient3D cubeOrient){
+		this.loc = (Vector3D)cubeLoc.add(orient.yz.multiply(( -1.0 * (double)length)/2.0));
+		return this.loc;
+	}
+
+	public Orient3D setOrient(Orient3D cubeOrient){
+		Orient3D myOrient = null;
 		
+		switch(id){
+		case 0:
+			myOrient = cubeOrient.clone();
+			break;
+		case 1:
+			Vector3D orientXY1 = (Vector3D)cubeOrient.yz.multiply(-1);
+			Vector3D orientYZ1 = (Vector3D)cubeOrient.xy.multiply(1);
+			Vector3D orientXZ1 = (Vector3D)cubeOrient.xz.multiply(1);
+			myOrient = new Orient3D(orientXY1, orientYZ1, orientXZ1);
+			break;
+		case 2:
+			Vector3D orientXY2 = (Vector3D)cubeOrient.xy.multiply(-1);
+			Vector3D orientYZ2 = (Vector3D)cubeOrient.yz.multiply(-1);
+			Vector3D orientXZ2 = (Vector3D)cubeOrient.xz.multiply(1);
+			myOrient = new Orient3D(orientXY2, orientYZ2, orientXZ2);
+			break;
+		case 3:
+			// Square 3
+			Vector3D orientXY3 = (Vector3D)cubeOrient.yz.multiply(1);
+			Vector3D orientYZ3 = (Vector3D)cubeOrient.xy.multiply(-1);
+			Vector3D orientXZ3 = (Vector3D)cubeOrient.xz.multiply(1);
+			myOrient = new Orient3D(orientXY3, orientYZ3, orientXZ3);
+			break;
+		case 4:
+			Vector3D orientXY4 = (Vector3D)cubeOrient.xy.multiply(1);
+			Vector3D orientYZ4 = (Vector3D)cubeOrient.xz.multiply(-1);
+			Vector3D orientXZ4 = (Vector3D)cubeOrient.yz.multiply(1);
+			myOrient = new Orient3D(orientXY4, orientYZ4, orientXZ4);
+			break;
+		case 5:
+			Vector3D orientXY5 = (Vector3D)cubeOrient.xy.multiply(1);
+			Vector3D orientYZ5 = (Vector3D)cubeOrient.xz.multiply(1);
+			Vector3D orientXZ5 = (Vector3D)cubeOrient.yz.multiply(-1);
+			myOrient = new Orient3D(orientXY5, orientYZ5, orientXZ5);
+			break;
+		default:
+			return null;
+		}
 		
-		
-		points[0] = (Vector3D) loc.add(orient.xy.multiply(-length/2).add(orient.xz.multiply(length/2)));
-		points[1] = (Vector3D) loc.add(orient.xy.multiply(length/2).add(orient.xz.multiply(length/2)));
-		points[2] = (Vector3D) loc.add(orient.xy.multiply(length/2).add(orient.xz.multiply(-length/2)));
-		points[3] = (Vector3D) loc.add(orient.xy.multiply(-length/2).add(orient.xz.multiply(-length/2)));
+		this.orient = myOrient;
+		return myOrient;
 	}
 	
 	public int[] getScreenLoc(Vector3D mults, double xyAngle, double xzAngle){
@@ -57,22 +104,20 @@ public class Square {
 		double dz = mults.dz();
 		xyAngle = Math.toRadians(xyAngle);
 		xzAngle = Math.toRadians(xzAngle);
-		
+
 		double resXHalf = Env.RESWIDTH / 2;
 		double resYHalf = Env.RESHEIGHT / 2;
-		
+
 		if(dy <= 0){
 			return null;
 		}
-		
+
 		int x = (int) ( resXHalf + ( dx * Math.tan(xyAngle) / dy * resXHalf ) );
 		int y = (int) ( resYHalf - ( dz * Math.tan(xzAngle) / dy * resYHalf ) );
-		
-		System.out.println("dy: " + dy + ", ( " + x + ", " + y + " )");
-		
+
 		return new int[]{x,y};
 	}
-	
+
 	public double getDYMultSum(Camera camera){
 		Vector3D[] diffs = new Vector3D[4];
 
@@ -84,15 +129,15 @@ public class Square {
 					this.points[i].dz() - camera.loc.dz()
 					);
 		}
-		
+
 		double dyMultSum = 0;
 		for(int i=0; i<4; i++){
 			dyMultSum += Vector3D.getBasisMultiples(camera.orient, diffs[i]).dy();
 		}
-		
+
 		return dyMultSum;
 	}
-	
+
 	public int[] getRender(Graphics g, Camera camera, Grid grid){
 		Vector3D[] diffs = new Vector3D[4];
 
@@ -106,7 +151,7 @@ public class Square {
 		}
 
 		Vector3D mults[] = new Vector3D[4];
-		
+
 		//Vector3D mults[] = new Vector3D[4];
 		boolean atLeastOneIsVisible = false;
 		//int visibleCount = 0;
@@ -117,7 +162,7 @@ public class Square {
 				//visibleCount++;
 			}
 		}
-		
+
 		if(atLeastOneIsVisible){
 			// Then draw it
 		}else{
@@ -129,19 +174,18 @@ public class Square {
 		int yPoints[] = new int[4];
 		double xyAngle = 30;
 		double xzAngle = 45;
-		
+
 		for(int i=0; i<4; i++){
-			System.out.print(i + ": ");
 			int[] screenLoc = getScreenLoc(mults[i], xyAngle, xzAngle);
-			
+
 			if(null == screenLoc){
 				return null;
 			}
-			
+
 			xPoints[i] = screenLoc[0];
 			yPoints[i] = screenLoc[1]; 
 		}
-		
+
 		int[] points = new int[8];
 		for(int i=0; i<4; i++){
 			points[i] = xPoints[i];
@@ -154,26 +198,25 @@ public class Square {
 		int[] points = new int[8];
 		int[] xPoints = new int[4];
 		int[] yPoints = new int[4];
-		
+
 		points = getRender(g, camera, grid);
 		if(null == points){
-			System.out.println("Square is now behind you: " + System.currentTimeMillis() + " | Square " + id);
 			return;
 		}
-		
+
 		for(int i=0; i<4; i++){
 			xPoints[i] = points[i];
 			yPoints[i] = points[i+4];
 		}
-		
+
 		g.setColor(this.color);
 		g.fillPolygon(xPoints, yPoints, 4);
 		g.setColor(Color.WHITE);
 		g.drawPolygon(xPoints, yPoints, 4);
-		
+
 		time++;
 	}
-	
+
 	public Vector3D loc(){
 		return this.loc;
 	}
