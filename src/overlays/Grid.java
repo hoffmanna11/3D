@@ -47,7 +47,7 @@ public class Grid extends Underlay {
 
 	public static void drawCenter(){
 		g.setColor(Color.RED);
-		g.fillOval(Env.RESWIDTH/2 - 10, Env.RESHEIGHT/2 - 10, 20, 20);
+		g.fillOval(Env.resWidth/2 - 10, Env.resHeight/2 - 10, 20, 20);
 	}
 	
 	public int[] getScreenLoc(Vector3D mults, Camera camera){
@@ -62,7 +62,7 @@ public class Grid extends Underlay {
 		//System.out.println("mults: " + mults.dy + ", distToPix: " + y);
 		//System.out.println("mults: " + mults.dz + ", distToPix: " + z);
 
-		double[] centerPlusXOffset = {Env.RESWIDTH / 2 + x, Env.RESHEIGHT / 2};
+		double[] centerPlusXOffset = {Env.resWidth / 2 + x, Env.resHeight / 2};
 		double[] vectorToFoci = {fociX - centerPlusXOffset[0], fociY - centerPlusXOffset[1]};
 
 		// Normalize the vector
@@ -74,8 +74,8 @@ public class Grid extends Underlay {
 		vectorToFoci[1] = vectorToFoci[1] * y;
 
 		int[] finalLoc = new int[2];
-		finalLoc[0] = (int)vectorToFoci[0] + x + Env.RESWIDTH / 2;
-		finalLoc[1] = (Env.RESHEIGHT/2) - (int)vectorToFoci[1] - z;
+		finalLoc[0] = (int)vectorToFoci[0] + x + Env.resWidth / 2;
+		finalLoc[1] = (Env.resHeight/2) - (int)vectorToFoci[1] - z;
 		
 		// Checking if the lengths added up
 		//double length = Math.sqrt(Math.pow(vectorToFoci[0], 2) + Math.pow(vectorToFoci[1], 2));
@@ -90,22 +90,22 @@ public class Grid extends Underlay {
 		int curDist = 0;
 
 		for(int i=0; i<100; i++){
-			int curY = (int)(Env.RESHEIGHT - distToPixY(curDist) - 1);
-			g.drawLine(0, curY, Env.RESWIDTH, curY);
+			int curY = (int)(Env.resHeight - distToPixY(curDist) - 1);
+			g.drawLine(0, curY, Env.resWidth, curY);
 			curDist += 50;
 		}
 	}
 
 	private void drawYLines(){
 		g.setColor(Color.green);
-		g.drawLine(Env.RESWIDTH/2, Env.RESHEIGHT, fociX, fociY);
+		g.drawLine(Env.resWidth/2, Env.resHeight, fociX, fociY);
 		
 		int curDist = 50;
 		
 		for(int i=0; i<100; i++){
 			int curX = distToPixX(curDist);
-			g.drawLine(Env.RESWIDTH/2 - curX, Env.RESHEIGHT, fociX, fociY);
-			g.drawLine(Env.RESWIDTH/2 + curX, Env.RESHEIGHT, fociX, fociY);
+			g.drawLine(Env.resWidth/2 - curX, Env.resHeight, fociX, fociY);
+			g.drawLine(Env.resWidth/2 + curX, Env.resHeight, fociX, fociY);
 			curDist += 50;
 		}
 	}

@@ -1,8 +1,10 @@
 package game_objects;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Random;
 
 import game.Camera;
+import game.Env;
 import game_cat.GameObject;
 import overlays.Grid;
 import polygons.Square;
@@ -11,6 +13,7 @@ import sub.Vector3D;
 public class Cube extends GameObject {
 	public int length;
 	public Square[] squares;
+	double rotateSpeed = Env.rand(0, 10);
 
 	public Cube(Vector3D loc, Vector3D dir, int length){
 		super(loc, dir.normalize());
@@ -19,7 +22,7 @@ public class Cube extends GameObject {
 	}
 	
 	public void tick() {
-		this.orient.rotate("XY", 40);
+		this.orient.rotate("XY", rotateSpeed);
 		recalcSquares();
 	}
 	
@@ -82,12 +85,20 @@ public class Cube extends GameObject {
 			squares[i] = new Square(this.loc, this.orient, length, i);
 		}
 		
+		Random rand = new Random();
+		
+		for(int i=0; i<6; i++){
+			squares[i].color = new Color(rand.nextInt(0xFFFFFF));
+		}
+		
+		/*
 		squares[0].color = Color.red;
 		squares[1].color = Color.blue;
 		squares[2].color = Color.pink;
 		squares[3].color = Color.orange;
 		squares[4].color = Color.green;
 		squares[5].color = Color.yellow;
+		*/
 	}
 
 }

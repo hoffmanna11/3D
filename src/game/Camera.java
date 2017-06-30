@@ -21,8 +21,10 @@ public class Camera {
 	public boolean up = false;
 	public boolean down = false;
 	public boolean rightClick = false;
+	public boolean speedUp = false;
+	public boolean slowDown = false;
 
-	public int speed = 2;
+	public double speed = 2;
 
 	public Camera(Vector3D loc, Vector3D yzOrient, KeyInput keyInput, Env env){
 		this.loc = loc;
@@ -33,6 +35,20 @@ public class Camera {
 
 	public void tick(){
 		applyKeyInput();
+		if(speedUp){
+			speedUp();
+		}else if(slowDown){
+			slowDown();
+		}
+	}
+	
+	public void speedUp(){
+		speed *= 1.1;
+	}
+	
+	public void slowDown(){
+		speed *= .9;
+		System.out.println("slow");
 	}
 
 	public void applyKeyInput(){
@@ -49,8 +65,8 @@ public class Camera {
 					double mouseDY = mouseYNew - keyInput.mouseY;
 
 					// Percentage of screen
-					double mouseDXPercent = mouseDX / (double)Env.RESWIDTH;
-					double mouseDYPercent = mouseDY / (double)Env.RESHEIGHT;
+					double mouseDXPercent = mouseDX / (double)Env.resWidth;
+					double mouseDYPercent = mouseDY / (double)Env.resHeight;
 					
 					//rotate(this.orient, "YZ", -mouseDYPercent * 100 * 2);
 					//rotate(this.orient, "XY", -mouseDXPercent * 100 * 4);

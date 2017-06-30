@@ -75,6 +75,14 @@ public class KeyInput extends KeyAdapter implements MouseListener {
 		if(SwingUtilities.isRightMouseButton(arg0)){
 			handler.camera.rightClick = true;
 		}
+		if(SwingUtilities.isLeftMouseButton(arg0)){
+			handler.camera.speedUp = true;
+			handler.camera.speedUp();
+		}
+		if(SwingUtilities.isMiddleMouseButton(arg0)){
+			handler.camera.slowDown = true;
+			handler.camera.slowDown();
+		}
 	}
 
 	@Override
@@ -83,6 +91,12 @@ public class KeyInput extends KeyAdapter implements MouseListener {
 			handler.camera.rightClick = false;
 			mouseX = -1;
 			mouseY = -1;
+		}
+		if(SwingUtilities.isLeftMouseButton(arg0)){
+			handler.camera.speedUp = false;
+		}
+		if(SwingUtilities.isMiddleMouseButton(arg0)){
+			handler.camera.slowDown = false;
 		}
 	}
 

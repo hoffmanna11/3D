@@ -19,13 +19,13 @@ public class Env extends Canvas implements Runnable {
 	static Handler handler;
 	static boolean running = false;
 	
-	public static final int RESSCALE = 60; // 120 = 1080p scaling
-	public static final int RESWIDTH = 16 * RESSCALE;
-	public static final int RESHEIGHT = 9 * RESSCALE;
+	public static final int resScale = 60; // 120 = 1080p scaling
+	public static final int resWidth = 16 * resScale;
+	public static final int resHeight = 9 * resScale;
 	
-	public static final int worldLength = 500;
-	public static final int worldWidth = 500;
-	public static final int worldHeight = 500;
+	public static final double worldLength = 4000;
+	public static final double worldWidth = 4000;
+	public static final double worldHeight = 4000;
 	
 	public static int fps = 60;
 	public static long lastRenderTime = 0;
@@ -42,13 +42,13 @@ public class Env extends Canvas implements Runnable {
 		this.addKeyListener(keyInput);
 		
 		// Using for easier location
-		Camera camera = new Camera(new Vector3D(0, 0, 0), new Vector3D(0,1,0), keyInput, this);
+		Camera camera = new Camera(new Vector3D(worldLength/2, worldWidth/2, worldHeight/2), new Vector3D(0,1,0), keyInput, this);
 		/* Use this normally
 		 * Camera camera = new Camera(new Vector3D(WORLDLENGTH/2, 0, WORLDHEIGHT/2), new Vector3D(0,1,0));
 		 */
 		
 		handler.setCamera(camera);
-		Grid grid = new Grid(handler.camera, RESWIDTH, RESHEIGHT);
+		Grid grid = new Grid(handler.camera, resWidth, resHeight);
 		handler.setGrid(grid);
 		handler.addOverlay(new CameraOrientation(camera));
 		
@@ -59,7 +59,7 @@ public class Env extends Canvas implements Runnable {
 		// Using easy location to make debugging easier
 		handler.addObject(new Cube(new Vector3D(0, 200, 0), new Vector3D(0,1,0).normalize(), 40));
 		
-		for(int i=0; i<1000; i++){
+		for(int i=0; i<200; i++){
 			handler.addObject(new Cube(new Vector3D((int)rand(0, worldLength), (int)rand(0, worldWidth), (int)rand(0, worldHeight)), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), (int)rand(20, 100)));
 		}
 		
@@ -73,10 +73,10 @@ public class Env extends Canvas implements Runnable {
 		 * handler.addObject(new Cube(new Vector3D(WORLDLENGTH/2 + 80, 200, WORLDHEIGHT/2 - 20), new Vector3D(0,1,0).normalize(), 50));
 		 */
 		
-		window = new Window(RESWIDTH, RESHEIGHT, "3D", this);
+		window = new Window(resWidth, resHeight, "3D", this);
 	}
 	
-	public double rand(double low, double high){
+	public static double rand(double low, double high){
 		Random random = new Random();
 		double r = Math.abs(random.nextDouble());
 		r = low + (r * (high - low));
@@ -93,7 +93,7 @@ public class Env extends Canvas implements Runnable {
 		for(int i=0; i<gameObjects.length; i++){
 			handler.addObject(gameObjects[i]);
 		}
-		window = new Window(RESWIDTH, RESHEIGHT, "3D", this);
+		window = new Window(resWidth, resHeight, "3D", this);
 	}
 	
 	public synchronized void start(){
@@ -151,7 +151,7 @@ public class Env extends Canvas implements Runnable {
 		 */
 		
 		g.setColor(Color.black);
-		g.fillRect(0, 0, RESWIDTH, RESHEIGHT);
+		g.fillRect(0, 0, resWidth, resHeight);
 
 		handler.render(g);
 

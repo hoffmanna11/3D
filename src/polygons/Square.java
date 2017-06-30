@@ -105,8 +105,8 @@ public class Square {
 		xyAngle = Math.toRadians(xyAngle);
 		xzAngle = Math.toRadians(xzAngle);
 
-		double resXHalf = Env.RESWIDTH / 2;
-		double resYHalf = Env.RESHEIGHT / 2;
+		double resXHalf = Env.resWidth / 2;
+		double resYHalf = Env.resHeight / 2;
 
 		if(dy <= 0){
 			return null;
