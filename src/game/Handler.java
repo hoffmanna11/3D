@@ -107,7 +107,7 @@ public class Handler implements Runnable {
 		//oldSort(distances, indexArr);
 		sort(distances, indexArr);
 
-		int rounds = 1;
+		int rounds = 10;
 		for(int i=squares.size() - 1; i>=0; ){
 			Env.threads[index].renderGameObjects5(squares, indexArr, g, camera, grid, i, rounds);
 			index = (index + 1) % Env.numCores;
