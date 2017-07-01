@@ -1,4 +1,4 @@
-package game;
+package sub;
 
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveAction;
