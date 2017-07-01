@@ -35,7 +35,7 @@ public class Env extends Canvas implements Runnable {
 	public static MyThread[] threads = new MyThread[numCores];
 	boolean[] threadRunning = new boolean[numCores];
 	
-	public static int numCubes = 100;
+	public static int numCubes = 300;
 	
 	/*
 	 * For normal usage
