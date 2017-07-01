@@ -30,10 +30,22 @@ public class Env extends Canvas implements Runnable {
 	public static long lastRenderTime = 0;
 	public static long desiredRenderInterval = 1000000000 / fps;
 	
+	public static int numCores = Runtime.getRuntime().availableProcessors();
+	//public static int numCores = 1;
+	public static MyThread[] threads = new MyThread[numCores];
+	boolean[] threadRunning = new boolean[numCores];
+	
+	public static int numCubes = 100;
+	
 	/*
 	 * For normal usage
 	 */
 	public Env() {
+		for(int i=0; i<numCores; i++){
+			threads[i] = new MyThread(handler, i);
+			threadRunning[i] = false;
+		}
+		
 		handler = new Handler();
 		
 		KeyInput keyInput = new KeyInput(handler);
@@ -55,10 +67,7 @@ public class Env extends Canvas implements Runnable {
 		 * handler.addObject(new BackgroundCube(new Vector3D(WORLDLENGTH/2, WORLDWIDTH/2, WORLDHEIGHT/2), new Vector3D(0,1,0).normalize(), WORLDWIDTH));
 		 */
 		
-		// Using easy location to make debugging easier
-		handler.addObject(new Cube(new Vector3D(0, 200, 0), new Vector3D(0,1,0).normalize(), 40));
-		
-		for(int i=0; i<200; i++){
+		for(int i=0; i<numCubes; i++){
 			handler.addObject(new Cube(new Vector3D((int)rand(0, worldLength), (int)rand(0, worldWidth), (int)rand(0, worldHeight)), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), (int)rand(20, 100)));
 		}
 		
@@ -83,6 +92,10 @@ public class Env extends Canvas implements Runnable {
 	}
 	
 	public synchronized void start(){
+		for(int i=0; i<numCores; i++){
+			threads[i].start();
+			threadRunning[i] = true;
+		}
 		thread = new Thread(this);
 		thread.start();
 		running = true;

@@ -8,7 +8,7 @@ import overlays.Grid;
 import sub.Orient3D;
 import sub.Vector3D;
 
-public class Square {
+public class Square implements Runnable {
 	private Vector3D loc;
 	public Orient3D orient;
 	public Vector3D[] points;
@@ -199,6 +199,10 @@ public class Square {
 
 	public Vector3D loc(){
 		return this.loc;
+	}
+
+	public void run() {
+		
 	}
 
 }
