@@ -57,12 +57,10 @@ public class Cube extends GameObject {
 	}
 
 	public void trailblaze(){
-		trailBlazeIndexDraw = (trailBlazeIndexDraw + 1) & trailBlaze.length;
-
 		int lo, med, hi;
 		lo = trailBlazeIndexDraw;
 		
-		if(frameCount > 1){
+		if(true){
 			trailBlaze[trailBlazeIndexDraw] = (Vector3D) this.loc.add(this.orient.yz.multiply(-1 * (double)this.length / 1.7));
 			trailBlazeIndexDraw = (trailBlazeIndexDraw + 1) % trailBlaze.length;
 		}
@@ -74,35 +72,40 @@ public class Cube extends GameObject {
 		if(ready == false){
 			for(int i=0; i<trailBlazeIndexDraw; i++){
 				int[] loc = Render.getRender(Env.g, camera, trailBlaze[i]);
-				Env.g.setColor(trailBlazeColor);
-				Env.g.drawOval(loc[0], loc[1], 2, 2);
-			}
-			trailBlazeIndexDraw = (trailBlazeIndexDraw + 1) % trailBlaze.length;
-			return;
-		}
-		
-		if(trailBlazeIndexDraw >= (trailBlaze.length / 2)){
-			for(int i=trailBlazeIndexDraw; i<trailBlaze.length - 1; i++){
-				int[] loc = Render.getRender(Env.g, camera, trailBlaze[i]);
-				Env.g.setColor(trailBlazeColor);
-				Env.g.drawOval(loc[0], loc[1], 2, 2);
-			}
-			for(int i=0; i<trailBlaze.length - trailBlazeIndexDraw; i++){
-				int[] loc = Render.getRender(Env.g, camera, trailBlaze[i]);
-				Env.g.setColor(trailBlazeColor);
-				Env.g.drawOval(loc[0], loc[1], 2, 2);
-			}
-		}else{
-			for(int i=trailBlazeIndexDraw; i<trailBlazeIndexDraw + trailBlaze.length / 2; i++){
-				int[] loc = Render.getRender(Env.g, camera, trailBlaze[i]);
-				
 				if(null != loc){
 					Env.g.setColor(trailBlazeColor);
-					Env.g.drawOval(loc[0], loc[1], 2, 2);
+					Env.g.drawOval(loc[0], loc[1], 5, 5);
+				}
+			}
+			//trailBlazeIndexDraw = (trailBlazeIndexDraw + 1) % trailBlaze.length;
+			return;
+		}else{
+			if(trailBlazeIndexDraw >= (trailBlaze.length / 2)){
+				for(int i=trailBlazeIndexDraw; i<trailBlaze.length - 1; i++){
+					int[] loc = Render.getRender(Env.g, camera, trailBlaze[i]);
+					if(null != loc){
+						Env.g.setColor(trailBlazeColor);
+						Env.g.drawOval(loc[0], loc[1], 2, 2);
+					}
+				}
+				for(int i=0; i<(trailBlaze.length / 2) - (trailBlaze.length - trailBlazeIndexDraw); i++){
+					int[] loc = Render.getRender(Env.g, camera, trailBlaze[i]);
+					if(null != loc){
+						Env.g.setColor(trailBlazeColor);
+						Env.g.drawOval(loc[0], loc[1], 2, 2);
+					}
+				}
+			}else{
+				for(int i=trailBlazeIndexDraw; i<trailBlazeIndexDraw + trailBlaze.length / 2; i++){
+					int[] loc = Render.getRender(Env.g, camera, trailBlaze[i]);
+					
+					if(null != loc){
+						Env.g.setColor(trailBlazeColor);
+						Env.g.drawOval(loc[0], loc[1], 2, 2);
+					}
 				}
 			}
 		}
-
 	}
 
 	public void specialRender(Graphics g, Camera camera, Grid grid){
