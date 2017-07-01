@@ -31,7 +31,11 @@ public class ParallelMergeSort {
      * previously here.
      */
     static class SortTask extends RecursiveAction {
-        double[] a;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		double[] a;
         double[] tmp;
         int lo, hi;
         public SortTask(double[] a, double[] tmp, int lo, int hi) {

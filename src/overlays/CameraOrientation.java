@@ -3,6 +3,7 @@ package overlays;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 import game.Camera;
 import game_cat.Overlay;
@@ -10,9 +11,16 @@ import sub.Vector3D;
 
 public class CameraOrientation extends Overlay {
 	private Camera camera;
+	int numValues = 4;
+	ArrayList<int[]> offsets;
 	
 	public CameraOrientation(Camera camera){
 		this.camera = camera;
+		offsets = new ArrayList<int[]>(numValues);
+		for(int i=0; i<numValues; i++){
+			offsets.add(new int[2]);
+			offsets.set(i, Overlay.newOffset());
+		}
 	}
 	
 	public void render(Graphics g) {
@@ -36,10 +44,10 @@ public class CameraOrientation extends Overlay {
 	public void drawStrings(Graphics g){
 		DecimalFormat df = new DecimalFormat("#.##");
 		g.setColor(Color.white);
-		g.drawString("camera loc: " + "(" + df.format(camera.loc.dx()) + "," + df.format(camera.loc.dy()) + "," + df.format(camera.loc.dz()) + ")", 10, 40);
-		g.drawString("camera xy: " + "(" + df.format(camera.orient.xy.dx()) + "," + df.format(camera.orient.xy.dy()) + "," + df.format(camera.orient.xy.dz()) + ")", 10, 60);
-		g.drawString("camera yz: " + "(" + df.format(camera.orient.yz.dx()) + "," + df.format(camera.orient.yz.dy()) + "," + df.format(camera.orient.yz.dz()) + ")", 10, 80);
-		g.drawString("camera xz: " + "(" + df.format(camera.orient.xz.dx()) + "," + df.format(camera.orient.xz.dy()) + "," + df.format(camera.orient.xz.dz()) + ")", 10, 100);
+		g.drawString("camera loc: " + "(" + df.format(camera.loc.dx()) + "," + df.format(camera.loc.dy()) + "," + df.format(camera.loc.dz()) + ")", offsets.get(0)[0], offsets.get(0)[1]);
+		g.drawString("camera xy: " + "(" + df.format(camera.orient.xy.dx()) + "," + df.format(camera.orient.xy.dy()) + "," + df.format(camera.orient.xy.dz()) + ")", offsets.get(1)[0], offsets.get(1)[1]);
+		g.drawString("camera yz: " + "(" + df.format(camera.orient.yz.dx()) + "," + df.format(camera.orient.yz.dy()) + "," + df.format(camera.orient.yz.dz()) + ")", offsets.get(2)[0], offsets.get(2)[1]);
+		g.drawString("camera xz: " + "(" + df.format(camera.orient.xz.dx()) + "," + df.format(camera.orient.xz.dy()) + "," + df.format(camera.orient.xz.dz()) + ")", offsets.get(3)[0], offsets.get(3)[1]);
 	}
 
 	public void drawVector(Graphics g, int[] coords, Color c){

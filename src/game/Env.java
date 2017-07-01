@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 import game_objects.Cube;
 import overlays.CameraOrientation;
+import overlays.FPS;
 import overlays.Grid;
 import sub.Vector3D;
 
@@ -26,6 +27,8 @@ public class Env extends Canvas implements Runnable {
 	public static final double worldWidth = 4000;
 	public static final double worldHeight = 4000;
 	
+	public static double currentFPS = 0;
+	
 	public static int fps = 60;
 	public static long lastRenderTime = 0;
 	public static long desiredRenderInterval = 1000000000 / fps;
@@ -35,7 +38,7 @@ public class Env extends Canvas implements Runnable {
 	public static MyThread[] threads = new MyThread[numCores];
 	boolean[] threadRunning = new boolean[numCores];
 	
-	public static int numCubes = 300;
+	public static int numCubes = 200;
 	
 	/*
 	 * For normal usage
@@ -61,7 +64,12 @@ public class Env extends Canvas implements Runnable {
 		handler.setCamera(camera);
 		Grid grid = new Grid(handler.camera, resWidth, resHeight);
 		handler.setGrid(grid);
-		handler.addOverlay(new CameraOrientation(camera));
+		
+		CameraOrientation camOrientOverlay = new CameraOrientation(camera);
+		FPS fpsOverlay = new FPS();
+		
+		handler.addOverlay(camOrientOverlay);
+		handler.addOverlay(fpsOverlay);
 		
 		/* Old background cube thing
 		 * handler.addObject(new BackgroundCube(new Vector3D(WORLDLENGTH/2, WORLDWIDTH/2, WORLDHEIGHT/2), new Vector3D(0,1,0).normalize(), WORLDWIDTH));
@@ -115,18 +123,49 @@ public class Env extends Canvas implements Runnable {
 	 */
 	public void run(){
 		long timer = System.currentTimeMillis();
-		//int frames = 0;
+		int frames = 0;
+		int lastFrames = frames;
+		long myTimer = System.currentTimeMillis();
+		long myTimer2 = System.nanoTime();
+		
+		int nanoSecondsAllottedPerRender = (10^9 / Env.fps);
 		
 		while(running) {
 			tick();
 			render();
+			
+			/*
+			int nanoSecondsElapsed = (int)(System.nanoTime() - lastRenderTime);
+			double fractionOfSixty = nanoSecondsElapsed / nanoSecondsAllottedPerRender;
+			currentFPS = fractionOfSixty * 60;
+			*/
+			
+			//currentFrames = frames;
+			
+			/*
+			if((System.currentTimeMillis() - myTimer) > 100){
+				currentFPS = (frames - lastFrames) * 10;
+				lastFrames = frames;
+				myTimer = System.currentTimeMillis();
+			}
+			
+			/*
+			if((System.nanoTime() - myTimer2) > (100 * 1000000)){
+				currentFPS = (frames - lastFrames) * 10;
+				lastFrames = frames;
+				myTimer2 = System.nanoTime();
+			}
+			*/
+			
 			lastRenderTime = System.nanoTime();
 			sleepNanos((long)desiredRenderInterval);
-			//frames++;
+			frames++;
 
 			if(System.currentTimeMillis() - timer > (1000)) {
 				//System.out.println("FPS: " + frames); frames = 0;
+				currentFPS = frames - lastFrames;
 				timer = System.currentTimeMillis();
+				lastFrames = frames;
 			}
 		}
 		stop();

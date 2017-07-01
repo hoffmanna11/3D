@@ -2,7 +2,6 @@ package game;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import game_cat.GameObject;
 import game_cat.Overlay;
@@ -104,9 +103,10 @@ public class Handler implements Runnable {
 			// indexArr[i] = i;
 		}
 
+		//oldSort(distances, indexArr);
 		sort(distances, indexArr);
 
-		int rounds = 5;
+		int rounds = 1;
 		for(int i=squares.size() - 1; i>=0; ){
 			Env.threads[index].renderGameObjects5(squares, indexArr, g, camera, grid, i, rounds);
 			index = (index + 1) % Env.numCores;
@@ -123,12 +123,35 @@ public class Handler implements Runnable {
 		}
 	}
 
+	public void oldSort(double[] arr, int[] indexArr){
+		for(int i=0; i<arr.length-1; i++){
+			for(int j=0; j<arr.length-1; j++){
+				//Env.threads[index].renderGameObjectsSort(arr, indexArr, j);
+				//index = (index + 1) % Env.numCores;
+
+				if(arr[j] > arr[j+1]){
+					double temp = arr[j];
+					arr[j] = arr[j+1];
+					arr[j+1] = temp;
+
+					int tempInt = indexArr[j];
+					indexArr[j] = indexArr[j+1];
+					indexArr[j+1] = tempInt;
+				}
+			}
+		}
+	}
+	
 	public void sort(double[] arr, int[] indexArr){
 		/*
 		double[] arrCopy;
 		int[] indexArrCopy;
 
 		long startTime1 = System.nanoTime();
+		
+		*/
+		
+		/*
 		for(int i=0; i<arr.length-1; i++){
 			for(int j=0; j<arr.length-1; j++){
 				//Env.threads[index].renderGameObjectsSort(arr, indexArr, j);
@@ -146,6 +169,7 @@ public class Handler implements Runnable {
 			}
 		}
 		*/
+		
 		//long time1 = System.nanoTime() - startTime1;
 		
 		//arrCopy = Arrays.copyOf(arr, arr.length);

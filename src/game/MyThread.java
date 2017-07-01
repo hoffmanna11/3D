@@ -14,7 +14,7 @@ import polygons.Square;
 public class MyThread extends Thread {
 	Handler handler;
 	int id;
-	boolean debug = true;
+	boolean debug = false;
 	
 	public MyThread(Handler handler, int id){
 		super();
