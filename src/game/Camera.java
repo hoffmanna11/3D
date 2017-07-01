@@ -23,8 +23,10 @@ public class Camera {
 	public boolean rightClick = false;
 	public boolean speedUp = false;
 	public boolean slowDown = false;
+	public boolean rotateXZNeg = false;
+	public boolean rotateXZPos = false;
 
-	public double speed = 2;
+	public double speed = 2.5;
 
 	public Camera(Vector3D loc, Vector3D yzOrient, KeyInput keyInput, Env env){
 		this.loc = loc;
@@ -35,11 +37,6 @@ public class Camera {
 
 	public void tick(){
 		applyKeyInput();
-		if(speedUp){
-			speedUp();
-		}else if(slowDown){
-			slowDown();
-		}
 	}
 	
 	public void speedUp(){
@@ -52,6 +49,20 @@ public class Camera {
 	}
 
 	public void applyKeyInput(){
+		if(rotateXZPos){
+			if(rotateXZNeg){
+				// Do nothing
+			}else{
+				this.orient.rotate("XZ", false);
+			}
+		} else if(rotateXZNeg){
+			this.orient.rotate("XZ", true);
+		}
+		if(speedUp){
+			speedUp();
+		}else if(slowDown){
+			slowDown();
+		}
 		if(rightClick){
 			Point p = env.getMousePosition();
 			if(null != p){

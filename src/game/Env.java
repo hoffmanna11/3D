@@ -83,19 +83,6 @@ public class Env extends Canvas implements Runnable {
 		return r;
 	}
 	
-	/*
-	 * For testing
-	 */
-	public Env(Vector3D camLoc, GameObject[] gameObjects) {
-		handler = new Handler();
-		//handler.setCamera(new Vector3D(WORLDLENGTH/2, 0, WORLDHEIGHT/2), new Vector3D(0,1,0));
-		this.addKeyListener(new KeyInput(handler));
-		for(int i=0; i<gameObjects.length; i++){
-			handler.addObject(gameObjects[i]);
-		}
-		window = new Window(resWidth, resHeight, "3D", this);
-	}
-	
 	public synchronized void start(){
 		thread = new Thread(this);
 		thread.start();

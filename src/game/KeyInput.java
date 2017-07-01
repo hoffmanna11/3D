@@ -20,16 +20,16 @@ public class KeyInput extends KeyAdapter implements MouseListener {
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 
-		if(key == KeyEvent.VK_W){
+		if(key == KeyEvent.VK_E){
 			handler.camera.forward = true;
 		}
-		if(key == KeyEvent.VK_S){
+		if(key == KeyEvent.VK_D){
 			handler.camera.backward = true;
 		}
-		if(key == KeyEvent.VK_D){
+		if(key == KeyEvent.VK_F){
 			handler.camera.right = true;
 		}
-		if(key == KeyEvent.VK_A){
+		if(key == KeyEvent.VK_S){
 			handler.camera.left = true;
 		}
 		if(key == KeyEvent.VK_SPACE){
@@ -41,18 +41,26 @@ public class KeyInput extends KeyAdapter implements MouseListener {
 		if(key == KeyEvent.VK_SHIFT){
 			handler.camera.shift = true;
 		}
+		if(key == KeyEvent.VK_A){
+			handler.camera.rotateXZNeg = true;
+		}
+		if(key == KeyEvent.VK_G){
+			handler.camera.rotateXZPos = true;
+		}
 	}
 
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 
-		if(key == KeyEvent.VK_W) handler.camera.forward = false;
-		if(key == KeyEvent.VK_S) handler.camera.backward = false;
-		if(key == KeyEvent.VK_D) handler.camera.right = false;
-		if(key == KeyEvent.VK_A) handler.camera.left = false;
+		if(key == KeyEvent.VK_E) handler.camera.forward = false;
+		if(key == KeyEvent.VK_D) handler.camera.backward = false;
+		if(key == KeyEvent.VK_F) handler.camera.right = false;
+		if(key == KeyEvent.VK_S) handler.camera.left = false;
 		if(key == KeyEvent.VK_SPACE) handler.camera.up = false;
 		if(key == KeyEvent.VK_CONTROL) handler.camera.down = false;
 		if(key == KeyEvent.VK_SHIFT) handler.camera.shift = false;
+		if(key == KeyEvent.VK_G) handler.camera.rotateXZPos = false;
+		if(key == KeyEvent.VK_A) handler.camera.rotateXZNeg = false;
 	}
 
 	@Override
