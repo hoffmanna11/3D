@@ -4,9 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import game.Camera;
 import game.Env;
-import overlays.Grid;
 import sub.Orient3D;
 import sub.Vector3D;
+import underlays.Grid;
 
 public class Square implements Runnable {
 	private Vector3D loc;

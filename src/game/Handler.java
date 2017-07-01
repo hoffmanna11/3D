@@ -7,8 +7,8 @@ import game_cat.GameObject;
 import game_cat.Overlay;
 import game_cat.Underlay;
 import game_objects.Cube;
-import overlays.Grid;
 import polygons.Square;
+import underlays.Grid;
 
 public class Handler implements Runnable {
 	Grid grid;

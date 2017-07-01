@@ -2,9 +2,9 @@ package game_cat;
 import java.awt.Graphics;
 
 import game.Camera;
-import overlays.Grid;
 import sub.Orient3D;
 import sub.Vector3D;
+import underlays.Grid;
 
 public abstract class GameObject {
 	public Vector3D loc;
