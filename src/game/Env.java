@@ -6,7 +6,6 @@ import java.awt.image.BufferStrategy;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import game_cat.GameObject;
 import game_objects.Cube;
 import overlays.CameraOrientation;
 import overlays.Grid;

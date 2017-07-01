@@ -45,7 +45,6 @@ public class Camera {
 	
 	public void slowDown(){
 		speed *= .9;
-		System.out.println("slow");
 	}
 
 	public void applyKeyInput(){

@@ -95,15 +95,8 @@ public class KeyInput extends KeyAdapter implements MouseListener {
 			}
 		}
 		if(SwingUtilities.isMiddleMouseButton(arg0)){
-			if(handler.camera.forward == true ||
-					handler.camera.backward == true ||
-					handler.camera.down == true ||
-					handler.camera.left == true ||
-					handler.camera.up == true ||
-					handler.camera.right == true){
-				handler.camera.slowDown = true;
-				handler.camera.slowDown();
-			}
+			handler.camera.slowDown = true;
+			handler.camera.slowDown();
 		}
 	}
 
