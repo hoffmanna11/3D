@@ -14,14 +14,16 @@ import underlays.Grid;
 
 public class Env extends Canvas implements Runnable {
 	private static final long serialVersionUID = 534748158841784372L;
-	static Window window;
+	public static Window window;
 	static Thread thread;
-	static Handler handler;
+	public static Handler handler;
 	static boolean running = false;
 	
 	public static final int resScale = 60; // 120 = 1080p scaling
-	public static final int resWidth = 16 * resScale;
-	public static final int resHeight = 9 * resScale;
+	public static int resWidth = 16 * resScale;
+	public static int resHeight = 9 * resScale;
+	
+	public static Graphics g;
 	
 	public static final double worldLength = 4000;
 	public static final double worldWidth = 4000;
@@ -62,8 +64,8 @@ public class Env extends Canvas implements Runnable {
 		 */
 		
 		handler.setCamera(camera);
-		Grid grid = new Grid(handler.camera, resWidth, resHeight);
-		handler.setGrid(grid);
+		//Grid grid = new Grid(handler.camera, resWidth, resHeight);
+		//handler.setGrid(grid);
 		
 		CameraOrientation camOrientOverlay = new CameraOrientation(camera);
 		FPS fpsOverlay = new FPS();
@@ -76,7 +78,7 @@ public class Env extends Canvas implements Runnable {
 		 */
 		
 		for(int i=0; i<numCubes; i++){
-			handler.addObject(new Cube(new Vector3D((int)rand(0, worldLength), (int)rand(0, worldWidth), (int)rand(0, worldHeight)), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), (int)rand(20, 100)));
+			handler.addObject(new Cube(new Vector3D((int)rand(0, worldLength), (int)rand(0, worldWidth), (int)rand(0, worldHeight)), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), (int)rand(20, 150), camera));
 		}
 		
 		//handler.addObject(new Cube(new Vector3D(0, 0, 0), new Vector3D(0,1,0).normalize(), 5000));
@@ -182,7 +184,7 @@ public class Env extends Canvas implements Runnable {
 			return;
 		}
 
-		Graphics g = bs.getDrawGraphics();
+		g = bs.getDrawGraphics();
 
 		/*
 		 * TODO Instead of filling the screen with black, render the background

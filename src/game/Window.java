@@ -8,7 +8,7 @@ public class Window extends Canvas {
 
 	private static final long serialVersionUID = -240840600533728354L;
 	
-	JFrame frame;
+	public JFrame frame;
 	
 	public Window(int width, int height, String title, Env env){
 		frame = new JFrame(title);
@@ -19,8 +19,8 @@ public class Window extends Canvas {
 		frame.setMinimumSize(new Dimension(width, height + idk));
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
+		frame.setResizable(true);
+		//frame.setLocationRelativeTo(null);
 		frame.add(env);
 		frame.setVisible(true);
 		env.start();

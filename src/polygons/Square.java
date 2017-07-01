@@ -1,6 +1,7 @@
 package polygons;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import game.Camera;
 import game.Env;
@@ -104,9 +105,18 @@ public class Square implements Runnable {
 		double dz = mults.dz();
 		xyAngle = Math.toRadians(xyAngle);
 		xzAngle = Math.toRadians(xzAngle);
-
+		
 		double resXHalf = Env.resWidth / 2;
 		double resYHalf = Env.resHeight / 2;
+		
+		Dimension dim = Env.window.frame.getSize();
+		
+		if(dim.getWidth() != Env.resWidth){
+			Env.resWidth = (int)dim.getWidth();
+		}
+		if(dim.getHeight() != Env.resHeight){
+			Env.resHeight = (int)dim.getHeight();
+		}
 
 		if(dy <= 0){
 			return null;
