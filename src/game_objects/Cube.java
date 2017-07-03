@@ -35,7 +35,6 @@ public class Cube extends GameObject {
 		initSquares();
 		double rand = Math.random();
 		if(rand > .75){
-			System.out.println(rand);
 			rotate = true;
 		}
 		speed = Math.random() * 10;
