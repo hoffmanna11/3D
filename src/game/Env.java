@@ -13,6 +13,8 @@ import sub.Vector3D;
 import underlays.Grid;
 
 public class Env extends Canvas implements Runnable {
+	private Options options = new Options();
+	
 	private static final long serialVersionUID = 534748158841784372L;
 	public static Window window;
 	static Thread thread;

@@ -55,19 +55,17 @@ public class Cube extends GameObject {
 		}
 	}
 
-	public void trailblaze(){
-		int lo, med, hi;
-		lo = trailBlazeIndexDraw;
-		
-		if(true){
-			trailBlaze[trailBlazeIndexDraw] = (Vector3D) this.loc.add(this.orient.yz.multiply(-1 * (double)this.length / 1.7));
-			trailBlazeIndexDraw = (trailBlazeIndexDraw + 1) % trailBlaze.length;
+	public void trailblaze(){		
+		trailBlaze[trailBlazeIndexDraw] = (Vector3D) this.loc.add(this.orient.yz.multiply(-1 * (double)this.length / 1.7));
+		trailBlazeIndexDraw = (trailBlazeIndexDraw + 1) % trailBlaze.length;
+
+		if(ready == false){
+			if(trailBlazeIndexDraw > trailBlaze.length / 2){
+				ready = true;
+			}
+
 		}
-		
-		if(trailBlazeIndexDraw > trailBlaze.length / 2){
-			ready = true;
-		}
-		
+
 		if(ready == false){
 			for(int i=0; i<trailBlazeIndexDraw; i++){
 				int[] loc = Render.getRender(Env.g, camera, trailBlaze[i]);
@@ -97,7 +95,7 @@ public class Cube extends GameObject {
 			}else{
 				for(int i=trailBlazeIndexDraw; i<trailBlazeIndexDraw + trailBlaze.length / 2; i++){
 					int[] loc = Render.getRender(Env.g, camera, trailBlaze[i]);
-					
+
 					if(null != loc){
 						Env.g.setColor(trailBlazeColor);
 						Env.g.drawOval(loc[0], loc[1], 2, 2);
