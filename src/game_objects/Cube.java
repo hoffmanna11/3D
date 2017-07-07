@@ -14,7 +14,7 @@ import underlays.Grid;
 public class Cube extends GameObject {
 	public int length;
 	public Square[] squares;
-	double rotateSpeed = Env.rand(0, 10);
+	double rotateSpeed = 50; // Env.rand(0, 10);
 	boolean rotate = false;
 	double speed = 0;
 	int trailBlazeLength = 100;
@@ -37,7 +37,8 @@ public class Cube extends GameObject {
 		if(rand > .75){
 			rotate = true;
 		}
-		speed = Math.random() * 10;
+		rotate = true;
+		speed = Math.random() * 1000;
 		for(int i=0; i<trailBlaze.length; i++){
 			trailBlaze[i] = new Vector3D(0,0,0);
 		}
@@ -55,7 +56,10 @@ public class Cube extends GameObject {
 		}
 	}
 
-	public void trailblaze(){		
+	public void trailblaze(){
+		if(true){
+			//return;
+		}
 		trailBlaze[trailBlazeIndexDraw] = (Vector3D) this.loc.add(this.orient.yz.multiply(-1 * (double)this.length / 1.7));
 		trailBlazeIndexDraw = (trailBlazeIndexDraw + 1) % trailBlaze.length;
 
