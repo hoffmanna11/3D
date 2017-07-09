@@ -37,8 +37,7 @@ public class Cube extends GameObject {
 		if(rand > .75){
 			rotate = true;
 		}
-		rotate = true;
-		speed = Math.random() * 1000;
+		speed = Math.random() * 50;
 		for(int i=0; i<trailBlaze.length; i++){
 			trailBlaze[i] = new Vector3D(0,0,0);
 		}
