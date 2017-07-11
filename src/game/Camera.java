@@ -34,6 +34,11 @@ public class Camera {
 		this.keyInput = keyInput;
 		this.env = env;
 	}
+	
+	public Camera(Vector3D loc, Vector3D yzOrient){
+		this.loc = loc;
+		this.orient = new Orient3D(yzOrient);
+	}
 
 	public void tick(){
 		applyKeyInput();

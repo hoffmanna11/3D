@@ -12,21 +12,24 @@ import sub.Vector3D;
 import underlays.Grid;
 
 public class Cube extends GameObject {
-	public int length;
+	public static Camera camera;
 	public Square[] squares;
+	
+	public int length;
 	double rotateSpeed = 50; // Env.rand(0, 10);
 	boolean rotate = false;
 	double speed = 0;
+	// TODO: Probably should be using a global Random object
+	Random rand = new Random();
+	boolean ready = false;
+	
+	// TODO: Replace instance variables with a TrailBlaze object that contains these
 	int trailBlazeLength = 100;
 	Vector3D[] trailBlaze = new Vector3D[trailBlazeLength];
 	int trailBlazeIndexDestroy = 0;
 	int trailBlazeIndexDraw = 0;
-	public static Camera camera;
-	Random rand = new Random();
 	Color trailBlazeColor = new Color(rand.nextInt(0xFFFFFF));
 	boolean destroyTrailBlaze = false;
-	int frameCount = 0;
-	boolean ready = false;
 
 	public Cube(Vector3D loc, Vector3D dir, int length, Camera cam){
 		super(loc, dir.normalize());
@@ -44,7 +47,6 @@ public class Cube extends GameObject {
 	}
 
 	public void tick() {
-		frameCount = (frameCount + 1) % 11;
 		if(rotate){
 			this.orient.rotate("XY", rotateSpeed);
 			this.loc.add$(this.orient.yz.multiply(speed));

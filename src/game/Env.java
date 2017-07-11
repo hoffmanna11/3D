@@ -16,37 +16,31 @@ public class Env extends Canvas implements Runnable {
 	private Options options = new Options();
 	
 	private static final long serialVersionUID = 534748158841784372L;
+	
 	public static Window window;
-	static Thread thread;
+	public static Thread thread;
+	public static int numCores = Runtime.getRuntime().availableProcessors();
+	public static MyThread[] threads = new MyThread[numCores];
+	boolean[] threadRunning = new boolean[numCores];
 	public static Handler handler;
+	public static Graphics g;
 	static boolean running = false;
 	
 	public static final int resScale = 60; // 120 = 1080p scaling
 	public static int resWidth = 16 * resScale;
 	public static int resHeight = 9 * resScale;
 	
-	public static Graphics g;
-	
 	public static final double worldLength = 4000;
 	public static final double worldWidth = 4000;
 	public static final double worldHeight = 4000;
 	
 	public static double currentFPS = 0;
-	
 	public static int fps = 60;
 	public static long lastRenderTime = 0;
 	public static long desiredRenderInterval = 1000000000 / fps;
 	
-	public static int numCores = Runtime.getRuntime().availableProcessors();
-	//public static int numCores = 1;
-	public static MyThread[] threads = new MyThread[numCores];
-	boolean[] threadRunning = new boolean[numCores];
-	
 	public static int numCubes = 200;
 	
-	/*
-	 * For normal usage
-	 */
 	public Env() {
 		for(int i=0; i<numCores; i++){
 			threads[i] = new MyThread(handler, i);
