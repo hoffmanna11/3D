@@ -10,10 +10,9 @@ import game_objects.Cube;
 import overlays.CameraOrientation;
 import overlays.FPS;
 import sub.Vector3D;
-import underlays.Grid;
 
 public class Env extends Canvas implements Runnable {
-	private Options options = new Options();
+	//private Options options = new Options();
 	
 	private static final long serialVersionUID = 534748158841784372L;
 	
@@ -123,10 +122,10 @@ public class Env extends Canvas implements Runnable {
 		long timer = System.currentTimeMillis();
 		int frames = 0;
 		int lastFrames = frames;
-		long myTimer = System.currentTimeMillis();
-		long myTimer2 = System.nanoTime();
+		//long myTimer = System.currentTimeMillis();
+		//long myTimer2 = System.nanoTime();
 		
-		int nanoSecondsAllottedPerRender = (10^9 / Env.fps);
+		//int nanoSecondsAllottedPerRender = (10^9 / Env.fps);
 		
 		while(running) {
 			tick();
