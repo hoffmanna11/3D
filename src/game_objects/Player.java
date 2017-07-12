@@ -1,11 +1,10 @@
-package game;
+package game_objects;
 
 import java.awt.Graphics;
 
+import game.Camera;
 import game_cat.GameObject;
-import sub.Orient3D;
 import sub.Vector3D;
-import underlays.Grid;
 
 public class Player extends GameObject {
 	private Camera camera;
@@ -19,7 +18,7 @@ public class Player extends GameObject {
 		
 	}
 
-	public void render(Graphics g, Camera camera, Grid grid) {
+	public void render(Graphics g, Camera camera) {
 		
 	}
 }

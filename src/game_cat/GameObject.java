@@ -16,5 +16,5 @@ public abstract class GameObject {
 	}
 
 	public abstract void tick();
-	public abstract void render(Graphics g, Camera camera, Grid grid);
+	public abstract void render(Graphics g, Camera camera);
 }

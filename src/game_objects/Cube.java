@@ -110,7 +110,7 @@ public class Cube extends GameObject {
 		}
 	}
 
-	public void specialRender(Graphics g, Camera camera, Grid grid){
+	public void specialRender(Graphics g, Camera camera){
 		double[] distances = new double[6];
 		for(int i=0; i<6; i++){
 			distances[i] = camera.loc.distanceBetween(squares[i].loc());
@@ -119,7 +119,7 @@ public class Cube extends GameObject {
 		int[] indexArr = {0,1,2,3,4,5};
 		sort(distances, indexArr);
 		for(int i=5; i>=0; i--){
-			squares[i].render(g,camera,grid);
+			squares[i].render(g,camera);
 		}
 	}
 
@@ -139,8 +139,8 @@ public class Cube extends GameObject {
 		}
 	}
 
-	public void render(Graphics g, Camera camera, Grid grid){
-		specialRender(g, camera, grid);
+	public void render(Graphics g, Camera camera){
+		specialRender(g, camera);
 
 		if(Square.time >= 90){
 			// Once square has been rendered X times, switch to next index

@@ -91,7 +91,7 @@ public class MyThread extends Thread {
 			if(i < 0){
 				return;
 			}
-			squares.get(indexArr[i]).render(g,camera,grid);
+			squares.get(indexArr[i]).render(g,camera);
 		}
 	}
 	

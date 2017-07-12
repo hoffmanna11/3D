@@ -7,7 +7,6 @@ import game.Camera;
 import game.Env;
 import sub.Orient3D;
 import sub.Vector3D;
-import underlays.Grid;
 
 public class Square implements Runnable {
 	private Vector3D loc;
@@ -128,7 +127,7 @@ public class Square implements Runnable {
 		return new int[]{x,y};
 	}
 
-	public int[] getRender(Graphics g, Camera camera, Grid grid){
+	public int[] getRender(Graphics g, Camera camera){
 		Vector3D[] diffs = new Vector3D[4];
 
 		for(int i=0; i<4; i++){
@@ -184,12 +183,12 @@ public class Square implements Runnable {
 		return points;
 	}
 
-	public void render(Graphics g, Camera camera, Grid grid){
+	public void render(Graphics g, Camera camera){
 		int[] points = new int[8];
 		int[] xPoints = new int[4];
 		int[] yPoints = new int[4];
 
-		points = getRender(g, camera, grid);
+		points = getRender(g, camera);
 		if(null == points){
 			return;
 		}
