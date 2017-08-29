@@ -1,4 +1,4 @@
-package game;
+package _game;
 import java.awt.Canvas;
 import java.awt.Dimension;
 

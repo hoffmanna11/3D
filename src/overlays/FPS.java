@@ -2,8 +2,8 @@ package overlays;
 
 import java.awt.Graphics;
 
-import game.Env;
-import game_cat.Overlay;
+import _game.Env;
+import object_categories.Overlay;
 
 public class FPS extends Overlay {
 	int xOffset, yOffset;

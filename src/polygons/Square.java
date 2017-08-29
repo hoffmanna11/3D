@@ -3,10 +3,11 @@ package polygons;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import game.Camera;
-import game.Env;
-import sub.Orient3D;
-import sub.Vector3D;
+
+import _game.Camera;
+import _game.Env;
+import support_lib.Orient3D;
+import support_lib.Vector3D;
 
 public class Square implements Runnable {
 	private Vector3D loc;

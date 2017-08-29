@@ -3,10 +3,10 @@ package underlays;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import game.Camera;
-import game.Env;
-import game_cat.Underlay;
-import sub.Vector3D;
+import _game.Camera;
+import _game.Env;
+import object_categories.Underlay;
+import support_lib.Vector3D;
 
 public class Grid extends Underlay {
 	// Had to make these static for the static methods

@@ -5,9 +5,9 @@ import java.awt.Graphics;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import game.Camera;
-import game_cat.Overlay;
-import sub.Vector3D;
+import _game.Camera;
+import object_categories.Overlay;
+import support_lib.Vector3D;
 
 public class CameraOrientation extends Overlay {
 	private Camera camera;

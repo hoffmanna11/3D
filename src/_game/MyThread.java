@@ -1,15 +1,15 @@
-package game;
+package _game;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import game_cat.GameObject;
-import game_cat.Overlay;
-import game_cat.Underlay;
-import game_objects.Cube;
+import object_categories.GameObject;
+import object_categories.Overlay;
+import object_categories.Underlay;
 import polygons.Square;
 import underlays.Grid;
+import units.Cube;
 
 public class MyThread extends Thread {
 	Handler handler;

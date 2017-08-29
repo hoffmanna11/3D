@@ -3,9 +3,9 @@ package rendering;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
-import game.Camera;
-import game.Env;
-import sub.Vector3D;
+import _game.Camera;
+import _game.Env;
+import support_lib.Vector3D;
 
 public class Render {
 	public static int[] getRender(Graphics g, Camera camera, Vector3D point){

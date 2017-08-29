@@ -3,8 +3,8 @@ package SFX;
 import java.awt.Color;
 import java.util.Random;
 
-import game_objects.Cube;
-import sub.Vector3D;
+import support_lib.Vector3D;
+import units.Cube;
 
 public class TrailBlaze {
 	Cube cube;

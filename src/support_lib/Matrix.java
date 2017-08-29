@@ -1,4 +1,4 @@
-package sub;
+package support_lib;
 
 public class Matrix {
 	private double[][] values;

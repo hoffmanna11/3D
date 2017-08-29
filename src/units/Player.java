@@ -1,10 +1,10 @@
-package game_objects;
+package units;
 
 import java.awt.Graphics;
 
-import game.Camera;
-import game_cat.GameObject;
-import sub.Vector3D;
+import _game.Camera;
+import object_categories.GameObject;
+import support_lib.Vector3D;
 
 public class Player extends GameObject {
 	private Camera camera;

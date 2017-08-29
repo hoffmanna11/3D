@@ -1,9 +1,9 @@
-package game;
+package _game;
 
 import java.awt.Point;
 
-import sub.Orient3D;
-import sub.Vector3D;
+import support_lib.Orient3D;
+import support_lib.Vector3D;
 
 public class Camera {
 	public Vector3D loc;

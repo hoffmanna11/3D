@@ -1,9 +1,9 @@
-package game_cat;
+package object_categories;
 import java.awt.Graphics;
 
-import game.Camera;
-import sub.Orient3D;
-import sub.Vector3D;
+import _game.Camera;
+import support_lib.Orient3D;
+import support_lib.Vector3D;
 import underlays.Grid;
 
 public abstract class GameObject {

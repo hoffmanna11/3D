@@ -1,4 +1,4 @@
-package game;
+package _game;
 
 public class Options {
 	SFXOptions sfxOptions = new SFXOptions();

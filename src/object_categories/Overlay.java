@@ -1,8 +1,8 @@
-package game_cat;
+package object_categories;
 
 import java.awt.Graphics;
 
-import game.Env;
+import _game.Env;
 
 public abstract class Overlay {
 	static int xOffset = 5;

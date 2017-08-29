@@ -1,4 +1,4 @@
-package game_cat;
+package object_categories;
 
 import java.awt.Graphics;
 

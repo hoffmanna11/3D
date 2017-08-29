@@ -1,14 +1,14 @@
-package game_objects;
+package units;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
 
-import game.Camera;
-import game.Env;
-import game_cat.GameObject;
+import _game.Camera;
+import _game.Env;
+import object_categories.GameObject;
 import polygons.Square;
 import rendering.Render;
-import sub.Vector3D;
+import support_lib.Vector3D;
 import underlays.Grid;
 
 public class Cube extends GameObject {

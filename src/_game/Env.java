@@ -1,4 +1,4 @@
-package game;
+package _game;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -6,10 +6,10 @@ import java.awt.image.BufferStrategy;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import game_objects.Cube;
 import overlays.CameraOrientation;
 import overlays.FPS;
-import sub.Vector3D;
+import support_lib.Vector3D;
+import units.Cube;
 
 public class Env extends Canvas implements Runnable {
 	//private Options options = new Options();

@@ -1,4 +1,4 @@
-package sub;
+package support_lib;
 
 public class Vector3D extends Matrix {
 	public static final  Vector3D origin = new Vector3D(0,0,0);
