@@ -22,14 +22,6 @@ public class Cube extends GameObject {
 	// TODO: Probably should be using a global Random object
 	Random rand = new Random();
 	boolean ready = false;
-	
-	// TODO: Replace instance variables with a TrailBlaze object that contains these
-	int trailBlazeLength = 100;
-	Vector3D[] trailBlaze = new Vector3D[trailBlazeLength];
-	int trailBlazeIndexDestroy = 0;
-	int trailBlazeIndexDraw = 0;
-	Color trailBlazeColor = new Color(rand.nextInt(0xFFFFFF));
-	boolean destroyTrailBlaze = false;
 
 	public Cube(Vector3D loc, Vector3D dir, int length, Camera cam){
 		super(loc, dir.normalize());
@@ -47,10 +39,6 @@ public class Cube extends GameObject {
 			rotate = false;
 			speed = 0;
 		}
-
-		for(int i=0; i<trailBlaze.length; i++){
-			trailBlaze[i] = new Vector3D(0,0,0);
-		}
 	}
 
 	public void tick() {
@@ -61,59 +49,6 @@ public class Cube extends GameObject {
 		}else{
 			this.loc.add$(this.orient.yz.multiply(speed));
 			recalcSquares();
-		}
-	}
-
-	public void trailblaze(){
-		if(true){
-			//return;
-		}
-		trailBlaze[trailBlazeIndexDraw] = (Vector3D) this.loc.add(this.orient.yz.multiply(-1 * (double)this.length / 1.7));
-		trailBlazeIndexDraw = (trailBlazeIndexDraw + 1) % trailBlaze.length;
-
-		if(ready == false){
-			if(trailBlazeIndexDraw > trailBlaze.length / 2){
-				ready = true;
-			}
-
-		}
-
-		if(ready == false){
-			for(int i=0; i<trailBlazeIndexDraw; i++){
-				int[] loc = Render.getRender(Env.g, camera, trailBlaze[i]);
-				if(null != loc){
-					Env.g.setColor(trailBlazeColor);
-					Env.g.drawOval(loc[0], loc[1], 5, 5);
-				}
-			}
-			//trailBlazeIndexDraw = (trailBlazeIndexDraw + 1) % trailBlaze.length;
-			return;
-		}else{
-			if(trailBlazeIndexDraw >= (trailBlaze.length / 2)){
-				for(int i=trailBlazeIndexDraw; i<trailBlaze.length - 1; i++){
-					int[] loc = Render.getRender(Env.g, camera, trailBlaze[i]);
-					if(null != loc){
-						Env.g.setColor(trailBlazeColor);
-						Env.g.drawOval(loc[0], loc[1], 2, 2);
-					}
-				}
-				for(int i=0; i<(trailBlaze.length / 2) - (trailBlaze.length - trailBlazeIndexDraw); i++){
-					int[] loc = Render.getRender(Env.g, camera, trailBlaze[i]);
-					if(null != loc){
-						Env.g.setColor(trailBlazeColor);
-						Env.g.drawOval(loc[0], loc[1], 2, 2);
-					}
-				}
-			}else{
-				for(int i=trailBlazeIndexDraw; i<trailBlazeIndexDraw + trailBlaze.length / 2; i++){
-					int[] loc = Render.getRender(Env.g, camera, trailBlaze[i]);
-
-					if(null != loc){
-						Env.g.setColor(trailBlazeColor);
-						Env.g.drawOval(loc[0], loc[1], 2, 2);
-					}
-				}
-			}
 		}
 	}
 

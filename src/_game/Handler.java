@@ -78,7 +78,6 @@ public class Handler implements Runnable {
 		}
 
 		for(int i=0; i<cubes.size(); i++){
-			cubes.get(i).trailblaze();
 			for(int j=0; j<6; j++){
 				Env.threads[index].renderGameObjects2(squares, cubes, i, j);
 				index = (index + 1) % Env.numCores;
