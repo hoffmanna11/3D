@@ -75,6 +75,7 @@ public class Env extends Canvas implements Runnable {
 		for(int i=0; i<numCubes; i++){
 			handler.addObject(new Cube(new Vector3D((int)rand(0, worldLength), (int)rand(0, worldWidth), (int)rand(0, worldHeight)), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), (int)rand(20, 150), camera));
 		}
+		handler.addObject(new Cube(new Vector3D(0,0,0), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), 1000000, camera));
 		
 		//handler.addObject(new Cube(new Vector3D(0, 0, 0), new Vector3D(0,1,0).normalize(), 5000));
 		
