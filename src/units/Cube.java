@@ -4,19 +4,17 @@ import java.awt.Graphics;
 import java.util.Random;
 
 import _game.Camera;
-import _game.Env;
 import object_categories.GameObject;
 import polygons.Square;
-import rendering.Render;
 import support_lib.Vector3D;
-import underlays.Grid;
 
 public class Cube extends GameObject {
 	public static Camera camera;
 	public Square[] squares;
 	
 	public int length;
-	double rotateSpeed = 50; // Env.rand(0, 10);
+	double rotateSpeed = 10; // Env.rand(0, 10);
+	double velocity = 20;
 	boolean rotate = false;
 	double speed = 0;
 	// TODO: Probably should be using a global Random object
@@ -34,14 +32,14 @@ public class Cube extends GameObject {
 		}
 
 		if(length != 1000000){
-			speed = Math.random() * 50;
+			speed = Math.random() * velocity;
 		}else{
 			rotate = false;
 			speed = 0;
 		}
 	}
 
-	public void tick() {
+	public void rotate(){
 		if(rotate){
 			this.orient.rotate("XY", rotateSpeed);
 			this.loc.add$(this.orient.yz.multiply(speed));
@@ -50,6 +48,10 @@ public class Cube extends GameObject {
 			this.loc.add$(this.orient.yz.multiply(speed));
 			recalcSquares();
 		}
+	}
+	
+	public void tick() {
+		rotate();
 	}
 
 	public void specialRender(Graphics g, Camera camera){

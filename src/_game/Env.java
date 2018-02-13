@@ -19,7 +19,7 @@ public class Env extends Canvas implements Runnable {
 	public static Window window;
 	public static Thread thread;
 	public static int numCores = Runtime.getRuntime().availableProcessors();
-	public static MyThread[] threads = new MyThread[numCores];
+	public static MyThread[] threads_ = new MyThread[numCores];
 	boolean[] threadRunning = new boolean[numCores];
 	public static Handler handler;
 	public static Graphics g;

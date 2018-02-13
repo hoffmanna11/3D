@@ -16,75 +16,47 @@ public class MyThread extends Thread {
 	int id;
 	boolean debug = false;
 	
-	public MyThread(Handler handler, int id){
+	public MyThread(Handler handler, int id, int i){
 		super();
-		if(debug){
-			System.out.println("Creating thread: " + id);
-		}
 		this.handler = handler;
 		this.id = id;
 	}
 	
 	public void tick(LinkedList<GameObject> object, int i){
-		if(debug){
-			System.out.println("tick: " + id);
-		}
 		GameObject tempObject = object.get(i);
 		tempObject.tick();
 	}
 	
 	public void renderUnderlays(Graphics g, ArrayList<Underlay> underlays, int i){
-		if(debug){
-			System.out.println("renderUnderlays: " + id);
-		}
 		Underlay tempUnderlay = underlays.get(i);
 		tempUnderlay.render(g);
 	}
 	
 	public void renderOverlays(Graphics g, ArrayList<Overlay> overlays, int i){
-		if(debug){
-			System.out.println("renderOverlays: " + id);
-		}
 		Overlay tempOverlay = overlays.get(i);
 		tempOverlay.render(g);
 	}
 	
-	public void renderGameObjects1(LinkedList<GameObject> object, int i, ArrayList<Cube> cubes){
-		if(debug){
-			System.out.println("renderGameObjects1: " + id);
-		}
+	public void renderGameObjects10(LinkedList<GameObject> object, int i, ArrayList<Cube> cubes){
 		GameObject tempObject = object.get(i);
 		if(tempObject.getClass().equals(Cube.class)){
 			cubes.add((Cube)tempObject);
 		}
 	}
 	
-	public void renderGameObjects2(ArrayList<Square> squares, ArrayList<Cube> cubes, int i, int j){
-		if(debug){
-			System.out.println("renderGameObjects2: " + id);
-		}
+	public void renderGameObjects20(ArrayList<Square> squares, ArrayList<Cube> cubes, int i, int j){
 		squares.add(cubes.get(i).squares[j]);
 	}
 	
 	public void renderGameObjects3(double[] distances, ArrayList<Square> squares, Camera camera, int i){
-		if(debug){
-			System.out.println("renderGameObjects3: " + id);
-		}
 		distances[i] = squares.get(i).loc().distanceBetween(camera.loc);
 	}
 	
-	public void renderGameObjects4(int indexArr[], int i){
-		if(debug){
-			System.out.println("renderGameObjects4: " + id);
-		}
+	public void renderGameObjects40(int indexArr[], int i){
 		indexArr[i] = i;
 	}
 	
-	public void renderGameObjects5(ArrayList<Square> squares, int[] indexArr, Graphics g, Camera camera, Grid grid, int startIndex, int rounds){
-		if(debug){
-			System.out.println("renderGameObjects5: " + id);
-		}
-		
+	public void renderGameObjects50(ArrayList<Square> squares, int[] indexArr, Graphics g, Camera camera, Grid grid, int startIndex, int rounds){
 		int endIndex = startIndex - rounds;
 		
 		for(int i=startIndex; i>=endIndex; i--){
@@ -95,10 +67,7 @@ public class MyThread extends Thread {
 		}
 	}
 	
-	public void renderGameObjectsSort(double arr[], int[] indexArr, int j){
-		if(debug){
-			//System.out.println("renderGameObjectsSort: " + id);
-		}
+	public void renderGameObjectsSort0(double arr[], int[] indexArr, int j){
 		if(arr[j] > arr[j+1]){
 			double temp = arr[j];
 			arr[j] = arr[j+1];
