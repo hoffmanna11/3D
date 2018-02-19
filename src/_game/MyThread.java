@@ -16,7 +16,7 @@ public class MyThread extends Thread {
 	int id;
 	boolean debug = false;
 	
-	public MyThread(Handler handler, int id, int i){
+	public MyThread(Handler handler, int id){
 		super();
 		this.handler = handler;
 		this.id = id;
@@ -37,14 +37,14 @@ public class MyThread extends Thread {
 		tempOverlay.render(g);
 	}
 	
-	public void renderGameObjects10(LinkedList<GameObject> object, int i, ArrayList<Cube> cubes){
+	public void renderGameObjects1(LinkedList<GameObject> object, int i, ArrayList<Cube> cubes){
 		GameObject tempObject = object.get(i);
 		if(tempObject.getClass().equals(Cube.class)){
 			cubes.add((Cube)tempObject);
 		}
 	}
 	
-	public void renderGameObjects20(ArrayList<Square> squares, ArrayList<Cube> cubes, int i, int j){
+	public void renderGameObjects2(ArrayList<Square> squares, ArrayList<Cube> cubes, int i, int j){
 		squares.add(cubes.get(i).squares[j]);
 	}
 	
@@ -52,11 +52,11 @@ public class MyThread extends Thread {
 		distances[i] = squares.get(i).loc().distanceBetween(camera.loc);
 	}
 	
-	public void renderGameObjects40(int indexArr[], int i){
+	public void renderGameObjects4(int indexArr[], int i){
 		indexArr[i] = i;
 	}
 	
-	public void renderGameObjects50(ArrayList<Square> squares, int[] indexArr, Graphics g, Camera camera, Grid grid, int startIndex, int rounds){
+	public void renderGameObjects5(ArrayList<Square> squares, int[] indexArr, Graphics g, Camera camera, Grid grid, int startIndex, int rounds){
 		int endIndex = startIndex - rounds;
 		
 		for(int i=startIndex; i>=endIndex; i--){
