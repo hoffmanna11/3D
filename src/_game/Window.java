@@ -23,6 +23,8 @@ public class Window extends Canvas {
 		//frame.setLocationRelativeTo(null);
 		frame.add(env);
 		frame.setVisible(true);
-		env.start();
+		
+		// sometimes the environment needs to be started from here
+		// env.start();
 	}
 }

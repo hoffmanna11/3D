@@ -4,6 +4,7 @@ import java.awt.Graphics;
 
 import _game.Camera;
 import object_categories.GameObject;
+import object_categories.Polygon;
 import support_lib.Vector3D;
 
 public class Player extends GameObject {
@@ -20,5 +21,11 @@ public class Player extends GameObject {
 
 	public void render(Graphics g, Camera camera) {
 		
+	}
+
+	@Override
+	public Polygon[] getPolygons() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

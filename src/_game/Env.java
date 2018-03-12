@@ -9,18 +9,17 @@ import java.util.concurrent.TimeUnit;
 import overlays.CameraOrientation;
 import overlays.FPS;
 import support_lib.Vector3D;
+import underlays.Grid;
 import units.Cube;
 
 public class Env extends Canvas implements Runnable {
 	//private Options options = new Options();
+	//public static int numCores = Runtime.getRuntime().availableProcessors();
 	
 	private static final long serialVersionUID = 534748158841784372L;
 	
 	public static Window window;
 	public static Thread thread;
-	public static int numCores = Runtime.getRuntime().availableProcessors();
-	//public static MyThread[] threads_ = new MyThread[numCores];
-	public static MyThread[] threads = new MyThread[numCores];
 	public static Handler handler;
 	public static Graphics g;
 	static boolean running = false;
@@ -38,55 +37,40 @@ public class Env extends Canvas implements Runnable {
 	public static long lastRenderTime = 0;
 	public static long desiredRenderInterval = 1000000000 / fps;
 	
-	public static int numCubes = 200;
-	
 	public Env() {
-		for(int i=0; i<numCores; i++){
-			threads[i] = new MyThread(handler, i);
-		}
-		
+		// handles tick render cycle
 		handler = new Handler();
 		
+		// movement enablers
 		KeyInput keyInput = new KeyInput(handler);
 		this.addMouseListener(keyInput);
 		this.addKeyListener(keyInput);
 		
-		// Using for easier location
+		// look around object
 		Camera camera = new Camera(new Vector3D(worldLength/2, worldWidth/2, worldHeight/2), new Vector3D(0,1,0), keyInput, this);
-		/* Use this normally
-		 * Camera camera = new Camera(new Vector3D(WORLDLENGTH/2, 0, WORLDHEIGHT/2), new Vector3D(0,1,0));
-		 */
-		
 		handler.setCamera(camera);
-		//Grid grid = new Grid(handler.camera, resWidth, resHeight);
-		//handler.setGrid(grid);
 		
+		// display all the data
 		CameraOrientation camOrientOverlay = new CameraOrientation(camera);
 		FPS fpsOverlay = new FPS();
-		
 		handler.addOverlay(camOrientOverlay);
 		handler.addOverlay(fpsOverlay);
 		
-		/* Old background cube thing
-		 * handler.addObject(new BackgroundCube(new Vector3D(WORLDLENGTH/2, WORLDWIDTH/2, WORLDHEIGHT/2), new Vector3D(0,1,0).normalize(), WORLDWIDTH));
-		 */
-		
+		// cubes flyin' all 'round
+		int numCubes = 200;
 		for(int i=0; i<numCubes; i++){
 			handler.addObject(new Cube(new Vector3D((int)rand(0, worldLength), (int)rand(0, worldWidth), (int)rand(0, worldHeight)), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), (int)rand(20, 150), camera));
 		}
-		handler.addObject(new Cube(new Vector3D(0,0,0), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), 1000000, camera));
 		
-		//handler.addObject(new Cube(new Vector3D(0, 0, 0), new Vector3D(0,1,0).normalize(), 5000));
+		// cube to border the environment
+		Cube borderCube = new Cube(new Vector3D(0,0,0), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), 1000000, camera);
+		handler.addObject(borderCube);
 		
-		/* Use this normally
-		 handler.addObject(new Cube(new Vector3D(WORLDLENGTH/2, 200, WORLDHEIGHT/2), new Vector3D(0,1,0).normalize(), 51));
-		*/
-		
-		/* Not sure what this was used for
-		 * handler.addObject(new Cube(new Vector3D(WORLDLENGTH/2 + 80, 200, WORLDHEIGHT/2 - 20), new Vector3D(0,1,0).normalize(), 50));
-		 */
-		
+		// draw box
 		window = new Window(resWidth, resHeight, "3D", this);
+		
+		// begin tick render cycle
+		this.start();
 	}
 	
 	public static double rand(double low, double high){
@@ -97,11 +81,6 @@ public class Env extends Canvas implements Runnable {
 	}
 	
 	public synchronized void start(){
-		for(int i=0; i<numCores; i++){
-			//threads[i].start();
-			//threadRunning[i] = true;
-			threads[i].running = true;
-		}
 		thread = new Thread(this);
 		thread.start();
 		running = true;
@@ -213,9 +192,5 @@ public class Env extends Canvas implements Runnable {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public static void main(String[] args){
-		new Env();
 	}
 }

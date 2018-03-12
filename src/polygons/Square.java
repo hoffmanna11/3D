@@ -6,21 +6,16 @@ import java.awt.Graphics;
 
 import _game.Camera;
 import _game.Env;
+import object_categories.Polygon;
 import support_lib.Orient3D;
 import support_lib.Vector3D;
 
-public class Square implements Runnable {
-	private Vector3D loc;
+public class Square extends Polygon implements Runnable {
 	public Orient3D orient;
 	public Vector3D[] points;
 	public Color color = null;
 	public int length;
 	int id;
-
-	public static boolean debug1 = false;
-
-	public static int time = 0;
-	public static int indexThing = 0;
 
 	public Square(Vector3D cubeLoc, Orient3D cubeOrient, int length, int id){
 		this.length = length;
@@ -204,11 +199,7 @@ public class Square implements Runnable {
 		g.setColor(Color.WHITE);
 		g.drawPolygon(xPoints, yPoints, 4);
 
-		time++;
-	}
-
-	public Vector3D loc(){
-		return this.loc;
+		//time++;
 	}
 
 	public void run() {

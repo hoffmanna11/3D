@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import _game.Camera;
 import support_lib.Orient3D;
 import support_lib.Vector3D;
-import underlays.Grid;
 
 public abstract class GameObject {
 	public Vector3D loc;
@@ -17,4 +16,5 @@ public abstract class GameObject {
 
 	public abstract void tick();
 	public abstract void render(Graphics g, Camera camera);
+	public abstract Polygon[] getPolygons();
 }

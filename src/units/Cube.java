@@ -5,6 +5,7 @@ import java.util.Random;
 
 import _game.Camera;
 import object_categories.GameObject;
+import object_categories.Polygon;
 import polygons.Square;
 import support_lib.Vector3D;
 
@@ -85,14 +86,6 @@ public class Cube extends GameObject {
 
 	public void render(Graphics g, Camera camera){
 		specialRender(g, camera);
-
-		if(Square.time >= 90){
-			// Once square has been rendered X times, switch to next index
-			Square.time = 0;
-			Square.indexThing = (Square.indexThing + 1) % 6;
-		}else{
-			// If not rendered X times yet, keep going
-		}
 	}
 
 	/*
@@ -127,6 +120,11 @@ public class Cube extends GameObject {
 		squares[4].color = Color.green;
 		squares[5].color = Color.yellow;
 		 */
+	}
+
+	@Override
+	public Polygon[] getPolygons() {
+		return (Polygon[])squares;
 	}
 
 }
