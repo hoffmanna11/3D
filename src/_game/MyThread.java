@@ -15,6 +15,7 @@ public class MyThread extends Thread {
 	Handler handler;
 	int id;
 	boolean debug = false;
+	boolean running = false;
 	
 	public MyThread(Handler handler, int id){
 		super();

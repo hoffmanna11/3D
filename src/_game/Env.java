@@ -21,7 +21,6 @@ public class Env extends Canvas implements Runnable {
 	public static int numCores = Runtime.getRuntime().availableProcessors();
 	//public static MyThread[] threads_ = new MyThread[numCores];
 	public static MyThread[] threads = new MyThread[numCores];
-	boolean[] threadRunning = new boolean[numCores];
 	public static Handler handler;
 	public static Graphics g;
 	static boolean running = false;
@@ -44,7 +43,6 @@ public class Env extends Canvas implements Runnable {
 	public Env() {
 		for(int i=0; i<numCores; i++){
 			threads[i] = new MyThread(handler, i);
-			threadRunning[i] = false;
 		}
 		
 		handler = new Handler();
@@ -100,8 +98,9 @@ public class Env extends Canvas implements Runnable {
 	
 	public synchronized void start(){
 		for(int i=0; i<numCores; i++){
-			threads[i].start();
-			threadRunning[i] = true;
+			//threads[i].start();
+			//threadRunning[i] = true;
+			threads[i].running = true;
 		}
 		thread = new Thread(this);
 		thread.start();
