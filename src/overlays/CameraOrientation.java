@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import _game.Camera;
+import game.Camera;
 import object_categories.Overlay;
 import support_lib.Vector3D;
 

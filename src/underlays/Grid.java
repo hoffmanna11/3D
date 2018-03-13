@@ -3,8 +3,8 @@ package underlays;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import _game.Camera;
-import _game.Env;
+import game.Camera;
+import game.Env;
 import object_categories.Underlay;
 import support_lib.Vector3D;
 

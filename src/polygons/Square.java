@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
-import _game.Camera;
-import _game.Env;
+import game.Camera;
+import game.Env;
 import object_categories.Polygon;
 import support_lib.Orient3D;
 import support_lib.Vector3D;

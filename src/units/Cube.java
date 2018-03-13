@@ -3,7 +3,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
 
-import _game.Camera;
+import game.Camera;
 import object_categories.GameObject;
 import object_categories.Polygon;
 import polygons.Square;

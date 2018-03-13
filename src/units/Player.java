@@ -2,7 +2,7 @@ package units;
 
 import java.awt.Graphics;
 
-import _game.Camera;
+import game.Camera;
 import object_categories.GameObject;
 import object_categories.Polygon;
 import support_lib.Vector3D;

@@ -2,7 +2,7 @@ package overlays;
 
 import java.awt.Graphics;
 
-import _game.Env;
+import game.Env;
 import object_categories.Overlay;
 
 public class FPS extends Overlay {

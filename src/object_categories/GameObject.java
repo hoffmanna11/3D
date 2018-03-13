@@ -1,7 +1,7 @@
 package object_categories;
 import java.awt.Graphics;
 
-import _game.Camera;
+import game.Camera;
 import support_lib.Orient3D;
 import support_lib.Vector3D;
 

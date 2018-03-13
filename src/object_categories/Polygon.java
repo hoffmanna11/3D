@@ -2,7 +2,7 @@ package object_categories;
 
 import java.awt.Graphics;
 
-import _game.Camera;
+import game.Camera;
 import support_lib.Vector3D;
 
 public abstract class Polygon {

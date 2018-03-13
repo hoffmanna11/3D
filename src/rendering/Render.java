@@ -3,8 +3,8 @@ package rendering;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
-import _game.Camera;
-import _game.Env;
+import game.Camera;
+import game.Env;
 import support_lib.Vector3D;
 
 public class Render {
