@@ -1,6 +1,7 @@
 package game;
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
@@ -63,7 +64,13 @@ public class Env extends Canvas implements Runnable {
 		}
 		
 		// cube to border the environment
-		Cube borderCube = new Cube(new Vector3D(0,0,0), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), 1000000, camera);
+		Cube borderCube = new Cube(new Vector3D(0,0,0), new Vector3D(.5, 1, .5).normalize(), 10000, camera);
+		
+		Color[] colors = new Color[] {Color.RED, Color.BLUE, Color.GREEN, Color.ORANGE, Color.PINK, Color.MAGENTA};
+		for(int i=0; i<6; i++) {
+			borderCube.squares[i].color = colors[i];
+		}
+		
 		handler.addObject(borderCube);
 		
 		// draw box
@@ -167,6 +174,14 @@ public class Env extends Canvas implements Runnable {
 		
 		g.setColor(Color.black);
 		g.fillRect(0, 0, resWidth, resHeight);
+		
+		Dimension dim = window.frame.getSize();
+		if(dim.getWidth() != resWidth){
+			resWidth = (int)dim.getWidth();
+		}
+		if(dim.getHeight() != resHeight){
+			resHeight = (int)dim.getHeight();
+		}
 
 		handler.render(g);
 

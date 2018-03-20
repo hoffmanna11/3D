@@ -16,10 +16,9 @@ public class Cube extends GameObject {
 	public int length;
 	double rotateSpeed = 10; // Env.rand(0, 10);
 	double velocity = 20;
-	boolean rotate = false;
+	public boolean rotate = false;
 	double speed = 0;
-	// TODO: Probably should be using a global Random object
-	Random rand = new Random();
+	static Random rand = new Random();
 	boolean ready = false;
 
 	public Cube(Vector3D loc, Vector3D dir, int length, Camera cam){
@@ -27,17 +26,6 @@ public class Cube extends GameObject {
 		camera = cam;
 		this.length = length;
 		initSquares();
-		double rand = Math.random();
-		if(rand > .75){
-			rotate = true;
-		}
-
-		if(length != 1000000){
-			speed = Math.random() * velocity;
-		}else{
-			rotate = false;
-			speed = 0;
-		}
 	}
 
 	public void rotate(){
@@ -55,7 +43,7 @@ public class Cube extends GameObject {
 		rotate();
 	}
 
-	public void specialRender(Graphics g, Camera camera){
+	public void render(Graphics g, Camera camera){
 		double[] distances = new double[6];
 		for(int i=0; i<6; i++){
 			distances[i] = camera.loc.distanceBetween(squares[i].loc());
@@ -84,10 +72,6 @@ public class Cube extends GameObject {
 		}
 	}
 
-	public void render(Graphics g, Camera camera){
-		specialRender(g, camera);
-	}
-
 	/*
 	 * Adjusts their location and orientation
 	 */
@@ -106,20 +90,9 @@ public class Cube extends GameObject {
 			squares[i] = new Square(this.loc, this.orient, length, i);
 		}
 
-		Random rand = new Random();
-
 		for(int i=0; i<6; i++){
 			squares[i].color = new Color(rand.nextInt(0xFFFFFF));
 		}
-
-		/*
-		squares[0].color = Color.red;
-		squares[1].color = Color.blue;
-		squares[2].color = Color.pink;
-		squares[3].color = Color.orange;
-		squares[4].color = Color.green;
-		squares[5].color = Color.yellow;
-		 */
 	}
 
 	@Override

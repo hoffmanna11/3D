@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import game.Camera;
 import game.Env;
 import object_categories.Polygon;
+import rendering.Render;
 import support_lib.Orient3D;
 import support_lib.Vector3D;
 
@@ -94,33 +95,22 @@ public class Square extends Polygon implements Runnable {
 		return myOrient;
 	}
 	
-	public int[] getScreenLoc(Vector3D mults, double xyAngle, double xzAngle){
-		double dx = mults.dx();
-		double dy = mults.dy();
-		double dz = mults.dz();
-		xyAngle = Math.toRadians(xyAngle);
-		xzAngle = Math.toRadians(xzAngle);
+	public boolean inFocalView(Vector3D mults, Camera camera, double xyAngle, double xzAngle) {
+		// check xy focal
+		double xyFocalLength = mults.dy() * Math.tan(xyAngle);
 		
-		double resXHalf = Env.resWidth / 2;
-		double resYHalf = Env.resHeight / 2;
+		if(mults.dx() < -xyFocalLength || mults.dx() > xyFocalLength) {
+			return false;
+		}
 		
-		Dimension dim = Env.window.frame.getSize();
+		// check xz focal
+		double xzFocalLength = mults.dy() * Math.tan(xzAngle);
 		
-		if(dim.getWidth() != Env.resWidth){
-			Env.resWidth = (int)dim.getWidth();
+		if(mults.dz() < -xzFocalLength || mults.dz() > xzFocalLength) {
+			return false;
 		}
-		if(dim.getHeight() != Env.resHeight){
-			Env.resHeight = (int)dim.getHeight();
-		}
-
-		if(dy <= 0){
-			return null;
-		}
-
-		int x = (int) ( resXHalf + ( dx * Math.tan(xyAngle) / dy * resXHalf ) );
-		int y = (int) ( resYHalf - ( dz * Math.tan(xzAngle) / dy * resYHalf ) );
-
-		return new int[]{x,y};
+		
+		return true;
 	}
 
 	public int[] getRender(Graphics g, Camera camera){
@@ -134,20 +124,21 @@ public class Square extends Polygon implements Runnable {
 					this.points[i].dz() - camera.loc.dz()
 					);
 		}
-
+		
 		Vector3D mults[] = new Vector3D[4];
-
-		//Vector3D mults[] = new Vector3D[4];
 		boolean atLeastOneIsVisible = false;
-		//int visibleCount = 0;
 		for(int i=0; i<4; i++){
 			mults[i] = Vector3D.getBasisMultiples(camera.orient, diffs[i]);
+			/*
 			if(mults[i].dy() > 0){
 				atLeastOneIsVisible = true;
-				//visibleCount++;
+			}
+			*/
+			if(inFocalView(mults[i], camera, Render.xyAngle, Render.xzAngle)) {
+				atLeastOneIsVisible = true;
 			}
 		}
-
+		
 		if(atLeastOneIsVisible){
 			// Then draw it
 		}else{
@@ -157,11 +148,9 @@ public class Square extends Polygon implements Runnable {
 
 		int xPoints[] = new int[4];
 		int yPoints[] = new int[4];
-		double xyAngle = 30;
-		double xzAngle = 45;
 
 		for(int i=0; i<4; i++){
-			int[] screenLoc = getScreenLoc(mults[i], xyAngle, xzAngle);
+			int[] screenLoc = Render.getScreenLoc(mults[i]);
 
 			if(null == screenLoc){
 				return null;

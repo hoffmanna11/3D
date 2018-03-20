@@ -1,77 +1,59 @@
 package rendering;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.Iterator;
 
-import game.Camera;
 import game.Env;
 import support_lib.Vector3D;
 
 public class Render {
-	public static int[] getRender(Graphics g, Camera camera, Vector3D point){
-		Vector3D diff;
+	public static double xyAngle = Math.toRadians(30);
+	public static double xzAngle = Math.toRadians(45);
 
-		// Get the difference from the camera to the point
-		diff = new Vector3D(
-				point.dx() - camera.loc.dx(),
-				point.dy() - camera.loc.dy(),
-				point.dz() - camera.loc.dz()
-				);
-
-		Vector3D mult;
-
-		boolean isVisible = false;
-		//int visibleCount = 0;
-		mult = Vector3D.getBasisMultiples(camera.orient, diff);
-		if(mult.dy() > 0){
-			isVisible = true;
-			//visibleCount++;
-		}
-
-		if(isVisible){
-			// Then draw it
-		}else{
-			// If no visible, no draw
-			return null;
-		}
-
-		double xyAngle = 30;
-		double xzAngle = 45;
-
-		int[] screenLoc = getScreenLoc(mult, xyAngle, xzAngle);
-
-		if(null == screenLoc){
-			return null;
-		}
-		
-		return screenLoc;
-	}
-	
-	public static int[] getScreenLoc(Vector3D mults, double xyAngle, double xzAngle){
+	public static int[] getScreenLoc(Vector3D mults){
 		double dx = mults.dx();
 		double dy = mults.dy();
 		double dz = mults.dz();
-		xyAngle = Math.toRadians(xyAngle);
-		xzAngle = Math.toRadians(xzAngle);
-		
-		double resXHalf = Env.resWidth / 2;
-		double resYHalf = Env.resHeight / 2;
-		
-		Dimension dim = Env.window.frame.getSize();
-		
-		if(dim.getWidth() != Env.resWidth){
-			Env.resWidth = (int)dim.getWidth();
-		}
-		if(dim.getHeight() != Env.resHeight){
-			Env.resHeight = (int)dim.getHeight();
-		}
 
-		if(dy <= 0){
+		//double resXHalf = Env.resWidth / 2;
+		//double resYHalf = Env.resHeight / 2;
+
+		int rw = Env.resWidth;
+		int rh = Env.resHeight;
+
+		if(dy == 0){
 			return null;
 		}
+		
+		//int x = (int) ( resXHalf + ( dx * Math.tan(xyAngle) / dy * resXHalf ) );
+		//int y = (int) ( resYHalf - ( dz * Math.tan(xzAngle) / dy * resYHalf ) );
 
-		int x = (int) ( resXHalf + ( dx * Math.tan(xyAngle) / dy * resXHalf ) );
-		int y = (int) ( resYHalf - ( dz * Math.tan(xzAngle) / dy * resYHalf ) );
+		int x, y = 0;
+
+		double xFocalLength = dy * Math.tan(xyAngle);
+		double zFocalLength = dy * Math.tan(xzAngle);
+
+		double dxFocalRatio = dx / ( xFocalLength );
+		double dzFocalRatio = dz / ( zFocalLength );
+		
+		if(dy > 0) {
+			// regular render
+			x = (int) ( (rw/2) + ( (rw/2) * dxFocalRatio ) );
+			y = (int) ( (rh/2) + ( (rh/2) * dzFocalRatio ) );
+		} else {
+			// one of the square's points is behind the camera
+			int dxDirection = 1;
+			int dzDirection = 1;
+			if(dx < 0) {
+				dxDirection = -1;
+			}
+			if(dz < 0) {
+				dzDirection = -1;
+			}
+
+			x = (int) ( (rw/2) + ( (rw/2) * ( dxDirection + (rw/2) * -dxFocalRatio ) ) );
+			y = (int) ( (rh/2) + ( (rh/2) * ( dzDirection + (rh/2) * -dzFocalRatio ) ) );
+		}
 
 		return new int[]{x,y};
 	}
