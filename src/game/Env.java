@@ -58,19 +58,18 @@ public class Env extends Canvas implements Runnable {
 		handler.addOverlay(fpsOverlay);
 		
 		// cubes flyin' all 'round
-		int numCubes = 200;
+		int numCubes = 1;
 		for(int i=0; i<numCubes; i++){
 			handler.addObject(new Cube(new Vector3D((int)rand(0, worldLength), (int)rand(0, worldWidth), (int)rand(0, worldHeight)), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), (int)rand(20, 150), camera));
 		}
 		
 		// cube to border the environment
 		Cube borderCube = new Cube(new Vector3D(0,0,0), new Vector3D(.5, 1, .5).normalize(), 10000, camera);
-		
+		// set its colors to consistent array
 		Color[] colors = new Color[] {Color.RED, Color.BLUE, Color.GREEN, Color.ORANGE, Color.PINK, Color.MAGENTA};
 		for(int i=0; i<6; i++) {
 			borderCube.squares[i].color = colors[i];
 		}
-		
 		handler.addObject(borderCube);
 		
 		// draw box

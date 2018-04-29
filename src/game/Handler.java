@@ -30,6 +30,13 @@ public class Handler implements Runnable {
 			tempObject.tick();
 		}
 		camera.tick();
+		/* TODO
+		 * instead of camera.tick(), have
+		 * 'player.tick()'
+		 * player will have a camera
+		 * apply controller input
+		 *  (should we use listeners instead?)
+		 */
 	}
 
 	public void render(Graphics g) {
