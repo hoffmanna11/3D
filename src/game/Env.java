@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 import overlays.CameraOrientation;
 import overlays.FPS;
 import support_lib.Vector3D;
-import underlays.Grid;
 import units.Cube;
 
 public class Env extends Canvas implements Runnable {
@@ -26,8 +25,8 @@ public class Env extends Canvas implements Runnable {
 	static boolean running = false;
 	
 	public static final int resScale = 60; // 120 = 1080p scaling
-	public static int resWidth = 16 * resScale;
-	public static int resHeight = 9 * resScale;
+	public static int resWidth = 8 * resScale;
+	public static int resHeight = 10 * resScale;
 	
 	public static final double worldLength = 4000;
 	public static final double worldWidth = 4000;

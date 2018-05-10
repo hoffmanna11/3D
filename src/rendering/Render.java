@@ -1,8 +1,5 @@
 package rendering;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import game.Env;
 import support_lib.Vector3D;
 
@@ -39,7 +36,7 @@ public class Render {
 		if(dy > 0) {
 			// regular render
 			x = (int) ( (rw/2) + ( (rw/2) * dxFocalRatio ) );
-			y = (int) ( (rh/2) + ( (rh/2) * dzFocalRatio ) );
+			y = rh - (int) ( (rh/2) + ( (rh/2) * dzFocalRatio ) );
 		} else {
 			// one of the square's points is behind the camera
 			int dxDirection = 1;
@@ -52,7 +49,7 @@ public class Render {
 			}
 
 			x = (int) ( (rw/2) + ( (rw/2) * ( dxDirection + (rw/2) * -dxFocalRatio ) ) );
-			y = (int) ( (rh/2) + ( (rh/2) * ( dzDirection + (rh/2) * -dzFocalRatio ) ) );
+			y = rh - (int) ( (rh/2) + ( (rh/2) * ( dzDirection + (rh/2) * -dzFocalRatio ) ) );
 		}
 
 		return new int[]{x,y};
