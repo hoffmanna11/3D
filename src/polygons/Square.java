@@ -1,11 +1,9 @@
 package polygons;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 
 import game.Camera;
-import game.Env;
 import object_categories.Polygon;
 import rendering.Render;
 import support_lib.Orient3D;
@@ -18,6 +16,10 @@ public class Square extends Polygon implements Runnable {
 	public int length;
 	int id;
 
+	public Square(Vector3D leftCorner, Vector3D loc, Orient3D squareOrient, int length) {
+		this.loc = (Vector3D) leftCorner.add(squareOrient.yz.multiply(length));
+	}
+	
 	public Square(Vector3D cubeLoc, Orient3D cubeOrient, int length, int id){
 		this.length = length;
 		this.id = id;

@@ -7,8 +7,10 @@ import java.awt.image.BufferStrategy;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import ground.Ground;
 import overlays.CameraOrientation;
 import overlays.FPS;
+import support_lib.Orient3D;
 import support_lib.Vector3D;
 import units.Cube;
 
@@ -63,13 +65,14 @@ public class Env extends Canvas implements Runnable {
 		}
 		
 		// cube to border the environment
-		Cube borderCube = new Cube(new Vector3D(0,0,0), new Vector3D(.5, 1, .5).normalize(), 10000, camera);
+		//Cube borderCube = new Cube(new Vector3D(0,0,0), new Vector3D(.5, 1, .5).normalize(), 10000, camera);
 		// set its colors to consistent array
-		Color[] colors = new Color[] {Color.RED, Color.BLUE, Color.GREEN, Color.ORANGE, Color.PINK, Color.MAGENTA};
-		for(int i=0; i<6; i++) {
-			borderCube.squares[i].color = colors[i];
-		}
-		handler.addObject(borderCube);
+		//Color[] colors = new Color[] {Color.RED, Color.BLUE, Color.GREEN, Color.ORANGE, Color.PINK, Color.MAGENTA};
+		//for(int i=0; i<6; i++) {
+		//	borderCube.squares[i].color = colors[i];
+		//}
+		//handler.addObject(borderCube);
+		handler.addObject(new Ground(new Vector3D(0,0,0), 10, new Orient3D(new Vector3D(1,0,0))));
 		
 		// draw box
 		window = new Window(resWidth, resHeight, "3D", this);
