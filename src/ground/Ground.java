@@ -30,7 +30,7 @@ public class Ground extends GameObject {
 		
 		for(int i=0; i<tilesWide-1; i++) {
 			for(int j=0; j<tilesWide-1; j++) {
-				tiles[i][j] = new Tile(vectorGrid, i,j, vectorGrid[i][j], orientation, 10);
+				tiles[i][j] = new Tile(vectorGrid, i,j, vectorGrid[i][j], initPos, orientation, 10);
 			}
 		}
 	}

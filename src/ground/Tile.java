@@ -9,8 +9,8 @@ import support_lib.Vector3D;
 public class Tile extends Square {
 	int x, y;
 	Vector3D[][] vectorGrid;
-	public Tile(Vector3D[][] vectorGrid, int x, int y, Vector3D leftCorner, Orient3D orient, int length) {
-		super(leftCorner, orient, length);
+	public Tile(Vector3D[][] vectorGrid, int x, int y, Vector3D leftCorner, Vector3D loc, Orient3D orient, int length) {
+		super(leftCorner, loc, orient, length);
 		this.points = new Vector3D[4];
 		this.x=x;
 		this.y=y;
