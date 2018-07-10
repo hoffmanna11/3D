@@ -72,7 +72,7 @@ public class Env extends Canvas implements Runnable {
 		//	borderCube.squares[i].color = colors[i];
 		//}
 		//handler.addObject(borderCube);
-		handler.addObject(new Ground(new Vector3D(0,0,0), 10, new Orient3D(new Vector3D(1,0,0))));
+		//handler.addObject(new Ground(new Vector3D(0,0,0), 10, new Orient3D(new Vector3D(1,0,0))));
 		
 		// draw box
 		window = new Window(resWidth, resHeight, "3D", this);
