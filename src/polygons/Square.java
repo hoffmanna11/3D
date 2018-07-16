@@ -9,7 +9,7 @@ import rendering.Render;
 import support_lib.Orient3D;
 import support_lib.Vector3D;
 
-public class Square extends Polygon implements Runnable {
+public class Square extends Polygon {
 	public Orient3D orient;
 	public Vector3D[] points;
 	public Color color = null;
@@ -191,10 +191,6 @@ public class Square extends Polygon implements Runnable {
 		g.drawPolygon(xPoints, yPoints, 4);
 
 		//time++;
-	}
-
-	public void run() {
-		
 	}
 
 }
