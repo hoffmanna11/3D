@@ -54,6 +54,17 @@ public class Handler implements Runnable {
 	}
 
 	public void renderGameObjects(Graphics g){
+		// test
+		int il = 0;
+		while(il > -1) {
+			long start = System.currentTimeMillis();
+			while((start + 1) > System.currentTimeMillis()) {
+				
+			}
+			System.out.println(il + " ...");
+			il++;
+		}
+		
 		int numPolygons = polygons.size();
 		double[] distances = new double[numPolygons];
 		int[] indexArr = new int[polygons.size()];
@@ -80,20 +91,20 @@ public class Handler implements Runnable {
 		long sortTime;
 		bubbleSort(distances, indexArr);
 		sortTime = System.nanoTime() - sortStart;
-		System.out.println("bSort time : " + (sortTime));
+		System.out.println("bSort time : " + sortTime);
 
 		sortStart = System.nanoTime();
 		ParallelMergeSort.sort(distances, indexArr);
 		sortTime = System.nanoTime() - sortStart;
-		System.out.println("pSort time : " + (sortTime));
+		System.out.println("pSort time : " + sortTime);
 
 		Square.fillTime = 0;
 		Square.outlineTime = 0;
 		for(int i=polygons.size() - 1; i >= 0; i--) {
 			polygons.get(indexArr[i]).render(g,camera);
 		}
-		System.out.println("Square fill time is " + Square.fillTime + "ns per frame");
-		System.out.println("Square outline time is " + Square.outlineTime + "ns per frame");
+		System.out.println("Square fill time is " + Square.fillTime + "ns per frame, " + (Square.fillTime/nsTime) + "ms");
+		System.out.println("Square outline time is " + Square.outlineTime + "ns per frame, " + (Square.fillTime/nsTime) + "ms");
 	}
 
 	public void bubbleSort(double[] arr, int[] indexArr) {
