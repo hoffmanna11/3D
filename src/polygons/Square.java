@@ -2,6 +2,7 @@ package polygons;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Random;
 
 import game.Camera;
 import object_categories.Polygon;
@@ -15,6 +16,8 @@ public class Square extends Polygon {
 	public Color color = null;
 	public int length;
 	int id;
+	public static long fillTime = 0;
+	public static long outlineTime = 0;
 
 	public Square(Vector3D leftCorner, Vector3D loc, Orient3D squareOrient, int length) {
 		this.loc = (Vector3D) leftCorner.add(squareOrient.yz.multiply(length));
@@ -184,11 +187,19 @@ public class Square extends Polygon {
 			xPoints[i] = points[i];
 			yPoints[i] = points[i+4];
 		}
-
+		
 		g.setColor(this.color);
+		
+		long fillStart = System.nanoTime();
 		g.fillPolygon(xPoints, yPoints, 4);
+		fillTime += (System.nanoTime() - fillStart);
+		System.out.println("t" + fillTime);
+		
 		g.setColor(Color.WHITE);
+		
+		long drawStart = System.nanoTime();
 		g.drawPolygon(xPoints, yPoints, 4);
+		outlineTime += (System.nanoTime() - drawStart);
 
 		//time++;
 	}

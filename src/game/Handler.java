@@ -21,7 +21,7 @@ public class Handler implements Runnable {
 	ArrayList<Underlay> underlays = new ArrayList<Underlay>();
 
 	public void run(){
-		
+
 	}
 
 	public void tick(){
@@ -66,12 +66,34 @@ public class Handler implements Runnable {
 			indexArr[i] = i;
 		}
 
-		//bubbleSort(distances, indexArr);
-		ParallelMergeSort.sort(distances, indexArr);
+		// get ns in a ms
+		long msStart = System.currentTimeMillis();
+		long nsStart = System.nanoTime();
+		while((msStart+1) > System.currentTimeMillis() ){
+			// keep waiting
+		}
+		// record ns
+		long nsTime = System.nanoTime() - nsStart;
+		System.out.println("ns in a ms: " + nsTime);
 
+		long sortStart = System.nanoTime();
+		long sortTime;
+		bubbleSort(distances, indexArr);
+		sortTime = System.nanoTime() - sortStart;
+		System.out.println("bSort time : " + (sortTime));
+
+		sortStart = System.nanoTime();
+		ParallelMergeSort.sort(distances, indexArr);
+		sortTime = System.nanoTime() - sortStart;
+		System.out.println("pSort time : " + (sortTime));
+
+		Square.fillTime = 0;
+		Square.outlineTime = 0;
 		for(int i=polygons.size() - 1; i >= 0; i--) {
 			polygons.get(indexArr[i]).render(g,camera);
 		}
+		System.out.println("Square fill time is " + Square.fillTime + "ns per frame");
+		System.out.println("Square outline time is " + Square.outlineTime + "ns per frame");
 	}
 
 	public void bubbleSort(double[] arr, int[] indexArr) {
@@ -123,7 +145,7 @@ public class Handler implements Runnable {
 		this.gameObjects.add(object);
 		addPolygons(object.getPolygons());
 	}
-	
+
 	public void addPolygons(Polygon[] objectPolygons) {
 		for(int i=0; i<objectPolygons.length; i++) {
 			this.polygons.add(objectPolygons[i]);
