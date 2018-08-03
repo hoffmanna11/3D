@@ -11,4 +11,9 @@ public class NewGround {
 		 *   Translates this to new position
 		 */
 	}
+	
+	/* creating the mesh
+	 *   moving into the realm of level design
+	 *   
+	 */
 }
