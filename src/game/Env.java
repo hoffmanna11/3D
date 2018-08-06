@@ -48,7 +48,7 @@ public class Env extends Canvas implements Runnable {
 		this.addMouseListener(keyInput);
 		this.addKeyListener(keyInput);
 		
-		// look around object
+		// look-around object
 		Camera camera = new Camera(new Vector3D(worldLength/2, worldWidth/2, worldHeight/2), new Vector3D(0,1,0), keyInput, this);
 		handler.setCamera(camera);
 		
