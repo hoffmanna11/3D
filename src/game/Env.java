@@ -4,12 +4,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import ground.Ground;
 import overlays.CameraOrientation;
 import overlays.FPS;
+import support_lib.EffTrackerList;
 import support_lib.Orient3D;
 import support_lib.Vector3D;
 import units.Cube;
@@ -39,6 +41,8 @@ public class Env extends Canvas implements Runnable {
 	public static long lastRenderTime = 0;
 	public static long desiredRenderInterval = 1000000000 / fps;
 	
+	public static EffTrackerList timeTracker = new EffTrackerList();
+	
 	public Env() {
 		// handles tick render cycle
 		handler = new Handler();
@@ -59,7 +63,7 @@ public class Env extends Canvas implements Runnable {
 		handler.addOverlay(fpsOverlay);
 		
 		// cubes flyin' all 'round
-		int numCubes = 1;
+		int numCubes = 10000;
 		for(int i=0; i<numCubes; i++){
 			handler.addObject(new Cube(new Vector3D((int)rand(0, worldLength), (int)rand(0, worldWidth), (int)rand(0, worldHeight)), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), (int)rand(20, 150), camera));
 		}
@@ -116,8 +120,10 @@ public class Env extends Canvas implements Runnable {
 		//int nanoSecondsAllottedPerRender = (10^9 / Env.fps);
 		
 		while(running) {
+			timeTracker.start("total");
 			tick();
 			render();
+			timeTracker.end("total");
 			
 			/*
 			int nanoSecondsElapsed = (int)(System.nanoTime() - lastRenderTime);
@@ -142,8 +148,9 @@ public class Env extends Canvas implements Runnable {
 			}
 			*/
 			
+			// USE THIS
 			lastRenderTime = System.nanoTime();
-			sleepNanos((long)desiredRenderInterval);
+			//sleepNanos((long)desiredRenderInterval);
 			frames++;
 
 			if(System.currentTimeMillis() - timer > (1000)) {
@@ -152,12 +159,15 @@ public class Env extends Canvas implements Runnable {
 				timer = System.currentTimeMillis();
 				lastFrames = frames;
 			}
+			//
 		}
 		stop();
 	}
 	
 	private void tick() {
+		timeTracker.start("tick");
 		handler.tick();
+		timeTracker.end("tick");
 	}
 	
 	private void render() {
@@ -169,9 +179,9 @@ public class Env extends Canvas implements Runnable {
 
 		g = bs.getDrawGraphics();
 
-		/*
-		 * TODO Instead of filling the screen with black, render the background
-		 */
+		//
+		// TODO Instead of filling the screen with black, render the background
+		//
 		
 		g.setColor(Color.black);
 		g.fillRect(0, 0, resWidth, resHeight);

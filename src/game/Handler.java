@@ -9,13 +9,16 @@ import object_categories.Overlay;
 import object_categories.Polygon;
 import object_categories.Underlay;
 import polygons.Square;
+import support_lib.EffTrackerList;
 import support_lib.ParallelMergeSort;
+import units.Cube;
 
 public class Handler implements Runnable {
 	Camera camera;
 	Square[] background = new Square[6];
+	static int count = 0;
 
-	LinkedList<GameObject> gameObjects = new LinkedList<GameObject>();
+	ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 	ArrayList<Polygon> polygons = new ArrayList<Polygon>();
 	ArrayList<Overlay> overlays = new ArrayList<Overlay>();
 	ArrayList<Underlay> underlays = new ArrayList<Underlay>();
@@ -25,10 +28,17 @@ public class Handler implements Runnable {
 	}
 
 	public void tick(){
+		Env.timeTracker.start("tickCheck2");
 		for(int i = 0; i < gameObjects.size(); i++) {
+			Env.timeTracker.start("tickGettingGameObject");
 			GameObject tempObject = gameObjects.get(i);
+			Env.timeTracker.end("tickGettingGameObject", gameObjects.size());
 			tempObject.tick();
+			if(!tempObject.getClass().equals(Cube.class)) {
+				System.out.println("\nGameObject not cube, is: " + tempObject.getClass().getName() + "\n");
+			}
 		}
+		Env.timeTracker.end("tickCheck2");
 		camera.tick();
 		/* TODO
 		 * instead of camera.tick(), have
@@ -54,60 +64,44 @@ public class Handler implements Runnable {
 	}
 
 	public void renderGameObjects(Graphics g){
-		// test
-		int il = 0;
-		while(il > -1) {
-			long start = System.currentTimeMillis();
-			while((start + 1) > System.currentTimeMillis()) {
-				
-			}
-			System.out.println(il + " ...");
-			il++;
-		}
-		
 		int numPolygons = polygons.size();
 		double[] distances = new double[numPolygons];
 		int[] indexArr = new int[polygons.size()];
-
+		
+		Env.timeTracker.start("polyDist");
 		for(int i=0; i<numPolygons; i++){
 			distances[i] = polygons.get(i).loc().distanceBetween(camera.loc);
 		}
-
+		Env.timeTracker.end("polyDist");
+		
 		for(int i=0; i<numPolygons; i++){
 			indexArr[i] = i;
 		}
+		
+		//Env.timeTracker.start("bubbleSort");
+		//bubbleSort(distances, indexArr);
+		//Env.timeTracker.end("bubbleSort");
 
-		// get ns in a ms
-		long msStart = System.currentTimeMillis();
-		long nsStart = System.nanoTime();
-		while((msStart+1) > System.currentTimeMillis() ){
-			// keep waiting
-		}
-		// record ns
-		long nsTime = System.nanoTime() - nsStart;
-		System.out.println("ns in a ms: " + nsTime);
-
-		long sortStart = System.nanoTime();
-		long sortTime;
-		bubbleSort(distances, indexArr);
-		sortTime = System.nanoTime() - sortStart;
-		System.out.println("bSort time : " + sortTime);
-
-		sortStart = System.nanoTime();
+		Env.timeTracker.start("parallelMergeSort");
 		ParallelMergeSort.sort(distances, indexArr);
-		sortTime = System.nanoTime() - sortStart;
-		System.out.println("pSort time : " + sortTime);
+		Env.timeTracker.end("parallelMergeSort");
 
-		Square.fillTime = 0;
-		Square.outlineTime = 0;
+		Env.timeTracker.start("renderTime");
 		for(int i=polygons.size() - 1; i >= 0; i--) {
 			polygons.get(indexArr[i]).render(g,camera);
 		}
-		System.out.println("Square fill time is " + Square.fillTime + "ns per frame, " + (Square.fillTime/nsTime) + "ms");
-		System.out.println("Square outline time is " + Square.outlineTime + "ns per frame, " + (Square.fillTime/nsTime) + "ms");
+		Env.timeTracker.end("renderTime");
+		
+		count++;
+		
+		if(count == 100) {
+			Env.timeTracker.print();
+			System.out.println("--------------------------------------------------");
+			count = 0;
+		}
 	}
 
-	public void bubbleSort(double[] arr, int[] indexArr) {
+	public void bubbleSorts(double[] arr, int[] indexArr) {
 		for(int i=0; i<arr.length-1; i++){
 			for(int j=0; j<arr.length-1; j++){
 				if(arr[j] > arr[j+1]){

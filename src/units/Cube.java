@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.util.Random;
 
 import game.Camera;
+import game.Env;
 import object_categories.GameObject;
 import object_categories.Polygon;
 import polygons.Square;
@@ -30,20 +31,27 @@ public class Cube extends GameObject {
 
 	public void rotate(){
 		if(rotate){
+			Env.timeTracker.start("rotateCheck1");
 			this.orient.rotate("XY", rotateSpeed);
 			this.loc.add$(this.orient.yz.multiply(speed));
 			recalcSquares();
+			Env.timeTracker.end("rotateCheck1", 1000);
 		}else{
+			Env.timeTracker.start("rotateCheck2");
 			this.loc.add$(this.orient.yz.multiply(speed));
 			recalcSquares();
+			Env.timeTracker.end("rotateCheck2", 1000);
 		}
 	}
 	
 	public void tick() {
-		rotate();
+		Env.timeTracker.start("tickCheck");
+		//rotate();
+		Env.timeTracker.end("tickCheck", 1000);
 	}
 
 	public void render(Graphics g, Camera camera){
+		/*
 		double[] distances = new double[6];
 		for(int i=0; i<6; i++){
 			distances[i] = camera.loc.distanceBetween(squares[i].loc());
@@ -54,6 +62,7 @@ public class Cube extends GameObject {
 		for(int i=5; i>=0; i--){
 			squares[i].render(g,camera);
 		}
+		*/
 	}
 
 	public void sort(double[] arr, int[] indexArr){

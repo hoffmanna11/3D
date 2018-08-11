@@ -41,7 +41,9 @@ public class Camera {
 	}
 
 	public void tick(){
+		Env.timeTracker.start("tickCamera");
 		applyKeyInput();
+		Env.timeTracker.end("tickCamera");
 	}
 	
 	public void speedUp(){

@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.util.Random;
 
 import game.Camera;
+import game.Env;
 import object_categories.Polygon;
 import rendering.Render;
 import support_lib.Orient3D;
@@ -189,17 +190,14 @@ public class Square extends Polygon {
 		}
 		
 		g.setColor(this.color);
-		
-		long fillStart = System.nanoTime();
+		Env.timeTracker.start("squareFillTime");
 		g.fillPolygon(xPoints, yPoints, 4);
-		fillTime += (System.nanoTime() - fillStart);
-		System.out.println("t" + fillTime);
+		Env.timeTracker.end("squareFillTime", 6*1000);
 		
 		g.setColor(Color.WHITE);
-		
-		long drawStart = System.nanoTime();
+		Env.timeTracker.start("squareOutlineTime");
 		g.drawPolygon(xPoints, yPoints, 4);
-		outlineTime += (System.nanoTime() - drawStart);
+		Env.timeTracker.end("squareOutlineTime", 6*1000);
 
 		//time++;
 	}
