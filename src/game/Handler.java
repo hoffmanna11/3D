@@ -79,7 +79,7 @@ public class Handler implements Runnable {
 		}
 		
 		//Env.timeTracker.start("bubbleSort");
-		//bubbleSort(distances, indexArr);
+		//bubbleSorts(distances, indexArr);
 		//Env.timeTracker.end("bubbleSort");
 
 		Env.timeTracker.start("parallelMergeSort");

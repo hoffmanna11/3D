@@ -63,7 +63,7 @@ public class Env extends Canvas implements Runnable {
 		handler.addOverlay(fpsOverlay);
 		
 		// cubes flyin' all 'round
-		int numCubes = 10000;
+		int numCubes = 100;
 		for(int i=0; i<numCubes; i++){
 			handler.addObject(new Cube(new Vector3D((int)rand(0, worldLength), (int)rand(0, worldWidth), (int)rand(0, worldHeight)), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), (int)rand(20, 150), camera));
 		}
