@@ -63,9 +63,16 @@ public class Env extends Canvas implements Runnable {
 		handler.addOverlay(fpsOverlay);
 		
 		// cubes flyin' all 'round
-		int numCubes = 100;
+		int numCubes = 1;
 		for(int i=0; i<numCubes; i++){
-			handler.addObject(new Cube(new Vector3D((int)rand(0, worldLength), (int)rand(0, worldWidth), (int)rand(0, worldHeight)), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), (int)rand(20, 150), camera));
+			//handler.addObject(new Cube(new Vector3D((int)rand(0, worldLength), (int)rand(0, worldWidth), (int)rand(0, worldHeight)), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), (int)rand(20, 150), camera));
+			handler.addObject(new Cube(new Vector3D(0,0,0), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), 10, camera));
+			// TODO 1: where you left off: you messed up the overlay system a little bit
+			// TODO 1: tried putting the offsets into the Overlay class instead of in the implementations (cameraOrient, FPS), but you need to make it into an arraylist of offsets
+			// TODO 1: to account for multiple lines of data
+			// TODO 2: make a cube at 0,0,0 and fly near it to make sure the square constructor is creating the square correctly (specifically check the leftCorner usage in Square constructor) 
+			// TODO 3: start implementing gravity after getting the square ground in (gSquare)!
+			// handler.add(gSquare);
 		}
 		
 		// cube to border the environment

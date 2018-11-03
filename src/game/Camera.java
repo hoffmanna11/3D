@@ -25,7 +25,7 @@ public class Camera {
 	public boolean slowDown = false;
 	public boolean rotateXZNeg = false;
 	public boolean rotateXZPos = false;
-
+	
 	public double speed = 2.5;
 
 	public Camera(Vector3D loc, Vector3D yzOrient, KeyInput keyInput, Env env){
@@ -47,11 +47,11 @@ public class Camera {
 	}
 	
 	public void speedUp(){
-		speed *= 1.1;
+		speed *= 1.05;
 	}
 	
 	public void slowDown(){
-		speed *= .9;
+		speed *= .95;
 	}
 
 	public void applyKeyInput(){

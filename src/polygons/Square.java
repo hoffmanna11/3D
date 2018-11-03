@@ -19,6 +19,16 @@ public class Square extends Polygon {
 	int id;
 	public static long fillTime = 0;
 	public static long outlineTime = 0;
+	
+	// centered: If true, 
+	public Square(Vector3D referencePoint, boolean centered, Vector3D loc, Orient3D squareOrient, int length) {
+		if(centered = false){
+			// referencePoint refers to the left corner of the square
+			this.loc = (Vector3D) referencePoint.add(squareOrient.yz.multiply(length));
+		}else{
+			this.loc = referencePoint;
+		}
+	}
 
 	public Square(Vector3D leftCorner, Vector3D loc, Orient3D squareOrient, int length) {
 		this.loc = (Vector3D) leftCorner.add(squareOrient.yz.multiply(length));

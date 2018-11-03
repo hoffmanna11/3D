@@ -2,25 +2,33 @@ package object_categories;
 
 import java.awt.Graphics;
 
+import game.Camera;
 import game.Env;
 
 public abstract class Overlay {
-	static int xOffset = 5;
-	static int yOffset = 13;
+	static int baseXOffset = 5;
+	static int baseYOffset = 13;
+	Camera camera;
+	public int[] offsets;
+	
+	public Overlay(Camera camera){
+		this.camera = camera;
+		this.offsets = Overlay.newOffset();
+	}
 	
 	public abstract void render(Graphics g);
 	
 	public static int[] newOffset(){
-		if(yOffset > (Env.resHeight)){
-			xOffset += 250;
-			yOffset = 13;
-			int[] ret = new int[]{xOffset, yOffset};
-			yOffset += 20;
+		if(baseYOffset > (Env.resHeight)){
+			baseXOffset += 250;
+			baseYOffset = 13;
+			int[] ret = new int[]{baseXOffset, baseYOffset};
+			baseYOffset += 20;
 			return ret;
 		}
 		
-		int[] ret = new int[]{xOffset, yOffset};
-		yOffset += 20;
+		int[] ret = new int[]{baseXOffset, baseYOffset};
+		baseYOffset += 20;
 		return ret;
 	}
 }

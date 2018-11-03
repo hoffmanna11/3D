@@ -12,9 +12,10 @@ import support_lib.Vector3D;
 public class CameraOrientation extends Overlay {
 	private Camera camera;
 	int numValues = 4;
-	ArrayList<int[]> offsets;
+	//ArrayList<int[]> offsets;
 	
 	public CameraOrientation(Camera camera){
+		super(camera);
 		this.camera = camera;
 		offsets = new ArrayList<int[]>(numValues);
 		for(int i=0; i<numValues; i++){
@@ -44,7 +45,7 @@ public class CameraOrientation extends Overlay {
 	public void drawStrings(Graphics g){
 		DecimalFormat df = new DecimalFormat("#.##");
 		g.setColor(Color.white);
-		g.drawString("camera loc: " + "(" + (int)(camera.loc.dx()) + "," + (int)(camera.loc.dy()) + "," + (int)(camera.loc.dz()) + ")", offsets.get(0)[0], offsets.get(0)[1]);
+		g.drawString("camera loc: " + "(" + (int)(camera.loc.dx()) + "," + (int)(camera.loc.dy()) + "," + (int)(camera.loc.dz()) + ")", , offsets.get(0)[1]);
 		g.drawString("camera xy: " + "(" + df.format(camera.orient.xy.dx()) + "," + df.format(camera.orient.xy.dy()) + "," + df.format(camera.orient.xy.dz()) + ")", offsets.get(1)[0], offsets.get(1)[1]);
 		g.drawString("camera yz: " + "(" + df.format(camera.orient.yz.dx()) + "," + df.format(camera.orient.yz.dy()) + "," + df.format(camera.orient.yz.dz()) + ")", offsets.get(2)[0], offsets.get(2)[1]);
 		g.drawString("camera xz: " + "(" + df.format(camera.orient.xz.dx()) + "," + df.format(camera.orient.xz.dy()) + "," + df.format(camera.orient.xz.dz()) + ")", offsets.get(3)[0], offsets.get(3)[1]);
