@@ -12,21 +12,16 @@ import support_lib.Vector3D;
 public class CameraOrientation extends Overlay {
 	private Camera camera;
 	int numValues = 4;
-	//ArrayList<int[]> offsets;
 	
 	public CameraOrientation(Camera camera){
-		super(camera);
 		this.camera = camera;
-		offsets = new ArrayList<int[]>(numValues);
-		for(int i=0; i<numValues; i++){
-			offsets.add(new int[2]);
-			offsets.set(i, Overlay.newOffset());
-		}
+		//for(int i=0; i<4; i++) { this.addOffset(); }
 	}
 	
 	public void render(Graphics g) {
 		drawVectors(g);
-		drawStrings(g);
+		//setMessages(g);
+		//renderStrings(g);
 	}
 	
 	public void drawVectors(Graphics g){
@@ -42,18 +37,31 @@ public class CameraOrientation extends Overlay {
 	/* 
 	 * Draws text for current orient/loc 
 	 */
-	public void drawStrings(Graphics g){
+	public void setMessages(Graphics g){
 		DecimalFormat df = new DecimalFormat("#.##");
 		g.setColor(Color.white);
+		
+		String cameraLoc = "camera loc: " + "(" + (int)(camera.loc.dx()) + "," + (int)(camera.loc.dy()) + "," + (int)(camera.loc.dz()) + ")";
+		String xy = "camera xy: " + "(" + df.format(camera.orient.xy.dx()) + "," + df.format(camera.orient.xy.dy()) + "," + df.format(camera.orient.xy.dz()) + ")";
+		String yz = "camera yz: " + "(" + df.format(camera.orient.yz.dx()) + "," + df.format(camera.orient.yz.dy()) + "," + df.format(camera.orient.yz.dz()) + ")";
+		String xz = "camera xz: " + "(" + df.format(camera.orient.xz.dx()) + "," + df.format(camera.orient.xz.dy()) + "," + df.format(camera.orient.xz.dz()) + ")";
+		
+		setMessage(0, cameraLoc);
+		setMessage(1, xy);
+		setMessage(2, yz);
+		setMessage(3, xz);
+		
+		/*
 		g.drawString("camera loc: " + "(" + (int)(camera.loc.dx()) + "," + (int)(camera.loc.dy()) + "," + (int)(camera.loc.dz()) + ")", , offsets.get(0)[1]);
 		g.drawString("camera xy: " + "(" + df.format(camera.orient.xy.dx()) + "," + df.format(camera.orient.xy.dy()) + "," + df.format(camera.orient.xy.dz()) + ")", offsets.get(1)[0], offsets.get(1)[1]);
 		g.drawString("camera yz: " + "(" + df.format(camera.orient.yz.dx()) + "," + df.format(camera.orient.yz.dy()) + "," + df.format(camera.orient.yz.dz()) + ")", offsets.get(2)[0], offsets.get(2)[1]);
 		g.drawString("camera xz: " + "(" + df.format(camera.orient.xz.dx()) + "," + df.format(camera.orient.xz.dy()) + "," + df.format(camera.orient.xz.dz()) + ")", offsets.get(3)[0], offsets.get(3)[1]);
+		*/
 	}
 
 	public void drawVector(Graphics g, int[] coords, Color c){
 		g.setColor(c);
-		g.drawLine(200, 50, 200 + coords[0], 50 - coords[1]);
+		g.drawLine(350, 50, 350 + coords[0], 50 - coords[1]);
 	}
 	
 }

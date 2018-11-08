@@ -26,7 +26,8 @@ public class Camera {
 	public boolean rotateXZNeg = false;
 	public boolean rotateXZPos = false;
 	
-	public double speed = 2.5;
+	private double baseSpeed = 100;
+	private double speed = baseSpeed / Env.targetFPS;
 
 	public Camera(Vector3D loc, Vector3D yzOrient, KeyInput keyInput, Env env){
 		this.loc = loc;
@@ -47,14 +48,32 @@ public class Camera {
 	}
 	
 	public void speedUp(){
-		speed *= 1.05;
+		if(baseSpeed <= 0) {
+			baseSpeed = 100;
+		}else {
+			baseSpeed = Math.pow(baseSpeed, 1 + (.1 / Env.currentFPS));
+			//baseSpeed *= 1 + (.15 / Env.currentFPS));
+		}
+		
+		if(baseSpeed > 10000) {
+			baseSpeed = 10000;
+		}
 	}
 	
 	public void slowDown(){
-		speed *= .95;
+		baseSpeed = Math.pow(baseSpeed, 1 - (.1 / Env.currentFPS));
+		//baseSpeed *= 1 - (.15 / Env.currentFPS);
+		if(baseSpeed < 0) {
+			baseSpeed = 0;
+		}
 	}
 
 	public void applyKeyInput(){
+		speed = baseSpeed / Env.currentFPS;
+		if(speed > 100) {
+			speed = 100;
+		}
+		
 		if(rotateXZPos){
 			if(rotateXZNeg){
 				// Do nothing
@@ -71,6 +90,7 @@ public class Camera {
 		}
 		if(rightClick){
 			Point p = env.getMousePosition();
+			
 			if(null != p){
 				double mouseXNew = p.getX();
 				double mouseYNew = p.getY();
@@ -186,5 +206,13 @@ public class Camera {
 				 */
 			}
 		}
+	}
+	
+	public double getSpeed() {
+		return this.speed;
+	}
+	
+	public double getBaseSpeed() {
+		return this.baseSpeed;
 	}
 }

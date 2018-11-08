@@ -18,7 +18,7 @@ public class Cube extends GameObject {
 	double rotateSpeed = 10; // Env.rand(0, 10);
 	double velocity = 20;
 	public boolean rotate = false;
-	double speed = 0;
+	public double speed = 0;
 	static Random rand = new Random();
 	boolean ready = false;
 
@@ -27,6 +27,8 @@ public class Cube extends GameObject {
 		camera = cam;
 		this.length = length;
 		initSquares();
+		chanceRotate();
+		chanceMove();
 	}
 
 	public void rotate(){
@@ -44,10 +46,31 @@ public class Cube extends GameObject {
 		}
 	}
 	
+	public void chanceRotate() {
+		if(rand.nextFloat() > -1) {
+			rotate = true;
+			rotateSpeed = rand.nextFloat();
+		}
+	}
+	
+	public void chanceMove() {
+		speed = rand.nextFloat() * 10;
+	}
+	
 	public void tick() {
 		Env.timeTracker.start("tickCheck");
-		//rotate();
+		rotate();
+		move();
 		Env.timeTracker.end("tickCheck", 1000);
+	}
+	
+	public void move() {
+		if(speed == 0) {
+			
+		}else {
+			this.loc.add$(orient.yz.multiply(speed));
+			recalcSquares();
+		}
 	}
 
 	public void render(Graphics g, Camera camera){

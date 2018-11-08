@@ -96,7 +96,6 @@ public class Handler implements Runnable {
 		
 		if(count == 100) {
 			Env.timeTracker.print();
-			System.out.println("--------------------------------------------------");
 			count = 0;
 		}
 	}

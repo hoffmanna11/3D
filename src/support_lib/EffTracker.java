@@ -78,5 +78,6 @@ public class EffTracker {
 		double ms = (double)(avg / 1000000000.);
 		double percentageOfFrame = (double)avg / (double)list.trackers.get("total").getAverage() * 100;
 		System.out.printf("'" + name + "' averaged " + avg + "ns (" + ms + "), " + "%2f" + "%% of frame\n", percentageOfFrame);
+		System.out.printf("--------------------------------------------------\n");
 	}
 }

@@ -10,7 +10,9 @@ import java.util.concurrent.TimeUnit;
 
 import ground.Ground;
 import overlays.CameraOrientation;
+import overlays.Controls;
 import overlays.FPS;
+import overlays.PlayerInfo;
 import support_lib.EffTrackerList;
 import support_lib.Orient3D;
 import support_lib.Vector3D;
@@ -29,7 +31,7 @@ public class Env extends Canvas implements Runnable {
 	static boolean running = false;
 	
 	public static final int resScale = 60; // 120 = 1080p scaling
-	public static int resWidth = 8 * resScale;
+	public static int resWidth = 14 * resScale;
 	public static int resHeight = 10 * resScale;
 	
 	public static final double worldLength = 4000;
@@ -37,9 +39,10 @@ public class Env extends Canvas implements Runnable {
 	public static final double worldHeight = 4000;
 	
 	public static double currentFPS = 0;
-	public static int fps = 60;
+	public static int targetFPS = 60;
 	public static long lastRenderTime = 0;
-	public static long desiredRenderInterval = 1000000000 / fps;
+	public static long desiredRenderInterval = 1000000000 / (targetFPS+50);
+	public static long initTime = System.currentTimeMillis();
 	
 	public static EffTrackerList timeTracker = new EffTrackerList();
 	
@@ -53,24 +56,28 @@ public class Env extends Canvas implements Runnable {
 		this.addKeyListener(keyInput);
 		
 		// look-around object
-		Camera camera = new Camera(new Vector3D(worldLength/2, worldWidth/2, worldHeight/2), new Vector3D(0,1,0), keyInput, this);
+		//Camera camera = new Camera(new Vector3D(worldLength/2, worldWidth/2, worldHeight/2), new Vector3D(0,1,0), keyInput, this);
+		Camera camera = new Camera(new Vector3D(0, -450, 100), new Vector3D(0,1,0), keyInput, this);
 		handler.setCamera(camera);
 		
 		// display all the data
-		CameraOrientation camOrientOverlay = new CameraOrientation(camera);
+		CameraOrientation camOrient = new CameraOrientation(camera);
+		Controls controls = new Controls();
 		FPS fpsOverlay = new FPS();
-		handler.addOverlay(camOrientOverlay);
+		PlayerInfo playerInfo = new PlayerInfo(camera);
+		handler.addOverlay(camOrient);
+		handler.addOverlay(controls);
 		handler.addOverlay(fpsOverlay);
+		handler.addOverlay(playerInfo);
 		
-		// cubes flyin' all 'round
-		int numCubes = 1;
+		// base cube at 0,0,0
+		Cube baseCube = new Cube(new Vector3D(0,0,0), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), 75, camera);
+		baseCube.speed = 0;
+		handler.addObject(baseCube);
+		
+		int numCubes = 150;
 		for(int i=0; i<numCubes; i++){
-			//handler.addObject(new Cube(new Vector3D((int)rand(0, worldLength), (int)rand(0, worldWidth), (int)rand(0, worldHeight)), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), (int)rand(20, 150), camera));
-			handler.addObject(new Cube(new Vector3D(0,0,0), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), 10, camera));
-			// TODO 1: where you left off: you messed up the overlay system a little bit
-			// TODO 1: tried putting the offsets into the Overlay class instead of in the implementations (cameraOrient, FPS), but you need to make it into an arraylist of offsets
-			// TODO 1: to account for multiple lines of data
-			// TODO 2: make a cube at 0,0,0 and fly near it to make sure the square constructor is creating the square correctly (specifically check the leftCorner usage in Square constructor) 
+			handler.addObject(new Cube(new Vector3D((int)rand(-worldLength/2, worldLength/2), (int)rand(-worldLength/2, worldLength/2), (int)rand(-worldLength/2, worldLength/2)), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), (int)rand(20, 150), camera)); 
 			// TODO 3: start implementing gravity after getting the square ground in (gSquare)!
 			// handler.add(gSquare);
 		}
@@ -111,6 +118,25 @@ public class Env extends Canvas implements Runnable {
 			running = false;
 		} catch(Exception e){
 			e.printStackTrace();
+		}
+	}
+	
+	public void adjustRenderInterval() {
+		// wait for fps to stabilize
+		if(System.currentTimeMillis() - this.initTime < 500) {
+			// do nothing
+		}else {
+			double diff = (double)currentFPS/(double)targetFPS;
+			
+			if(Math.abs(1-diff) < .05) {
+				// within tolerance!
+			}else {
+				if(diff > 1) {
+					desiredRenderInterval *= 1.0005;
+				}else {
+					desiredRenderInterval *= 0.9995;
+				}
+			}
 		}
 	}
 	
@@ -157,7 +183,8 @@ public class Env extends Canvas implements Runnable {
 			
 			// USE THIS
 			lastRenderTime = System.nanoTime();
-			//sleepNanos((long)desiredRenderInterval);
+			adjustRenderInterval();
+			sleepNanos((long)desiredRenderInterval);
 			frames++;
 
 			if(System.currentTimeMillis() - timer > (1000)) {

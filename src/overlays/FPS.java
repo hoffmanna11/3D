@@ -6,16 +6,13 @@ import game.Env;
 import object_categories.Overlay;
 
 public class FPS extends Overlay {
-	int xOffset, yOffset;
-	
 	public FPS(){
-		int[] offsets = Overlay.newOffset();
-		this.xOffset = offsets[0];
-		this.yOffset = offsets[1];
+		addOffset();
 	}
 
 	public void render(Graphics g) {
-		g.drawString("FPS: " + Env.currentFPS, xOffset, yOffset);
+		setMessage(0, "FPS: " + Env.currentFPS + ", Target FPS: " + Env.targetFPS);
+		renderStrings(g);
 	}
 
 }

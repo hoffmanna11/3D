@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 public class EffTrackerList {
 	HashMap<String, EffTracker> trackers;
+	boolean show = false;
 
 	public EffTrackerList() {
 		trackers = new HashMap<String, EffTracker>();
@@ -37,8 +38,10 @@ public class EffTrackerList {
 	}
 
 	public void print() {
-		for(EffTracker e : trackers.values()) {
-			e.printAverageSpecial();
+		if(show) {
+			for(EffTracker e : trackers.values()) {
+				e.printAverageSpecial();
+			}
 		}
 	}
 }
