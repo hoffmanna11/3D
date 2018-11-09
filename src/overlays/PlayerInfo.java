@@ -19,7 +19,7 @@ public class PlayerInfo extends Overlay {
 	@Override
 	public void render(Graphics g) {
 		setMessage(0, "Speed: " + df.format(camera.getBaseSpeed()));
-		setMessage(1, "Player Loc: (" + df.format(camera.loc.dx()) + ", " + df.format(camera.loc.dx()) + ", " + df.format(camera.loc.dx()) + ")");
+		setMessage(1, "Player Loc: (" + df.format(camera.loc.dx()) + ", " + df.format(camera.loc.dy()) + ", " + df.format(camera.loc.dz()) + ")");
 		renderStrings(g);
 	}
 
