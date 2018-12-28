@@ -4,13 +4,15 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
 import javax.swing.SwingUtilities;
 
-public class KeyInput extends KeyAdapter implements MouseListener {
+public class KeyInput extends KeyAdapter implements MouseListener, MouseWheelListener {
 	public double mouseX = -1;
 	public double mouseY = -1;
-	
+
 	private Handler handler;
 
 	public KeyInput(Handler handler) {
@@ -70,18 +72,19 @@ public class KeyInput extends KeyAdapter implements MouseListener {
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		if(SwingUtilities.isRightMouseButton(arg0)){
 			handler.camera.rightClick = true;
+			System.out.println("Right");
 		}
 		if(SwingUtilities.isLeftMouseButton(arg0)){
 			if(handler.camera.forward == true ||
@@ -113,6 +116,20 @@ public class KeyInput extends KeyAdapter implements MouseListener {
 		if(SwingUtilities.isMiddleMouseButton(arg0)){
 			handler.camera.slowDown = false;
 		}
+	}
+
+	@Override
+	public void mouseWheelMoved(MouseWheelEvent e) {
+		// TODO Auto-generated method stub
+
+		if(e.getWheelRotation() < 0){
+			handler.camera.mouseWheelForward = true;
+			handler.camera.mouseWheelForwardClicks++;
+		}else{
+			handler.camera.mouseWheelBackward = true;
+			handler.camera.mouseWheelBackwardClicks++;
+		}
+
 	}
 
 }

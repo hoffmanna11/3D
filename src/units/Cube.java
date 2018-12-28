@@ -31,30 +31,33 @@ public class Cube extends GameObject {
 		chanceMove();
 	}
 
+	public void revolveShow(){
+		
+	}
+	
 	public void rotate(){
 		if(rotate){
 			Env.timeTracker.start("rotateCheck1");
-			this.orient.rotate("XY", rotateSpeed);
-			this.loc.add$(this.orient.yz.multiply(speed));
-			recalcSquares();
+			//this.orient.rotate("XY", rotateSpeed);
+			this.orient.rotate("YZ", rotateSpeed);
+			//this.orient.rotate("XZ", rotateSpeed);
+			//this.loc.add$(this.orient.yz.multiply(speed));
+			//recalcSquares();
 			Env.timeTracker.end("rotateCheck1", 1000);
-		}else{
-			Env.timeTracker.start("rotateCheck2");
-			this.loc.add$(this.orient.yz.multiply(speed));
-			recalcSquares();
-			Env.timeTracker.end("rotateCheck2", 1000);
 		}
 	}
 	
 	public void chanceRotate() {
 		if(rand.nextFloat() > -1) {
 			rotate = true;
-			rotateSpeed = rand.nextFloat();
+			rotateSpeed = .95;
+			//rotateSpeed = rand.nextFloat();
 		}
 	}
 	
 	public void chanceMove() {
-		speed = rand.nextFloat() * 10;
+		//speed = rand.nextFloat() * 20;
+		speed = 10;
 	}
 	
 	public void tick() {
@@ -122,8 +125,9 @@ public class Cube extends GameObject {
 			squares[i] = new Square(this.loc, this.orient, length, i);
 		}
 
+		Color c = new Color(rand.nextInt(0xFFFFFF));
 		for(int i=0; i<6; i++){
-			squares[i].color = new Color(rand.nextInt(0xFFFFFF));
+			squares[i].color = c;
 		}
 	}
 

@@ -54,10 +54,13 @@ public class Env extends Canvas implements Runnable {
 		KeyInput keyInput = new KeyInput(handler);
 		this.addMouseListener(keyInput);
 		this.addKeyListener(keyInput);
+		this.addMouseWheelListener(keyInput);
 		
 		// look-around object
 		//Camera camera = new Camera(new Vector3D(worldLength/2, worldWidth/2, worldHeight/2), new Vector3D(0,1,0), keyInput, this);
-		Camera camera = new Camera(new Vector3D(0, -450, 100), new Vector3D(0,1,0), keyInput, this);
+		//Camera camera = new Camera(new Vector3D(0, -450, 100), new Vector3D(0,1,0), keyInput, this);
+		Vector3D cameraLoc = new Vector3D(0, -2400, 800);
+		Camera camera = new Camera(cameraLoc, new Vector3D(0,1,-.2), keyInput, this);
 		handler.setCamera(camera);
 		
 		// display all the data
@@ -71,13 +74,18 @@ public class Env extends Canvas implements Runnable {
 		handler.addOverlay(playerInfo);
 		
 		// base cube at 0,0,0
-		Cube baseCube = new Cube(new Vector3D(0,0,0), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), 75, camera);
+		//Cube baseCube = new Cube(new Vector3D(0,0,0), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), 75, camera).revolveShow();
+		Cube baseCube = new Cube(new Vector3D(0,0,0), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), 2, camera);
 		baseCube.speed = 0;
 		handler.addObject(baseCube);
 		
-		int numCubes = 150;
+		int numCubes = 500;
 		for(int i=0; i<numCubes; i++){
-			handler.addObject(new Cube(new Vector3D((int)rand(-worldLength/2, worldLength/2), (int)rand(-worldLength/2, worldLength/2), (int)rand(-worldLength/2, worldLength/2)), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), (int)rand(20, 150), camera)); 
+			//handler.addObject(new Cube(new Vector3D((int)rand(-worldLength/2, worldLength/2), (int)rand(-worldLength/2, worldLength/2), (int)rand(-worldLength/2, worldLength/2)), new Vector3D(rand(0,1),rand(0,1),rand(0,1)).normalize(), (int)rand(20, 150), camera));
+			Vector3D loc = new Vector3D(0,0,0);
+			Vector3D dir = new Vector3D(rand(-1,1),rand(-1,1),rand(-1,1)).normalize();
+			int length = 50;
+			handler.addObject(new Cube(loc, dir, length, camera));
 			// TODO 3: start implementing gravity after getting the square ground in (gSquare)!
 			// handler.add(gSquare);
 		}

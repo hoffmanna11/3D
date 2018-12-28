@@ -25,6 +25,10 @@ public class Camera {
 	public boolean slowDown = false;
 	public boolean rotateXZNeg = false;
 	public boolean rotateXZPos = false;
+	public boolean mouseWheelForward = false;
+	public boolean mouseWheelBackward = false;
+	public double mouseWheelForwardClicks = 0;
+	public double mouseWheelBackwardClicks = 0;
 	
 	private double baseSpeed = 100;
 	private double speed = baseSpeed / Env.targetFPS;
@@ -205,6 +209,16 @@ public class Camera {
 				loc.dz -= this.orient.xz.dz * speed;
 				 */
 			}
+		}
+		
+		if(mouseWheelForward){
+			loc.add$(orient.yz.multiply(200).multiply(mouseWheelForwardClicks));
+			mouseWheelForwardClicks = 0;
+			mouseWheelForward = false;
+		}else if(mouseWheelBackward){
+			loc.add$(orient.yz.multiply(-200).multiply(mouseWheelBackwardClicks));
+			mouseWheelBackwardClicks = 0;
+			mouseWheelBackward = false;
 		}
 	}
 	

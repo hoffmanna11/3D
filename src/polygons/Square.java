@@ -22,7 +22,7 @@ public class Square extends Polygon {
 	
 	// centered: If true, 
 	public Square(Vector3D referencePoint, boolean centered, Vector3D loc, Orient3D squareOrient, int length) {
-		if(centered = false){
+		if(centered == false){
 			// referencePoint refers to the left corner of the square
 			this.loc = (Vector3D) referencePoint.add(squareOrient.yz.multiply(length));
 		}else{
