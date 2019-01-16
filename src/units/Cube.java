@@ -133,7 +133,9 @@ public class Cube extends GameObject {
 
 	@Override
 	public Polygon[] getPolygons() {
-		return (Polygon[])squares;
+		Polygon[] singleRender = new Polygon[1];
+		singleRender[0] = squares[0];
+		return (Polygon[])singleRender;
 	}
 
 }
